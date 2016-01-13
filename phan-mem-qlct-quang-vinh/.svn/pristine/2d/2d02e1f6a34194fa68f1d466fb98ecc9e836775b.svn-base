@@ -1,0 +1,123 @@
+﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="VatLieu.aspx.cs" Inherits="PhanMemQLCTQuangVinh.QLVatLieu.VatLieu" %>
+<asp:Content ID="Content1" ContentPlaceHolderID="HeadContent" runat="server">
+</asp:Content>
+<asp:Content ID="Content3" ContentPlaceHolderID="MainContent" runat="server">
+    <h2>DANH SÁCH VẬT LIỆU</h2>
+    <div>
+        <div class="search">
+            <asp:TextBox ID="txtTim" runat="server"></asp:TextBox>
+            <asp:Button ID="btnTim" runat="server" Text="Tìm" />
+        </div>
+    </div>
+    <asp:GridView ID="GridDSVL" runat="server" AutoGenerateColumns="False" 
+        AllowPaging="True" AllowSorting="True">
+        <Columns>
+            <asp:TemplateField HeaderText="Mã Vật Liệu">
+                <EditItemTemplate>
+                    <asp:TextBox ID="TextBox1" runat="server" Text='<%# Bind("MaVL") %>'></asp:TextBox>
+                </EditItemTemplate>
+                <ItemTemplate>
+                    <asp:Label ID="Label1" runat="server" Text='<%# Bind("MaVL") %>'></asp:Label>
+                </ItemTemplate>
+            </asp:TemplateField>
+            <asp:TemplateField HeaderText="Tên Vật Liệu">
+                <EditItemTemplate>
+                    <asp:TextBox ID="TextBox2" runat="server" Text='<%# Bind("TenVL") %>'></asp:TextBox>
+                </EditItemTemplate>
+                <ItemTemplate>
+                    <asp:Label ID="Label2" runat="server" Text='<%# Bind("TenVL") %>'></asp:Label>
+                </ItemTemplate>
+            </asp:TemplateField>
+            <asp:TemplateField HeaderText="Nhà cung cấp">
+                <EditItemTemplate>
+                    <asp:TextBox ID="TextBox3" runat="server" Text='<%# Bind("dtoNCC.TenNCC") %>'></asp:TextBox>
+                </EditItemTemplate>
+                <ItemTemplate>
+                    <asp:Label ID="Label3" runat="server" Text='<%# Bind("dtoNCC.TenNCC") %>'></asp:Label>
+                </ItemTemplate>
+            </asp:TemplateField>
+            <asp:TemplateField HeaderText="Đơn vị">
+                <EditItemTemplate>
+                    <asp:TextBox ID="TextBox4" runat="server" Text='<%# Bind("Donvi") %>'></asp:TextBox>
+                </EditItemTemplate>
+                <ItemTemplate>
+                    <asp:Label ID="Label4" runat="server" Text='<%# Bind("Donvi") %>'></asp:Label>
+                </ItemTemplate>
+            </asp:TemplateField>
+            <asp:TemplateField HeaderText="Giá">
+                <EditItemTemplate>
+                    <asp:TextBox ID="TextBox5" runat="server" Text='<%# Bind("Gia") %>'></asp:TextBox>
+                </EditItemTemplate>
+                <ItemTemplate>
+                    <asp:Label ID="Label5" runat="server" Text='<%# Bind("Gia") %>'></asp:Label>
+                </ItemTemplate>
+            </asp:TemplateField>
+            <asp:TemplateField HeaderText="Số Lượng">
+                <EditItemTemplate>
+                    <asp:TextBox ID="TextBox6" runat="server" Text='<%# Bind("Soluong") %>'></asp:TextBox>
+                </EditItemTemplate>
+                <ItemTemplate>
+                    <asp:Label ID="Label6" runat="server" Text='<%# Bind("Soluong") %>' ></asp:Label>
+                </ItemTemplate>
+            </asp:TemplateField>
+            <asp:TemplateField HeaderText="Sửa">
+                <ItemTemplate>
+                    <asp:HyperLink CssClass="fa fa-edit edit" ID="HyperLink1" runat="server" NavigateUrl='<%# "~/QLBoPhan_VatLieu/QLVatLieu/SuaVatLieu.aspx?MaVL=" + Eval("MaVL") %>' Text="Sửa"></asp:HyperLink>
+                </ItemTemplate>
+            </asp:TemplateField>
+            <asp:TemplateField HeaderText="Xóa">
+                <ItemTemplate>
+                    <asp:HyperLink CssClass="fa fa-remove remove" ID="HyperLink2" runat="server" onclick="return confirm('Are you sure?')"  NavigateUrl='<%# "~/QLVatLieu/XoaVatLieu.aspx" %>' Text="Xóa"></asp:HyperLink>
+                </ItemTemplate>
+            </asp:TemplateField>
+            <asp:TemplateField HeaderText="Sdt Nhà CC">
+                <EditItemTemplate>
+                    <asp:TextBox ID="TextBox7" runat="server" Text='<%# Bind("dtoNCC.Sdt") %>'></asp:TextBox>
+                </EditItemTemplate>
+                <ItemTemplate>
+                    <asp:Label ID="Label7" runat="server" Text='<%# Bind("dtoNCC.Sdt") %>'></asp:Label>
+                </ItemTemplate>
+            </asp:TemplateField>
+        </Columns>
+    </asp:GridView>
+    <div>
+        <asp:Button ID="bt_ThemVL" runat="server" onclick="Button1_Click" Text="Thêm" />
+    </div>
+    <div id="ThemVL" runat="server">
+        <asp:Label ID="lbloi" runat="server" CssClass="Message-error" Text=""></asp:Label>
+        <div class="form-content">
+            <div class="form-item">
+                <asp:Label ID="lbTenVL" runat="server" AssociatedControlID="txttenvl" 
+                    Text="Tên Vật Liệu"></asp:Label>
+                <asp:TextBox ID="txttenvl" runat="server"></asp:TextBox>
+            </div>
+            <div class="form-item">
+                <asp:Label ID="lbncc" runat="server" Text="Nhà cung cấp"></asp:Label>
+                <asp:DropDownList ID="ddNCC" runat="server" DataSourceID="SqlDataSource1" 
+                    DataTextField="TenNCC" DataValueField="MaNCC">
+                </asp:DropDownList>
+                <asp:SqlDataSource ID="SqlDataSource1" runat="server" 
+                    ConnectionString="<%$ ConnectionStrings:CSDLQuangVinh %>" 
+                    SelectCommand="SELECT * FROM [NhaCungCap]"></asp:SqlDataSource>
+            </div>
+            <div class="form-item">
+                <asp:Label ID="lbdonvi" runat="server" Text="Đơn vị"></asp:Label>
+                <asp:TextBox ID="txtdonvi" runat="server"></asp:TextBox>
+            </div>
+            <div class="form-item">
+                <asp:Label ID="lbGia" runat="server" Text="Giá"></asp:Label>
+                <asp:TextBox ID="txtgia" runat="server"></asp:TextBox>
+            </div>
+            <div class="form-item">
+                <asp:Label ID="lbsl" runat="server" Text="Số lượng"></asp:Label>
+                <asp:TextBox ID="txtsl" runat="server"></asp:TextBox>
+            </div>
+            <div class="form-item form-action">
+            <asp:Button ID="btluu" runat="server" Text="Lưu" onclick="btLuu_Click" />
+            <input type="reset" name="name" value="Làm lại" />
+        </div>
+        </div>
+    </div>
+    <br />
+
+</asp:Content>

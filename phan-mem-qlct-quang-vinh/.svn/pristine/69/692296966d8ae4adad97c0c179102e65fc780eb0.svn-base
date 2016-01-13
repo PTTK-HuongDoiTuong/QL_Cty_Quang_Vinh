@@ -1,0 +1,21 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Web;
+using PhanMemQLCTQuangVinh.DAO;
+using PhanMemQLCTQuangVinh.DTO;
+
+namespace PhanMemQLCTQuangVinh.BLL
+{
+    public class BLLVatLieu
+    {
+        public void ThemVatlieu(DTOVatLieu VL)
+        {
+            DAO_Entity daoVL = new DAO_Entity();
+            daoVL.ThemVatLieu(VL);
+            // Giờ mọi cái xử lý đều code trong phần Control BLL này phần ở ngoài VatLieu.aspx.cs chỉ là 
+            // lầy giá trị ở các User Control trên giao diện rồi truyền qua đây thôi, dây xử lý mấy cái đó và đọc dữ liệu
+            // từ CSDL lên bằng lớp DAO như bình thường.
+        }
+    }
+}

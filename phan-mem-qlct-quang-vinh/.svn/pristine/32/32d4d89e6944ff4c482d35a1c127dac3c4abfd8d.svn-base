@@ -1,0 +1,31 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Web;
+using PhanMemQLCTQuangVinh.DTO;
+using PhanMemQLCTQuangVinh.DAO;
+using System.Data;
+
+namespace PhanMemQLCTQuangVinh.BLL
+{
+    public class BLLQuanLyCongNoBanHang
+    {
+        public void LoadDSDH(DTODonDatHang dtoDH)
+        {
+            DAO_Entity entity = new DAO_Entity();
+       //     entity.TaoDSDH(); //phuong thuc nay chua co @@
+        }
+
+        public void LayDSDHTheoMa(string ma)
+        {
+            DAO_Entity entity = new DAO_Entity();
+            entity.LayDSDHTheoMa(ma);
+        }
+
+        public void ThanhToan(DTOThanhToan dtott)
+        {
+            DAO_Entity entity = new DAO_Entity();
+            entity.ThemThanhToan(dtott);
+        }
+    }
+}

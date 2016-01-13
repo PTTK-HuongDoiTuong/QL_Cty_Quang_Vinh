@@ -1,0 +1,36 @@
+﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="SuaKhachHang.aspx.cs" Inherits="PhanMemQLCTQuangVinh.QLKhachHang.SuaKhachHang" %>
+<asp:Content ID="Content1" ContentPlaceHolderID="HeadContent" runat="server">
+</asp:Content>
+<asp:Content ID="Content2" ContentPlaceHolderID="MainContent" runat="server">
+    <h2>Sửa khách hàng</h2>
+    <asp:Label ID="lbLoi" CssClass="message-error" runat="server" Text=""></asp:Label>
+
+    <div class="form-content form-edit-custom">
+        <div class="form-item">
+            <asp:Label ID="lbMaKH" runat="server" Text="Mã khách hàng" AssociatedControlID="lbMa"></asp:Label>
+            <asp:Label ID="lbMa" runat="server" Text=""></asp:Label>
+        </div>
+        <div class="form-item">
+            <asp:Label ID="lbTenKH" runat="server" Text="Tên khách hàng" AssociatedControlID="txtTenKH"></asp:Label>
+            <asp:TextBox ID="txtTenKH" runat="server"></asp:TextBox>
+        </div>
+        <div class="form-item">
+            <asp:Label ID="lbDiaChi" runat="server" Text="Địa chỉ" AssociatedControlID="txtDiaChi"></asp:Label>
+            <asp:TextBox ID="txtDiaChi" runat="server"></asp:TextBox>
+        </div>
+        <div class="form-item">
+            <asp:Label ID="lbSdt" runat="server" Text="Số điện thoại" AssociatedControlID="txtSdt"></asp:Label>
+            <asp:TextBox ID="txtSdt" runat="server"></asp:TextBox>
+        </div>
+        <div class="form-item">
+            <asp:Label ID="lbLoaiKH" runat="server" Text="Loại khách hàng" AssociatedControlID="ddLoaiKH"></asp:Label>
+            <asp:DropDownList ID="ddLoaiKH" runat="server" >            
+            </asp:DropDownList>
+        
+        </div>
+        <div class="form-item form-action">
+            <asp:Button ID="btnLuu" runat="server" Text="Lưu" onclick="btnLuu_Click" />
+            <asp:HyperLink ID="HyperLink1" runat="server" NavigateUrl="~/QLBoPhan_TiepNhanKH/QLKhachHang/KhachHang.aspx">Xem danh sách khách hàng</asp:HyperLink>
+        </div>
+    </div>
+</asp:Content>

@@ -1,0 +1,33 @@
+﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="ThemVL.aspx.cs" Inherits="PhanMemQLCTQuangVinh.QLVatLieu.ThemVL" %>
+<asp:Content ID="Content1" ContentPlaceHolderID="HeadContent" runat="server">
+</asp:Content>
+<asp:Content ID="Content3" ContentPlaceHolderID="MainContent" runat="server">
+    <asp:Label ID="lbloi" runat="server" CssClass="Message-error" Text=""></asp:Label>
+    <div class="form-content">
+        <div class="form-item">
+            <asp:Label ID="lbTenVL" runat="server" Text="Tên Vật Liệu" AssociatedControlID="txttenvl"></asp:Label>
+            <asp:TextBox ID="txttenvl" runat="server"></asp:TextBox>
+        </div>
+        <div class="form-item">
+            <asp:Label ID="lbncc" runat="server" Text="Nhà cung cấp"></asp:Label>
+            <asp:DropDownList ID="ddNCC" runat="server">
+            </asp:DropDownList>
+        </div>
+        <div class="form-item">
+            <asp:Label ID="lbdonvi" runat="server" Text="Đơn vị"></asp:Label>
+            <asp:TextBox ID="txtdonvi" runat="server"></asp:TextBox>
+        </div>
+        <div class="form-item">
+            <asp:Label ID="lbGia" runat="server" Text="Giá"></asp:Label>
+            <asp:TextBox ID="txtgia" runat="server"></asp:TextBox>
+        </div>
+        <div class="form-item">
+            <asp:Label ID="lbsl" runat="server" Text="Số lượng"></asp:Label>
+            <asp:TextBox ID="txtsl" runat="server"></asp:TextBox>
+        </div>
+        <div class="form-item form-action">
+            <asp:Button ID="btluu" runat="server" Text="Lưu" onclick="btLuu_Click" />
+            <input type="reset" name="name" value="Làm lại" />
+        </div>
+    </div>
+</asp:Content>

@@ -1,0 +1,129 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Web;
+using System.Web.UI;
+using System.Web.UI.WebControls;
+using PhanMemQLCTQuangVinh.DAO;
+using PhanMemQLCTQuangVinh.DTO;
+
+namespace PhanMemQLCTQuangVinh.QLBoPhan_VatLieu.NhapVatLieuNCC
+{
+    public partial class NhapVatLieu : System.Web.UI.Page
+    {
+        DAOPhieuNhapVatLieu_NCC daoEntities = new DAOPhieuNhapVatLieu_NCC();
+        protected void Page_Load(object sender, EventArgs e)
+        {
+            if (!IsPostBack)
+            {
+                if (Request.QueryString["maPhieu"] != null)
+                {
+                    string maPhieu = Request.QueryString["maPhieu"].ToString();
+                    List<DTOChiTietPhieuDatNCC> DSChitietPhieuDat = daoEntities.layDSVatLieuDaDat(maPhieu);
+                    gridDSVatLieu.DataSource = DSChitietPhieuDat;
+                    gridDSVatLieu.DataBind();
+
+                    DTOPhieuDatVatLieuCC dtoPhieudat = DSChitietPhieuDat[0].PhieuDat;
+                    MaPhieuDat.Text = dtoPhieudat.MaPDVLCC;
+                    lbNgayNhap.Text = DateTime.Now.ToShortDateString();
+                }
+            }
+        }
+
+        protected void btnLuu_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                string maPhieuDat = Request.QueryString["maPhieu"].ToString();
+                DTOPhieuNVL_SX dtoPhieuNhap = new DTOPhieuNVL_SX();
+                string maPhieuNhap = DateTime.Now.ToString("yyyyMMddHHmmss");
+                dtoPhieuNhap.dtoPhieuDat = new DTOPhieuDatVatLieuCC();
+
+                dtoPhieuNhap.MaPNVLSX = maPhieuNhap;
+                dtoPhieuNhap.dtoPhieuDat.MaPDVLCC = maPhieuDat;
+                dtoPhieuNhap.ngaylap = DateTime.Now.ToShortDateString();
+                dtoPhieuNhap.NguoiGiao = txtNguoiGiao.Text;
+                dtoPhieuNhap.NgayGiao = txtNgayGiao.Text;
+                dtoPhieuNhap.MaNV = int.Parse(txtMaNV.Text);
+
+                int dem = 0;
+                if (daoEntities.ThemPhieuNhap(dtoPhieuNhap))
+                {
+                    foreach (GridViewRow dong in gridDSVatLieu.Rows)
+                    {
+                        TextBox txtSLThuc = (TextBox)dong.FindControl("txtSLThuc");
+                        TextBox txtSLGiao = (TextBox)dong.FindControl("txtSoluongGiao");
+                        Label lbMaVL = (Label)dong.FindControl("lbMaVL");
+                        int soluongThuc = 0, soluongGiao = 0;
+                        int.TryParse(txtSLThuc.Text, out soluongThuc);
+                        int.TryParse(txtSLGiao.Text, out soluongGiao);
+                        DTOChiTietPhieuNhapVL dtoChiTietPhieuNhapVL = new DTOChiTietPhieuNhapVL();
+                        dtoChiTietPhieuNhapVL.dtoPhieuNhapVL = new DTOPhieuNVL_SX();
+                        dtoChiTietPhieuNhapVL.dtoPhieuNhapVL.MaPNVLSX = maPhieuNhap;
+                        dtoChiTietPhieuNhapVL.dtoVatLieu = new DTOVatLieu();
+                        dtoChiTietPhieuNhapVL.dtoVatLieu.MaVL = int.Parse(lbMaVL.Text);
+                        dtoChiTietPhieuNhapVL.SoLuongThuc = soluongThuc;
+                        dtoChiTietPhieuNhapVL.SoLuongGiao = soluongGiao;
+
+                        if (daoEntities.ThemCTPhieuNhap(dtoChiTietPhieuNhapVL))
+                            dem++;
+
+                        //cập nhật trạng thái phiếu đặt
+                        daoEntities.capNhatTrangThaiPhieuDat(maPhieuDat, 2);
+
+                        //xử lý sự cố
+                        if (soluongThuc < soluongGiao)
+                        { 
+                            int soLuongKhongDat = soluongGiao - soluongThuc;
+                            Label lbKhongDat = (Label)dong.FindControl("lbKhongDat");
+                            if (daoEntities.ThemXuLySuCo(maPhieuNhap, int.Parse(lbMaVL.Text), soLuongKhongDat))
+                                lbKhongDat.Text = soLuongKhongDat.ToString();
+                            
+                               
+                        }
+                    }
+                }
+
+                if (dem == gridDSVatLieu.Rows.Count)
+                {
+                    DTOPhieuGiao dtoPhieuGiao = new DTOPhieuGiao();
+                    dtoPhieuGiao.MaPhieuGiao = maPhieuNhap;
+                    dtoPhieuGiao.NgayGiao = txtNgayGiao.Text;
+                    dtoPhieuGiao.NguoiGiao = txtNguoiGiao.Text;
+                    if (daoEntities.ThemPhieuGiao(dtoPhieuGiao))
+                    {
+                        foreach (GridViewRow dong in gridDSVatLieu.Rows)
+                        {
+                            TextBox txtSLThuc = (TextBox)dong.FindControl("txtSLThuc");
+                            TextBox txtSLGiao = (TextBox)dong.FindControl("txtSoluongGiao");
+                            Label lbMaVL = (Label)dong.FindControl("lbMaVL");
+                            int soluongThuc = 0, soluongGiao = 0;
+                            int.TryParse(txtSLThuc.Text, out soluongThuc);
+                            int.TryParse(txtSLGiao.Text, out soluongGiao);
+                            DTOChiTietPhieuGiao dtoChiTietPhieuGiao = new DTOChiTietPhieuGiao();
+                            dtoChiTietPhieuGiao.dtoPhieuGiao = new DTOPhieuGiao();
+                            dtoChiTietPhieuGiao.dtoVatLieu = new DTOVatLieu();
+                            dtoChiTietPhieuGiao.dtoVatLieu.MaVL = int.Parse(lbMaVL.Text);
+
+                            dtoChiTietPhieuGiao.dtoPhieuGiao.MaPhieuGiao = maPhieuNhap;
+                            dtoChiTietPhieuGiao.SoluongGiao = soluongGiao;
+
+                            daoEntities.ThemCTPhieuGiao(dtoChiTietPhieuGiao);
+                        }
+                    }
+                }
+                
+            }
+            catch (Exception)
+            {
+                
+                throw;
+            }
+        }
+
+        protected void btnBack_Click(object sender, EventArgs e)
+        {
+            Response.Redirect("~/QLBoPhan_VatLieu/NhapVatLieuNCC/DanhSachPDVL.aspx");
+        }
+    }
+}

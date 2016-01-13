@@ -1,0 +1,19 @@
+﻿<%@ Page Title="Chi tiết đơn hàng" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="ChiTietDonHang.aspx.cs" Inherits="PhanMemQLCTQuangVinh.QLDonHang.ChiTietDonHang" %>
+<asp:Content ID="Content1" ContentPlaceHolderID="HeadContent" runat="server">
+</asp:Content>
+<asp:Content ID="Content2" ContentPlaceHolderID="MainContent" runat="server">
+    <h2>CHI TIẾT ĐƠN HÀNG</h2>
+    <asp:GridView ID="gridCTDH" runat="server" AllowSorting="True" 
+        AutoGenerateColumns="False">
+        <Columns>
+            <asp:BoundField DataField="MaDH" HeaderText="Mã đơn hàng" />
+            <asp:BoundField DataField="MaSP" HeaderText="Mã sản phẩm" />
+            <asp:BoundField DataField="SoLuong" HeaderText="Số lượng" />
+        </Columns>
+    </asp:GridView>
+
+    <div class="form-action">
+        <asp:HyperLink ID="linkKhachHang" runat="server" NavigateUrl="~/QLBoPhan_TiepNhanKH/QLKhachHang/KhachHang.aspx">Về danh sách khách hàng</asp:HyperLink>
+    </div>
+    
+</asp:Content>

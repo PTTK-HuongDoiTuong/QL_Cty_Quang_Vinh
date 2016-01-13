@@ -1,0 +1,29 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Data;
+using System.Web;
+
+namespace PhanMemQLCTQuangVinh.DTO
+{
+    public class DTOPhieuNVL_SX
+    {
+        public string MaPNVLSX { get; set; }
+        public DateTime Ngaplap { get; set; }
+        public int MaVL { get; set; }
+        public int Soluong { get; set; }
+        public string Ghichu { get; set; }
+
+        public DTOPhieuNVL_SX()
+        {}
+
+        public DTOPhieuNVL_SX(DataRow dongDL)
+        {
+            MaPNVLSX = dongDL["MaPNVLSX"].ToString();
+            Ngaplap = (DateTime)dongDL["Ngaylap"];
+            MaVL = (int)dongDL["MaVL"];
+            Soluong = (int)dongDL["Soluong"];
+            Ghichu = dongDL["Ghichu"].ToString();
+        }
+    }
+}

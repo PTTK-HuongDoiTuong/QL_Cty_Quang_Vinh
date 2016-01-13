@@ -1,0 +1,87 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Web;
+using System.Web.UI;
+using System.Web.UI.WebControls;
+using PhanMemQLCTQuangVinh.DAO;
+using PhanMemQLCTQuangVinh.DTO;
+using System.Data;
+using System.Data.SqlClient;
+using PhanMemQLCTQuangVinh.BLL;
+
+namespace PhanMemQLCTQuangVinh.QLBoPhan_TiepXucKH
+{
+    public partial class TaoDonHang : System.Web.UI.Page
+    {
+        protected void Page_Load(object sender, EventArgs e)
+        {
+            try
+            {
+               
+                string madh = Request.QueryString["MaKH"].ToString();
+                 DAO_Entity daokh = new DAO_Entity();
+                List<DTODonDatHang> dsdh = daokh.LayDSDHTheoMa(madh);
+                GridViewDH.DataSource = dsdh;
+                GridViewDH.DataBind();
+            }
+            catch (Exception)
+            {
+                Response.Write("<script>alert('Loi tai du lieu!')</script>");
+            }
+
+            if (IsPostBack == false)//postback=false: chưa có sự kiện click trên web
+            {
+                // request: yeu cau. QueryString: lay gia tri cua chuoi tren duong dan
+                string makh = Request.QueryString["MaKH"].ToString();
+                //hien thi chuoi len web
+                //Response.Write(maKH);
+
+                BLLXuLyDonHang bll = new BLLXuLyDonHang();
+                bll.LayThongTinKHTheoMa(makh);
+
+                DAO_Entity daoKH = new DAO_Entity();
+                DTOKhachHang dtoKH = daoKH.LayTTKHTheoMa(makh);
+
+                txtMa.Text = dtoKH.MaKH.ToString();
+                txtTen.Text = dtoKH.TenKH;
+                txtNgayTaoDH.Text = DateTime.Now.ToShortDateString();
+                //txtSdt.Text = dtoKH.SdtKH;
+                //txtDiaChi.Text = dtoKH.DiaChiKH;
+                //txtLoaiKH.Text = dtoKH.dtoLoaiKH.TenLKH;
+                
+                
+            }
+          //ThemDH.Visible = false;
+            
+        }
+
+
+        protected void btnThemDh_Click(object sender, EventArgs e)
+        {
+            DTODonDatHang dtodh = new DTODonDatHang();
+            dtodh.MaKH = int.Parse(txtMa.Text);
+          //  dtodh.TenKH = txtTen.Text;
+            dtodh.NgayTaoDH = Convert.ToDateTime(txtNgayTaoDH.Text);
+            dtodh.NgayGH = Convert.ToDateTime(txtGiao.Text);
+
+            dtodh.TongTien = 0;           
+            dtodh.CongNoDH = 0;
+            dtodh.TrangThai = "Chưa Xử Lý";
+
+            BLLXuLyDonHang bll = new BLLXuLyDonHang();
+            bll.ThemDonHang(dtodh);
+
+            DAO_Entity daoDH = new DAO_Entity();
+            daoDH.ThemDonHang(dtodh);
+            Response.Redirect(Request.RawUrl);
+        }
+
+        protected void Button1_Click(object sender, EventArgs e)
+        {
+            Response.Redirect("~/QLBoPhan_TiepXucKH/DSKhachHang.aspx");
+        }
+
+
+    }
+}

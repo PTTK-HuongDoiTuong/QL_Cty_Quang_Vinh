@@ -1,0 +1,110 @@
+Create new database CtyQuangVinh
+
+GO
+
+/****** Object:  Table [dbo].[ChiTietPDVL]    Script Date: 03/06/2015 00:30:15 ******/
+SET ANSI_NULLS ON
+GO
+
+SET QUOTED_IDENTIFIER ON
+GO
+
+CREATE TABLE [dbo].[ChiTietPDVL](
+	[MaPDVL] [nchar](10) NOT NULL,
+	[MaVL] [nchar](10) NOT NULL,
+	[Soluong] [nchar](10) NOT NULL,
+	[Thanhtien] [nchar](10) NOT NULL
+) ON [PRIMARY]
+
+GO
+CREATE TABLE [dbo].[CTHD](
+	[MaHD] [nchar](10) NOT NULL,
+	[MaSP] [nchar](10) NOT NULL,
+	[Soluong] [nchar](10) NOT NULL,
+	[ThanhtienHD] [nchar](10) NOT NULL
+) ON [PRIMARY]
+
+GO
+CREATE TABLE [dbo].[HoaDon](
+	[MaHD] [nchar](10) NOT NULL,
+	[Ngaylap] [nchar](10) NOT NULL,
+	[TongtienHD] [nchar](10) NOT NULL,
+ CONSTRAINT [PK_HoaDon] PRIMARY KEY CLUSTERED 
+(
+	[MaHD] ASC
+)WITH (PAD_INDEX  = OFF, STATISTICS_NORECOMPUTE  = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS  = ON, ALLOW_PAGE_LOCKS  = ON) ON [PRIMARY]
+) ON [PRIMARY]
+
+GO
+CREATE TABLE [dbo].[KhachHang](
+	[MaKH] [nchar](10) NOT NULL,
+	[TenKH] [nchar](10) NOT NULL,
+	[Diachi] [nchar](10) NOT NULL,
+	[Sdt] [nchar](10) NOT NULL,
+	[Ghichu] [nchar](10) NULL,
+ CONSTRAINT [PK_KhachHang] PRIMARY KEY CLUSTERED 
+(
+	[MaKH] ASC
+)WITH (PAD_INDEX  = OFF, STATISTICS_NORECOMPUTE  = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS  = ON, ALLOW_PAGE_LOCKS  = ON) ON [PRIMARY]
+) ON [PRIMARY]
+
+GO
+CREATE TABLE [dbo].[Nhacungung](
+	[MaNCU] [nchar](10) NOT NULL,
+	[TenNCU] [nchar](10) NOT NULL,
+	[Diachi] [nchar](10) NOT NULL,
+	[Sdt] [nchar](10) NOT NULL,
+ CONSTRAINT [PK_Nhacungung] PRIMARY KEY CLUSTERED 
+(
+	[MaNCU] ASC
+)WITH (PAD_INDEX  = OFF, STATISTICS_NORECOMPUTE  = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS  = ON, ALLOW_PAGE_LOCKS  = ON) ON [PRIMARY]
+) ON [PRIMARY]
+
+GO
+CREATE TABLE [dbo].[NhanVien](
+	[MaNV] [nchar](10) NOT NULL,
+	[TenNV] [nchar](10) NOT NULL,
+ CONSTRAINT [PK_NhanVien] PRIMARY KEY CLUSTERED 
+(
+	[MaNV] ASC
+)WITH (PAD_INDEX  = OFF, STATISTICS_NORECOMPUTE  = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS  = ON, ALLOW_PAGE_LOCKS  = ON) ON [PRIMARY]
+) ON [PRIMARY]
+
+GO
+CREATE TABLE [dbo].[Phieu_Dat_Vat_Lieu](
+	[MaPDVL] [nchar](10) NOT NULL,
+	[NgayDat] [nchar](10) NOT NULL,
+	[TongTien] [nchar](10) NOT NULL,
+ CONSTRAINT [PK_Phieu_Dat_Vat_Lieu] PRIMARY KEY CLUSTERED 
+(
+	[MaPDVL] ASC
+)WITH (PAD_INDEX  = OFF, STATISTICS_NORECOMPUTE  = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS  = ON, ALLOW_PAGE_LOCKS  = ON) ON [PRIMARY]
+) ON [PRIMARY]
+
+GO
+CREATE TABLE [dbo].[SanPham](
+	[MaSP] [nchar](10) NOT NULL,
+	[TenSP] [nchar](10) NOT NULL,
+	[LoaiSP] [nchar](10) NOT NULL,
+	[GiaSP] [nchar](10) NOT NULL,
+ CONSTRAINT [PK_SanPham] PRIMARY KEY CLUSTERED 
+(
+	[MaSP] ASC
+)WITH (PAD_INDEX  = OFF, STATISTICS_NORECOMPUTE  = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS  = ON, ALLOW_PAGE_LOCKS  = ON) ON [PRIMARY]
+) ON [PRIMARY]
+
+GO
+CREATE TABLE [dbo].[VatLieu](
+	[MaVL] [nchar](10) NOT NULL,
+	[TenVL] [nchar](10) NOT NULL,
+	[NhaCU] [nchar](10) NOT NULL,
+	[DV_VL] [nchar](10) NOT NULL,
+	[GiaVL] [nchar](10) NOT NULL,
+ CONSTRAINT [PK_VatLieu] PRIMARY KEY CLUSTERED 
+(
+	[MaVL] ASC
+)WITH (PAD_INDEX  = OFF, STATISTICS_NORECOMPUTE  = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS  = ON, ALLOW_PAGE_LOCKS  = ON) ON [PRIMARY]
+) ON [PRIMARY]
+
+GO
+

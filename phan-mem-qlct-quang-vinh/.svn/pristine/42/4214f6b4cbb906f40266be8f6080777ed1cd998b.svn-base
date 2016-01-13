@@ -1,0 +1,153 @@
+﻿<%@ Master Language="C#" AutoEventWireup="true" CodeBehind="Site.master.cs" Inherits="PhanMemQLCTQuangVinh.SiteMaster" %>
+
+<!DOCTYPE html>
+<html lang="en">
+<head runat="server">
+    <title></title>
+
+    <%--<script src = "~/Scripts/jquery-1.11.2.min.js" type="text/javascript"/>--%>
+    <%--<script src = "~/Scripts/bootstrap.js" type="text/javascript"/>--%>
+    <meta charset="UTF-8" />
+    <script src="<%# ResolveUrl("~/") %>/Scripts/jquery-1.11.2.min.js" type="text/javascript"></script>
+    <script src="<%# ResolveUrl("~/") %> /Scripts/bootstrap.js" type="text/javascript"></script>
+
+    <link href="~/Styles/bootstrap.css" rel="Stylesheet" type="text/css" />
+    <link href="~/Styles/bootstrap-theme.css" rel="Stylesheet" type="text/css" />
+    <link href="~/Styles/css/Site.css" rel="stylesheet" type="text/css" />
+    <link href="~/Styles/font-awesome-4.3.0/css/font-awesome.css" rel="stylesheet" type="text/css" />
+    <asp:ContentPlaceHolder ID="HeadContent" runat="server">
+    </asp:ContentPlaceHolder>
+</head>
+<body>
+    <form runat="server">
+    <div class="page">
+        <div class="headline">
+            <div class="container clearfix">
+               <p class="support pull-left">Hỗ trợ khách hàng: (083) 8334 789</p>
+                <div class="menu-block pull-right">
+                    <ul class="menu">
+                        <li>
+                            <a title="Trợ giúp" href="#"><i class="fa fa-bookmark"></i> Trợ giúp</a>
+                        </li>
+                        <li>
+                            <a title="Đăng nhập" href="<%# ResolveUrl("~/") %> /GUI/DangNhap.aspx"><i class="fa fa-user"></i> Đăng nhập</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="header">
+        <div class="container-fluid clearfix">
+            <a href="<%# ResolveUrl("~/") %> /Default.aspx" class="logo pull-left left" title="Home">
+                <img src="<%# ResolveUrl("~") %> /Images/logo.png" alt="Logo" />
+            </a>
+            <nav class="navbar navbar-default pull-left">
+                <ul class="nav navbar-nav">
+                    <li>
+                        <asp:HyperLink ID="TrangChu" runat="server" NavigateUrl="~/Default.aspx">Trang Chủ</asp:HyperLink>
+                    </li>
+
+                    <li class="dropdown">
+                        <a class="dropdown-toggle" data-toggle="dropdown" href="#" aria-expanded="false">tiếp nhận Khách Hàng <span class="caret"></span></a>
+                        <ul class="dropdown-menu" role="menu">
+                            <%--<li>
+                                 <asp:HyperLink ID="menuKH" runat="server" NavigateUrl='~/QLBoPhan_TiepXucKH/DSKhachHang.aspx'>Quản lý Khách Hàng</asp:HyperLink>
+                            </li>--%>
+                            <li>
+                                <asp:HyperLink ID="menuDH" runat="server" NavigateUrl='~/QLBoPhan_TiepXucKH/DSKhachHang.aspx'>Quản lý đơn hàng</asp:HyperLink>
+                            </li>
+                        </ul>
+                    </li>
+
+                    <li class="dropdown">
+                        <a class="dropdown-toggle" data-toggle="dropdown" href="#" aria-expended="false">sản xuất <span class="caret"></span></a>
+                        <ul class="dropdown-menu" role="menu">
+                            <li>
+                                <asp:HyperLink ID="menuChamCong" runat="server" NavigateUrl='~/QLChamCong/ChamCong.aspx'>Chấm công</asp:HyperLink>
+                            </li>
+                            <li>
+                                <asp:HyperLink ID="menuNVLSX" runat="server" NavigateUrl='~/QLBoPhan_VatLieu/QLVatLieu/VatLieu.aspx'>Nguyên vật liệu</asp:HyperLink>
+                            </li>
+                        </ul>
+                    </li>
+
+                    <li class="dropdown">
+                        <a class="dropdown-toggle" data-toggle="dropdown" href="#" aria-expanded="false">thủ kho NVL <span class="caret"></span></a>
+                        <ul class="dropdown-menu" role="menu">
+                            <li>
+                                <asp:HyperLink ID="menuNVL" runat="server" NavigateUrl='~/QLBoPhan_VatLieu/QLCongNoNCC/DanhSachCongNo.aspx'>Quản lý nguyên vật liệu</asp:HyperLink>
+                            </li>
+                            <li>
+                                <asp:HyperLink ID="menuCongNo" runat="server" NavigateUrl='~/QLBoPhan_VatLieu/QLCongNoNCC/DanhsachCongNo.aspx'>Quản lý công nợ NCC</asp:HyperLink>
+                            </li>
+                        </ul>
+                    </li>
+
+                    <li class="dropdown">
+                        <a class"dropdown-toggle" data-toggle="dropdown" href="#" aria-expanded="false">thủ kho thành phẩm <span class="caret"></span></a>
+                        <ul class="dropdown-menu" role="menu">
+                            <li>
+                                <asp:HyperLink ID="menuSP" runat="server" NavigateUrl='~/QLBoPhan_ThanhPham/QLPhieuNhapTP/DSDonHang(DangXL).aspx'>Danh sách ĐH (chưa xử lý)</asp:HyperLink>
+                            </li>
+                            <li>
+                                <asp:HyperLink ID="menuCNBH" runat="server" NavigateUrl='~/QLBoPhan_ThanhPham/QuanLyQuanNo_BH/DanhSachCongNo_BH.aspx'>Quản lý công nợ bán hàng</asp:HyperLink>
+                            </li>
+                        </ul>
+                    </li>
+
+                    <li class="dropdown">
+                        <a class="dropdown-toggle" data-toggle="dropdown" href="#" aria-expanded="false">Quản trị <span class="caret"></span></a>
+                        <ul class="dropdown-menu" role="menu">
+                            <li>
+                                <asp:HyperLink ID="menuTK" runat="server" NavigateUrl='~/QLBoPhan_TiepNhanKH/QLKhachHang/KhachHang.aspx'>Quản lý khách hàng</asp:HyperLink>
+                            </li>
+                            <li>
+                                <asp:HyperLink ID="menuPhanQuyen" runat="server" NavigateUrl='~/QLBophan_Admin/QLPhanQuyen/PhanQuyen.aspx'>Phân quyền</asp:HyperLink>
+                            </li>
+                            <li>
+                                <asp:HyperLink ID="menuCauHinh" runat="server" NavigateUrl='~/QLBophan_Admin/QLCauHinhChung/TrangCauHinh.aspx'>Cấu hình</asp:HyperLink>
+                            </li>
+                        </ul>
+                    </li>
+                </ul>
+            </nav>
+            </div>
+        </div>
+        <div class="main">
+            <div class = "container">
+                <asp:ContentPlaceHolder ID="MainContent" runat="server">                    
+                </asp:ContentPlaceHolder>
+            </div>
+         </div>
+        <div class="footer">
+            <div class="container clearfix">
+                <address class="pull-left">
+                    <p class="company-name">
+                    Công ty TNHH Quang Vinh
+                    </p>
+                    <p>
+                        <i class="fa fa-map-marker"></i>Địa chỉ: 123 Trần Hưng Đạo P1 Q5 TP.HCM
+                    </p>
+                    <p>
+                        <i class="fa fa-phone"></i>SĐT: (083) 3123 456
+                    </p>
+                    <p>
+                        <i class="fa fa-envelope"></i>Email: contact@quangvinhco.com
+                    </p>
+                </address>
+                <div class="pull-right">
+                    <p>
+                    &copy; Bản quyền thuộc về nhóm Như-Oanh trường ĐH Sài Gòn    
+                    </p>
+                    <p>
+                    Địa chỉ: 273 An Dương Vương - Quận 5 - TP.HCM
+                    </p>
+                </div>
+            </div>
+        </div>
+        
+    </div>
+    
+    </form>
+</body>
+</html>

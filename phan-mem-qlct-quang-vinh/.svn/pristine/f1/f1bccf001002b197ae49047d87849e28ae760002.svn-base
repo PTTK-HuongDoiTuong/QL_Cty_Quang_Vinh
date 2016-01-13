@@ -1,0 +1,57 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Web;
+using System.Web.UI;
+using System.Web.UI.WebControls;
+using PhanMemQLCTQuangVinh.DAO;
+using PhanMemQLCTQuangVinh.DTO;
+
+namespace PhanMemQLCTQuangVinh.QLCauHinhLoaiKH
+{
+    public partial class SuaLKH : System.Web.UI.Page
+    {
+        protected void Page_Load(object sender, EventArgs e)
+        {
+            if (IsPostBack == false)//postback=false: chưa có sự kiện click trên web
+            {
+                // request: yeu cau. QueryString: lay gia tri cua chuoi tren duong dan
+                string maLKH = Request.QueryString["MaLKH"].ToString();
+                //hien thi chuoi len web
+                //Response.Write(maKH);
+                DAO_Entity daoLKH = new DAO_Entity();
+                DTOLoaiKH dtoloaikh = daoLKH.LayThongTinLoaiKH(maLKH);
+                lbMa.Text = dtoloaikh.MaLKH.ToString();
+                txtTenLoaiKH.Text = dtoloaikh.TenLKH;           
+            }
+        }
+
+        protected void btLu_Click(object sender, EventArgs e)
+        {
+            DTOLoaiKH dtoloaikh = new DTOLoaiKH();
+            dtoloaikh.MaLKH = int.Parse(lbMa.Text);
+            dtoloaikh.TenLKH = txtTenLoaiKH.Text;
+
+            DAO_Entity daolkh = new DAO_Entity();
+            if (KiemTraNhap() == "")
+            {
+                daolkh.SuaLoaiKH(dtoloaikh);
+                Response.Redirect("~/QLBophan_Admin/QLCauHinhLoaiKH/LoaiKH.aspx");
+            }
+            else
+            {
+                lbLoi.Text = KiemTraNhap();
+            }
+        }
+        private string KiemTraNhap()
+        {
+            string kq = "";
+            if ( txtTenLoaiKH.Text.Trim() == "")
+            {
+                kq += "Vui lòng nhập tên!";
+            }
+            return kq;
+        }
+
+    }
+}

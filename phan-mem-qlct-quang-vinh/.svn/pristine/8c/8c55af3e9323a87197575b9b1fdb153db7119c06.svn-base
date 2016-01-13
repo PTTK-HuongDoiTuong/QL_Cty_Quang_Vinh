@@ -1,0 +1,79 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Web;
+using System.Web.UI;
+using PhanMemQLCTQuangVinh.DAO;
+using PhanMemQLCTQuangVinh.DTO;
+
+namespace PhanMemQLCTQuangVinh.QLVatLieu
+{
+    public partial class ThemVL : System.Web.UI.Page
+    {
+        protected void Page_Load(object sender, EventArgs e)
+        {
+            if (IsPostBack == false)
+            {
+                List<DTONhacungcap> dsNCC = new List<DTONhacungcap>();
+                DAO_Entity daoVL = new DAO_Entity();
+                dsNCC = daoVL.LayDSNCC();
+                //hien thi ten loai KH ra dropdownlist
+                ddNCC.DataTextField = "TenNCC";//TenLKH la thuoc tinh trong DTOLoaiKH
+                //truyen dl theo ma loai 
+                ddNCC.DataValueField = "MaNCC";//MaLKH la thuoc tinh trong DTOLoaiKH
+                ddNCC.DataSource = dsNCC;
+                ddNCC.DataBind();
+            }
+
+        }
+        protected void btLuu_Click(object sender, EventArgs e)
+        {
+            DTOVatLieu dtoVL = new DTOVatLieu();
+
+            dtoVL.TenVL = txttenvl.Text;
+            DTONhacungcap dtoNCC = new DTONhacungcap ();
+            dtoNCC.MaNCC = int.Parse(ddNCC.SelectedValue);
+            dtoNCC.TenNCC = ddNCC.SelectedItem.ToString();
+            dtoVL.dtoNCC = dtoNCC;
+            dtoVL.Donvi = txtdonvi.Text;
+            dtoVL.Gia = decimal.Parse(txtgia.Text);
+            dtoVL.Soluong = int.Parse(txtsl.Text);     
+
+            DAO_Entity daoVL = new DAO_Entity();
+            if (KiemTraNhap() == "")
+            {
+                daoVL.ThemVatLieu(dtoVL);
+                Response.Redirect("VatLieu.aspx");
+            }
+            else
+            {
+                lbloi.Text = KiemTraNhap();
+            }
+
+        }
+        private string KiemTraNhap()
+        {
+            string kq = "";
+            //if (txtMaKH.Text.Trim() == "")
+            //{
+            //    kq += "Mã ko đc rỗng!";
+            //}
+            if (txttenvl.Text.Trim() == "")
+            {
+                kq += "Vui lòng nhập tên!";
+            }
+            if (txtdonvi.Text.Trim() == "")
+            {
+                kq += "Vui lòng nhập đơn vị";
+            }
+            /*
+            if (txtgia.Text.Trim () == "")
+            {
+                kq += "Vui lòng nhập giá";
+            }
+             */
+            
+            return kq;
+        }
+    }
+}

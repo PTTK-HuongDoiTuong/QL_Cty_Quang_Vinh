@@ -1,0 +1,34 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Web;
+using System.Data;
+using PhanMemQLCTQuangVinh.DTO;
+
+namespace PhanMemQLCTQuangVinh.DTO
+{
+    public class DTOCongNoBanHang
+    {
+        public int MaCNBH { get; set; }
+        public int MaDH { get; set; }
+        public int MaKH { get; set; }
+        public int MaNV { get; set; }
+        public DateTime NgayTraNo { get; set; }
+        public int TienTT { get; set; }
+        //public int MaThanhToan { get; set; }
+
+        public DTOCongNoBanHang()
+        { }
+
+        public DTOCongNoBanHang(DataRow dongDL)
+        {
+            MaCNBH = (int)dongDL["MaCNBH"];
+            MaDH = (int)dongDL["MaDH"];
+            MaKH = (int)dongDL["MaKH"];
+            MaNV = (int)dongDL["MaNV"];
+            NgayTraNo = (DateTime)dongDL["NgayTraNo"];
+            TienTT = (int)dongDL["TienTT"];
+         //   MaThanhToan = (int)dongDL["MaThanhToan"];
+        }
+    }
+}

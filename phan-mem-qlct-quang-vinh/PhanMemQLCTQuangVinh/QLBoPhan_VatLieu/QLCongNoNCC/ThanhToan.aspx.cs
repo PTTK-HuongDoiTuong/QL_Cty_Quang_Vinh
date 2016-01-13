@@ -1,0 +1,56 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Web;
+using System.Web.UI;
+using System.Web.UI.WebControls;
+using PhanMemQLCTQuangVinh.DAO;
+using PhanMemQLCTQuangVinh.DTO;
+using System.Data;
+
+namespace PhanMemQLCTQuangVinh.QLBoPhan_VatLieu.QLCongNoNCC
+{
+    public partial class ThanhToan : System.Web.UI.Page
+    {
+        protected void Page_Load(object sender, EventArgs e)
+        {
+            if (IsPostBack == false)
+            {
+                string maPD = Request.QueryString["MaPDVLCC"].ToString();
+                DAO_Entity daoPD = new DAO_Entity();
+                DTOPhieuDatVatLieuCC dtoDH = daoPD.LayTTPhieuDatTheoMa(maPD);
+                lbMPD.Text = dtoDH.MaPDVLCC.ToString();
+                lbNCC.Text = dtoDH.dtoncc.MaNCC.ToString();
+                lbTenNCC.Text = dtoDH.TenNCC.ToString();
+                lbNTT.Text = DateTime.Now.ToShortDateString();
+                lbTong.Text = dtoDH.CongNoNCC.ToString();
+            }
+        }
+
+        protected void btnLuu_Click(object sender, EventArgs e)
+        {
+            
+            DTOCongNoVatLieu dtovl = new DTOCongNoVatLieu();
+            dtovl.MaPDVLCC = int.Parse(lbMPD.Text);
+            dtovl.MaNCC = int.Parse(lbNCC.Text);
+            dtovl.MaNV = int.Parse(TextBox1.Text);
+            dtovl.NgayTraNo = Convert.ToDateTime(lbNTT.Text);
+            dtovl.Sotien = int.Parse(TextBox2.Text);
+
+            DAO_Entity dao = new DAO_Entity();
+            dao.ThemCongNoNCC(dtovl);
+
+
+            DTOPhieuDatVatLieuCC dtopd = new DTOPhieuDatVatLieuCC();
+            dtopd.MaPDVLCC = lbMPD.Text;
+            int tong = int.Parse(lbTong.Text);
+            int no = int.Parse(TextBox2.Text);
+            dtopd.CongNoNCC = tong - no;
+            dao.CapNhatCongNoNCC(dtopd);
+
+            Response.Redirect("~/QLBoPhan_VatLieu/QLCongNoNCC/DanhSachCongNo.aspx");
+        }
+
+
+    }
+}

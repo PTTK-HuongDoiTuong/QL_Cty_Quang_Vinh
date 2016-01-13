@@ -1,0 +1,30 @@
+﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="SuaNCC.aspx.cs" Inherits="PhanMemQLCTQuangVinh.QLCauHinhNCC.SuaNCC" %>
+<asp:Content ID="Content1" ContentPlaceHolderID="HeadContent" runat="server">
+</asp:Content>
+<asp:Content ID="Content2" ContentPlaceHolderID="MainContent" runat="server">
+    <h2>
+        Sửa Nhà cung cấp</h2>
+    <asp:Label ID="lbLoi" CssClass="message-error" runat="server" Text=""></asp:Label>
+    <div class="form-content form-edit-custom">
+        <div class="form-item">
+            <asp:Label ID="lbMaNCC" runat="server" Text="Mã Nhà Cung Cấp: "></asp:Label>
+            <asp:Label ID="lbMa" runat="server" Text=""></asp:Label>
+        </div>
+        <div class="form-item">
+            <asp:Label ID="lbTen" runat="server" Text="Tên Nhà Cung Cấp: "></asp:Label>
+            <asp:TextBox ID="txtTenNCC" runat="server"></asp:TextBox>
+        </div>
+        <div class="form-item">
+            <asp:Label ID="lbSDT" runat="server" Text="Số Điện Thoại: "></asp:Label>
+            <asp:TextBox ID="txtSDT" runat="server"></asp:TextBox>
+        </div>
+        <div class="form-item">
+            <asp:Label ID="lbdiachi" runat="server" Text="Địa Chỉ: "></asp:Label>
+            <asp:TextBox ID="txtdiachi" runat="server"></asp:TextBox>
+        </div>
+        <div class="form-item form-action">
+            <asp:Button ID="btnLuu" runat="server" onclick="btnLuu_Click" Text="Lưu" />
+            <asp:Button ID="btnHuy" runat="server" Text="Hủy" />
+        </div>
+    </div>
+</asp:Content>

@@ -1,0 +1,58 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Web;
+using PhanMemQLCTQuangVinh.DAO;
+using PhanMemQLCTQuangVinh.DTO;
+using System.Data;
+
+
+namespace PhanMemQLCTQuangVinh.BLL
+{
+    public class BLLXuLyDonHang
+    {
+        public void LoadDSKhachHang(DTOKhachHang dtokh)
+        {
+            DAO_Entity entity = new DAO_Entity();
+            entity.TaoDSKH();
+        }
+        public void TimKhachHang(string Timten)
+        {
+            DAO_Entity en = new DAO_Entity();
+            en.TimTheoTenKH(Timten);
+        }
+        public void LayThongTinKHTheoMa(string ma)
+        {
+            DAO_Entity en = new DAO_Entity();
+            en.LayTTKHTheoMa(ma);
+        }
+
+        public void ThemDonHang(DTODonDatHang dto)
+        {
+            DAO_Entity en = new DAO_Entity();
+            en.ThemDonHang(dto);
+        }
+        public void LayThongTinDonHang(string ma)
+        {
+            DAO_Entity en = new DAO_Entity();
+            en.LayDHTheoMa(ma);
+        }
+        public void ThemChiTietDH(DTOChiTietDH dtoct)
+        {
+            DAO_Entity en = new DAO_Entity();
+            en.ThemChiTietDH(dtoct);
+        }
+        public void LuuPhieuDatCoc(DTOThanhToan dtott)
+        {
+            DAO_Entity en = new DAO_Entity();
+            en.ThemThanhToan(dtott);
+        }
+        public void ThemKhachHang(DTOKhachHang dtoKH)
+        {
+            DAO_Entity en = new DAO_Entity();
+            en.ThemKhachHang(dtoKH);
+        }
+
+
+    }
+}

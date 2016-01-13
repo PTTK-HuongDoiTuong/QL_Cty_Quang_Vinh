@@ -1,0 +1,31 @@
+﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="SuaUser.aspx.cs" Inherits="PhanMemQLCTQuangVinh.QLBophan_Admin.QLUser.SuaUser" %>
+<asp:Content ID="Content1" ContentPlaceHolderID="HeadContent" runat="server">
+</asp:Content>
+<asp:Content ID="Content2" ContentPlaceHolderID="MainContent" runat="server">
+    <h2>
+        Sửa tài khoản user</h2>
+    <asp:Label ID="lbLoi" runat="server" CssClass="message-error" Text=""></asp:Label>
+    <div class="form-content form-edit-custom">
+        <div class="form-item">
+            <asp:Label ID="Label1" runat="server" Text="ID USer"></asp:Label>
+            <asp:Label ID="lbMa" runat="server" Text=""></asp:Label>
+        </div>
+        <div class="form-item">
+            <asp:Label ID="lbMK" runat="server" Text="Mật Khẩu"></asp:Label>
+            <asp:TextBox ID="txtMK" runat="server"></asp:TextBox>
+        </div>
+        <div class="form-item">
+            <asp:Label ID="txtHoTen" runat="server" Text="Họ Tên USer:"></asp:Label>
+            <asp:TextBox ID="TextBox2" runat="server"></asp:TextBox>
+        </div>
+        <div class="form-item">
+            <asp:Label ID="bNhomQ" runat="server" Text="Nhóm Quyền: "></asp:Label>
+            <asp:DropDownList ID="ddlNhomQ" runat="server">
+            </asp:DropDownList>
+        </div>
+        <div class="form-item form-action">
+            <asp:Button ID="btnLuu" runat="server" Text="Lưu" />
+            <asp:Button ID="btnHuy" runat="server" Text="Hủy" />
+        </div>
+    </div>
+</asp:Content>

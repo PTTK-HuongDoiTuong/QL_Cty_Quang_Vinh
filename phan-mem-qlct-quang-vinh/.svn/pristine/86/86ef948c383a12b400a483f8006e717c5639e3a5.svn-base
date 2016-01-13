@@ -1,0 +1,36 @@
+﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="SanPham.aspx.cs" Inherits="PhanMemQLCTQuangVinh.QLSanPham.SanPham" %>
+<asp:Content ID="Content1" ContentPlaceHolderID="HeadContent" runat="server">
+</asp:Content>
+<asp:Content ID="Content2" ContentPlaceHolderID="MainContent" runat="server">
+    <h2>DANH SÁCH SẢN PHẨM</h2>
+    <div class="search">
+        <asp:TextBox ID="txtTim" runat="server" placeholder="Nhập tên sản phẩm..."></asp:TextBox>
+        <asp:Button ID="btnTim" runat="server" Text="Tìm" />
+    </div>
+
+    <asp:GridView ID="GridDSSP" runat="server" AllowPaging="True" 
+        AllowSorting="True" AutoGenerateColumns="False">
+        <Columns>
+            <asp:BoundField HeaderText="Mã sản phẩm" />
+            <asp:BoundField HeaderText="Tên sản phẩm" />
+            <asp:BoundField HeaderText="Loại sản phẩm" />
+            <asp:BoundField HeaderText="Giá" />
+            <asp:TemplateField HeaderText="Sửa">
+                <ItemTemplate>
+                    <asp:HyperLink CssClass="fa fa-edit edit" ID="HyperLink1" runat="server" 
+                        NavigateUrl="~/QLSanPham/SuaSanPham.aspx" Text="Sửa"></asp:HyperLink>
+                </ItemTemplate>
+            </asp:TemplateField>
+           <asp:TemplateField HeaderText="Xóa" ShowHeader="False">
+                <ItemTemplate>
+                    <asp:LinkButton CssClass="fa fa-remove remove" OnClientClick='return confirm("Bạn có muốn xóa?")' ID="btnXoa" runat="server" CausesValidation="false" 
+                        CommandName="cmdXoa" CommandArgument='<%# Eval("MaSP") %>' Text="Xóa" EnableTheming="false"></asp:LinkButton>
+                </ItemTemplate>
+            </asp:TemplateField>
+        </Columns>
+    </asp:GridView>
+
+    <div class="form-action">
+        <asp:HyperLink ID="HyperLink1" runat="server" NavigateUrl="~/QLSanPham/ThemSanPham.aspx">Thêm sản phẩm</asp:HyperLink>
+    </div>
+</asp:Content>

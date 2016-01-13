@@ -1,0 +1,40 @@
+﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="PhanQuyen.aspx.cs" Inherits="PhanMemQLCTQuangVinh.QLPhanQuyen.PhanQuyen" %>
+<asp:Content ID="Content1" ContentPlaceHolderID="HeadContent" runat="server">
+</asp:Content>
+<asp:Content ID="Content2" ContentPlaceHolderID="MainContent" runat="server">
+    <h2>
+        Phân quyền người dùng</h2>
+    <div>
+        <asp:Label ID="bIDUser" runat="server" Text="Chọn ID User: "></asp:Label>
+        <asp:DropDownList ID="ddlIDUser" runat="server">
+        </asp:DropDownList>
+        
+    </div>
+    <br />
+    <div>
+        <asp:Label ID="lbNhomQ" runat="server" Text="Chọn Nhóm Quyền: "></asp:Label>
+        <asp:CheckBoxList ID="CheckBoxList1" runat="server" 
+            DataSourceID="SqlDataSource2" DataTextField="NhomQuyen" 
+            DataValueField="MaNhomQ" Width="167px">
+        </asp:CheckBoxList>
+        <asp:SqlDataSource ID="SqlDataSource2" runat="server" 
+            ConnectionString="<%$ ConnectionStrings:CSDLQuangVinh %>" 
+            SelectCommand="SELECT * FROM [NhomQuyen]"></asp:SqlDataSource>
+    </div>
+    <br />
+    <div>
+        <asp:Label ID="Quyen" runat="server" 
+            Text="Chọn Quyền Tương Ứng với Nhóm Quyền: "></asp:Label>
+        <asp:SqlDataSource ID="SqlDataSource3" runat="server" 
+            ConnectionString="<%$ ConnectionStrings:CSDLQuangVinh %>" 
+            SelectCommand="SELECT * FROM [PhanQuyen]"></asp:SqlDataSource>
+        <asp:CheckBoxList ID="CheckBoxList2" runat="server" 
+            DataSourceID="SqlDataSource3" DataTextField="TenQuyen" DataValueField="MaQuyen">
+        </asp:CheckBoxList>
+        <br />
+        <div>
+            <asp:Button ID="btnLuu" runat="server" Text="Lưu" />
+            <asp:Button ID="btnThoat" runat="server" Text="Thoát" />
+        </div>
+    </div>
+</asp:Content>

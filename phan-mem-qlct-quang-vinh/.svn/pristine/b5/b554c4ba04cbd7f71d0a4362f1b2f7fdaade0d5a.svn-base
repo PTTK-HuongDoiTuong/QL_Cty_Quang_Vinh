@@ -1,0 +1,21 @@
+﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="ChonTaoDH.aspx.cs" Inherits="PhanMemQLCTQuangVinh.QLDonHang.ChonTaoDH" %>
+<asp:Content ID="Content1" ContentPlaceHolderID="HeadContent" runat="server">
+</asp:Content>
+<asp:Content ID="Content2" ContentPlaceHolderID="MainContent" runat="server">
+    <div class="rbtn">
+       <%-- <asp:RadioButton ID="" GroupName="grpTrangThai" 
+            Text="Khách hàng đã tồn tại" runat="server" 
+            postbackurl="~/QLDonHang/ThemDonHang.aspx" 
+            oncheckedchanged="rbtnDaCo_CheckedChanged"/>--%>
+     
+        <%--<asp:RadioButton ID="rbtnChua" GroupName="grpTrangThai" Text="Tạo mới khách hàng" runat="server"/>--%>
+       
+        <asp:RadioButtonList AutoPostBack="true" ID="grpTrangThai" runat="server" 
+            onselectedindexchanged="grpTrangThai_SelectedIndexChanged">
+            <asp:ListItem Value="Co" Selected="True" Text="Khách hàng đã tồn tại"></asp:ListItem>
+            <asp:ListItem Value="Chua" Text="Tạo mới khách hàng"></asp:ListItem>
+        </asp:RadioButtonList>
+        <asp:HyperLink ID="linkTaoDH" runat="server" NavigateUrl="~/QLBoPhan_TiepNhanKH/QLDonHang/ThemDonHang.aspx">Tạo đơn hàng</asp:HyperLink>
+        <asp:HyperLink ID="linkThemKH" runat="server" NavigateUrl="~/QLBoPhan_TiepNhanKH/QLKhachHang/ThemKhachHang.aspx">Thêm khách hàng</asp:HyperLink>
+    </div> 
+</asp:Content>

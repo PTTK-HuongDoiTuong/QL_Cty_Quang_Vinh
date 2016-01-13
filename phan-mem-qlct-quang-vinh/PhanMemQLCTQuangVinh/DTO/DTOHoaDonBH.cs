@@ -1,0 +1,29 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Web;
+using System.Data;
+
+namespace PhanMemQLCTQuangVinh.DTO
+{
+    public class DTOHoaDonBH
+    {
+        public string MaHDBH { get; set; }
+        public int MaKH { get; set; }
+        public DateTime NgayHDBH { get; set; }
+        public int TongTien { get; set; }
+        public DTOXLSC_HDBH dtoxl { get; set; }
+
+        public DTOHoaDonBH()
+        { }
+
+        public DTOHoaDonBH(DataRow dongDL)
+        {
+            MaHDBH = dongDL["MaHDBH"].ToString();
+            MaKH = (int)dongDL["MaKH"];
+            NgayHDBH = (DateTime)dongDL["NgayHDBH"];
+            TongTien = (int)dongDL["TongTien"];
+            dtoxl = new DTOXLSC_HDBH(dongDL);
+        }
+    }
+}

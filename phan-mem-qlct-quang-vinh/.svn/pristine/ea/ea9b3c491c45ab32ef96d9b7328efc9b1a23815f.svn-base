@@ -1,0 +1,26 @@
+﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="ChiTietNhapKhoThanhPham.aspx.cs" Inherits="PhanMemQLCTQuangVinh.QLPhieuNhapKhoTP.ChiTietNhapKhoThanhPham" %>
+<asp:Content ID="Content1" ContentPlaceHolderID="HeadContent" runat="server">
+</asp:Content>
+<asp:Content ID="Content2" ContentPlaceHolderID="MainContent" runat="server">
+    <h2>CHI TIẾT PHIẾU NHẬP KHO THÀNH PHẨM</h2>
+    <div class="form-item">
+        <asp:Label ID="lbMa" runat="server" Text="Mã phiếu nhập"></asp:Label>
+        <asp:Label ID="lbMaPN" runat="server" Text=""></asp:Label>
+    </div>
+    
+    <div class="form-item">
+        <asp:Label ID="lbKho" runat="server" Text="Kho"></asp:Label>
+        <asp:Label ID="lbKhoTP" runat="server" Text=""></asp:Label>
+    </div>
+
+    <div>
+        <asp:GridView ID="gridDSChiTiet" runat="server" AutoGenerateColumns="False" 
+            AllowPaging="True" AllowSorting="True">
+            <Columns>
+                <asp:BoundField HeaderText="Mã sản phẩm" />
+                <asp:BoundField HeaderText="Tên sản phẩm" />
+                <asp:BoundField HeaderText="Số lượng" />
+            </Columns>
+        </asp:GridView>
+    </div>
+</asp:Content>

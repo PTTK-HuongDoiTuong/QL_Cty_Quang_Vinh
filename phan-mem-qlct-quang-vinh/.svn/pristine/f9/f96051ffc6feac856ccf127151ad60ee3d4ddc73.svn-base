@@ -1,0 +1,60 @@
+﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="DatCoc.aspx.cs" Inherits="PhanMemQLCTQuangVinh.QLBoPhan_TiepXucKH.DatCoc" %>
+<%@ Register assembly="AjaxControlToolkit" namespace="AjaxControlToolkit" tagprefix="cc1" %>
+<asp:Content ID="Content1" ContentPlaceHolderID="HeadContent" runat="server">
+</asp:Content>
+<asp:Content ID="Content2" ContentPlaceHolderID="MainContent" runat="server">
+    <h2>
+        PHIẾU ĐẶT CỌC<asp:ScriptManager ID="ScriptManager1" runat="server">
+        </asp:ScriptManager>
+    </h2>
+    <div>
+        <asp:Label ID="lbMaDH" runat="server" Text="Mã Đơn Hàng: "></asp:Label>
+        <asp:TextBox ID="txtMaDH" runat="server"></asp:TextBox>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp; &nbsp;
+        <asp:Label ID="lbMaKH" runat="server" Text="Mã Khách Hàng: "></asp:Label>
+        <asp:TextBox ID="txtMaKH" runat="server"></asp:TextBox>
+    </div>
+    <div>
+    </div>
+    <div>
+        <asp:Label ID="lbTenKH" runat="server" Text="Tên Khách Hàng: "></asp:Label>
+        <asp:TextBox ID="txtTenKH" runat="server"></asp:TextBox>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;<asp:Label ID="lbTongTien" runat="server" Text="Tổng Tiền ĐH: "></asp:Label>
+        <asp:TextBox ID="txtTong" runat="server"></asp:TextBox>
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</div>
+    <div>
+    </div>
+    <div>
+        &nbsp;<asp:Label ID="lbMaNV" runat="server" Text="Mã Nhân Viên: "></asp:Label>
+        <asp:TextBox ID="txtNhanVien" runat="server" Width="152px"></asp:TextBox>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;<asp:Label ID="lbDatCoc" runat="server" 
+            Text="Tiền Đặt Cọc: "></asp:Label>
+        <asp:TextBox ID="txtDatCoc" runat="server"></asp:TextBox>
+    </div>
+    <div>
+        <div>
+        </div>
+        <div>
+&nbsp;<asp:Label ID="lbNgayThanhToan" runat="server" Text="Ngày Đặt Cọc: "></asp:Label>
+            <asp:TextBox ID="txtNgayThanhToan" runat="server"></asp:TextBox>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;<asp:Label 
+                ID="lbHanTT" runat="server" Text="Hạn Thanh Toán: "></asp:Label>
+            <asp:TextBox ID="txtHanTT" runat="server"></asp:TextBox>
+    
+            <cc1:CalendarExtender ID="txtHanTT_CalendarExtender" Format="dd.MM.yyyy"  
+            PopupButtonID="ibtHanTT" runat="server" 
+                BehaviorID="txtHanTT_CalendarExtender" TargetControlID="txtHanTT">
+            </cc1:CalendarExtender>
+    
+            <asp:ImageButton ID="ibtHanTT" runat="server" Height="36px" 
+            ImageUrl="~/Images/calendar.jpg" Width="69px" />
+        </div>
+        <br />
+    </div>
+    <asp:Button ID="btbLuu" runat="server" Text="Lưu" onclick="btbLuu_Click" />
+    <asp:Button ID="btnHuy" runat="server" Text="Hủy" onclick="btnHuy_Click" />
+    <br />
+    <div>
+    </div>
+</asp:Content>

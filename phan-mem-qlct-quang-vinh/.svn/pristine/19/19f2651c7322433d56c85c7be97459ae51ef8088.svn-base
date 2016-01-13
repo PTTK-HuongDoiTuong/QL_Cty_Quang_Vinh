@@ -1,0 +1,207 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Web;
+using System.Web.UI;
+using System.Web.UI.WebControls;
+using PhanMemQLCTQuangVinh.DAO;
+using PhanMemQLCTQuangVinh.DTO;
+
+namespace PhanMemQLCTQuangVinh.QLSanPham
+{
+    public partial class NhapThanhPham_BPSX : System.Web.UI.Page
+    {
+
+        List<DTOSanPham> dsThanhPhamChon;
+        DAO_Entity daoEntities = new DAO_Entity();
+        
+        protected void Page_Load(object sender, EventArgs e)
+        {
+            if (IsPostBack == false)
+            {
+                try
+                {
+                    if (Request.QueryString["maDH"] != null)
+                    {
+                        string date = DateTime.Now.ToString("dd/MM/yyyy");
+                        Ngay.Text = date;
+                        string maDH = Request.QueryString["maDH"].ToString();
+                        List<DTOChiTietDH> dsTP = daoEntities.LayDSChiTietDH(maDH);
+                        gridDSTP.DataSource = dsTP;
+                        gridDSTP.DataBind();
+
+                        lbMaDH.Text = dsTP[0].dtoDH.MaDH;
+                    }
+                    
+                }
+                catch (Exception)
+                {
+                    Response.Write("<script>alert('Loi tai du lieu!')</script>");
+                }                          
+            }
+            
+        }
+
+
+        protected void btnTim_Click(object sender, EventArgs e)
+        {
+            DAOSanPham daoSP = new DAOSanPham();
+            List<DTOSanPham> kqTim = daoSP.TimTPTheoTen(txtTim.Text.Trim());
+            gridDSTP.DataSource = kqTim;
+            gridDSTP.DataBind();
+        }
+
+        protected void btnTaiLai_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                
+                List<DTOSanPham> dsTP = daoEntities.TaoDSSP();
+                gridDSTP.DataSource = dsTP;
+                gridDSTP.DataBind();                
+            }
+            catch (Exception)
+            {
+                Response.Write("<script>alert('Loi tai du lieu!')</script>");
+            }
+        }
+
+        protected void gridDSTP_RowCommand(object sender, GridViewCommandEventArgs e)
+        {
+            if (e.CommandName == "themThanhPham")
+            {
+                //TextBox txt1 = (TextBox)gridDSTP.Rows[Convert.ToInt32(e.CommandArgument)].FindControl("txtSLThuc");
+                GridViewRow row = (GridViewRow)(((LinkButton)e.CommandSource).NamingContainer);
+                TextBox txtSLThuc = (TextBox)row.FindControl("txtSLThuc");
+                Label lb = (Label)row.FindControl("lbTenTP");
+                TextBox txtSLGiao = (TextBox)row.FindControl("txtSLGiao");
+
+                int maThanhPham = int.Parse(e.CommandArgument.ToString());
+                int soluongThuc = int.Parse(txtSLThuc.Text);
+                int soluongGiao = int.Parse(txtSLGiao.Text);
+                string tenTP = lb.Text;
+
+                if (Session["dsThanhPhamChon"] == null)
+                {
+                    dsThanhPhamChon = new List<DTOSanPham>();
+                    Session["dsThanhPhamChon"] = dsThanhPhamChon;
+                }
+
+                bool trangthai = false;
+                foreach (DTOSanPham t in dsThanhPhamChon)
+                {
+                    if (t.MaSP == maThanhPham)
+                    {
+                        t.soluong += soluongThuc;
+                        trangthai = true;
+                        break;
+                    }
+                }
+                if (trangthai == false)
+                {
+                    DTOSanPham tp = new DTOSanPham();
+                    tp.MaSP = maThanhPham;
+                    tp.TenSP = tenTP;
+                    //tp.soluong = soluong;
+                    //tp.soluongGiao = int.Parse(lbSoluongGiao.Text);
+                    tp.soluongGiao = 10;
+                    dsThanhPhamChon.Add(tp);
+                }
+
+            }
+        }
+
+       
+
+
+        protected void gridDSChon_RowCommand(object sender, GridViewCommandEventArgs e)
+        {
+            if (e.CommandName == "xoaThanhPhamChon")
+            {
+                
+                int maTP = int.Parse(e.CommandArgument.ToString());
+                foreach (DTOSanPham t in dsThanhPhamChon)
+                {
+                    if (t.MaSP == maTP)
+                    {
+                        dsThanhPhamChon.Remove(t);
+                        break;
+                    }
+                }                
+            }
+        }
+
+        protected void btnLuu_Click(object sender, EventArgs e)
+        {
+            DAOSanPham daoSanPham = new DAOSanPham();
+            DAOPhieuNhapThanhPham daoPhieuNhap = new DAOPhieuNhapThanhPham();
+            if (Request.QueryString["maDH"] != null)
+            {
+
+
+            }
+            string ngayTao = Ngay.Text;
+            //int maDH = int.Parse(Request.QueryString["maDH"].ToString());
+            string maDH = lbMaDH.Text;
+            string maGiao = txtMaGiao.Text;
+            string ngayGiao = txtNgayGiao.Text;
+            string nguoiGiao = txtNgGiao.Text;
+            string nguoiNhan = txtNgNhan.Text;
+            string maPN = DateTime.Now.ToString("yyyyMMddHHmmss");
+            DTONhapTP dtoNhapTP = new DTONhapTP();
+
+            dtoNhapTP.MaNTP = maPN;
+            dtoNhapTP.MaPhieuGiao = txtMaGiao.Text;
+            dtoNhapTP.MaDH = maDH;
+            dtoNhapTP.NgayTao = ngayTao;
+            dtoNhapTP.NgayGiao = ngayGiao;
+            dtoNhapTP.NguoiGiao = nguoiGiao;
+            dtoNhapTP.NguoiNhan = nguoiNhan;
+
+            if (daoPhieuNhap.ThemPhieuNhap(dtoNhapTP))
+            {
+
+                foreach (GridViewRow dong in gridDSTP.Rows)
+                {
+                    TextBox txtSLThuc = (TextBox)dong.FindControl("txtSLThuc");
+                    Label lbMaSP = (Label)dong.FindControl("lbMaSP");
+                    TextBox txtSLGiao = (TextBox)dong.FindControl("txtSLGiao");
+                    int MaSP = int.Parse(lbMaSP.Text);
+                    int SoLuongThuc = 0;
+                    int soluongGiao = 0;
+                    int.TryParse(txtSLThuc.Text, out SoLuongThuc);
+                    int.TryParse(txtSLGiao.Text, out soluongGiao);
+                    DTOChiTietNhapTP dtoCTNhap = new DTOChiTietNhapTP();
+                    dtoCTNhap.maNTP = maPN;
+                    dtoCTNhap.maSP = MaSP;
+                    dtoCTNhap.SoLuongGiao = soluongGiao;
+                    dtoCTNhap.SoLuongThuc = SoLuongThuc;
+
+                    daoPhieuNhap.ThemCTPhieuNhap(dtoCTNhap);
+                    daoSanPham.capNhatSoLuong(SoLuongThuc, MaSP);
+
+                    //xử lý sự cố
+                    Label lbKhongDat = (Label)dong.FindControl("lbKhongDat");
+                    if (SoLuongThuc < soluongGiao)
+                    {
+                        int khongDat = soluongGiao - SoLuongThuc;
+                        lbKhongDat.Text = khongDat.ToString();
+                        daoPhieuNhap.ThemXuLySuCo(maPN, MaSP, khongDat);
+                    }
+                    else
+                    {
+                        lbKhongDat.Text = "0";
+                    }
+                }
+                int soluongSPTrongDonHang = 0, soluongSPDaNhap = 0;
+                soluongSPTrongDonHang = daoPhieuNhap.LayTongSoLuongTrongDonHang(maDH);
+                soluongSPDaNhap = daoPhieuNhap.LayTongSoLuongTrongPhieuNhap(maDH);
+                if (soluongSPDaNhap == soluongSPTrongDonHang)
+                {
+                    daoPhieuNhap.capNhatTrangThai(maDH, "Đã Sản Xuất");
+                }
+                Response.Redirect("~/QLBoPhan_ThanhPham/QLPhieuNhapTP/DSDonHang(DangXL).aspx");
+            }
+        }
+    }
+}

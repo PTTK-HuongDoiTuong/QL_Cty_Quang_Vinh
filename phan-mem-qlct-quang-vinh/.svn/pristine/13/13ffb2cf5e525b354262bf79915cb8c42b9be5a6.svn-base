@@ -1,0 +1,47 @@
+﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="DangNhap.aspx.cs" Inherits="PhanMemQLCTQuangVinh.GUI.DangNhap" %>
+<asp:Content ID="Content1" ContentPlaceHolderID="HeadContent" runat="server">
+    <style type="text/css">
+        .style4
+        {
+        }
+    </style>
+</asp:Content>
+<asp:Content ID="Content3" ContentPlaceHolderID="MainContent" runat="server">
+    <table id="table2" style="width:100%;">
+        <tr>
+            <td colspan="3">
+                <h2 align="center">ĐĂNG NHẬP TÀI KHOẢN</h2></td>
+        </tr>
+        <tr>
+            <td class="style4">
+                Tên Đăng Nhập:</td>
+            <td colspan="2">
+                <asp:TextBox ID="tbTenDN" runat="server" Width="194px"></asp:TextBox>
+            </td>
+        </tr>
+        <tr>
+            <td class="style4">
+                Mật Khẩu:</td>
+            <td colspan="2">
+                <asp:TextBox ID="tbMK" runat="server" TextMode="Password" Width="199px"></asp:TextBox>
+            </td>
+        </tr>
+        <tr>
+            <td class="style4">
+                &nbsp;</td>
+            <td>
+                <asp:Button ID="btDangNhap" runat="server" Text="Đăng Nhập" 
+                    onclick="btDangNhap_Click" />
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            </td>
+            <td rowspan="2">
+                &nbsp;</td>
+        </tr>
+        <tr>
+            <td class="style4" colspan="2">
+                <asp:Label ID="lbTBLoi" runat="server" 
+                    Text="Tên Đăng Nhập và Mật Khẩu không đúng" ForeColor="Red"></asp:Label>
+            </td>
+        </tr>
+    </table>
+</asp:Content>

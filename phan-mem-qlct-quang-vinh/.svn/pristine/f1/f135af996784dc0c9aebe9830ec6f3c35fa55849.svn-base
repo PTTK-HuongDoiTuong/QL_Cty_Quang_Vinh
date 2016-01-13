@@ -1,0 +1,31 @@
+﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="ThemSanPham.aspx.cs" Inherits="PhanMemQLCTQuangVinh.QLSanPham.ThemSanPham" %>
+<asp:Content ID="Content1" ContentPlaceHolderID="HeadContent" runat="server">
+</asp:Content>
+<asp:Content ID="Content2" ContentPlaceHolderID="MainContent" runat="server">
+    <h2>Thêm sản phẩm</h2>
+
+    <asp:Label ID="lbLoi" CssClass="message-error" runat="server" Text=""></asp:Label>
+
+    <div class="form-add-customer form-content clearfix">
+        <div class="form-item">
+            <asp:Label ID="lbTenSP" runat="server" Text="Tên sản phẩm *" AssociatedControlID="txtTenSP"></asp:Label>
+            <asp:TextBox ID="txtTenSP" runat="server"></asp:TextBox>
+        </div>
+       
+        <div class="form-item">
+            <asp:Label ID="lbLoaiSP" runat="server" Text="Loại" AssociatedControlID="ddLoaiSP"></asp:Label>
+            <asp:DropDownList ID="ddLoaiSP" runat="server">
+            </asp:DropDownList>
+        </div>
+
+         <div class="form-item">
+            <asp:Label ID="lbGiaSP" runat="server" Text="Giá *" AssociatedControlID="txtGiaSP"></asp:Label>
+            <asp:TextBox ID="txtGiaSP" runat="server"></asp:TextBox>
+        </div>
+
+        <div class="form-item form-action">
+            <asp:Button ID="btnLuu" runat="server" Text="Lưu" />
+            <input type="reset" value="Huỷ" />
+        </div>
+    </div>
+</asp:Content>

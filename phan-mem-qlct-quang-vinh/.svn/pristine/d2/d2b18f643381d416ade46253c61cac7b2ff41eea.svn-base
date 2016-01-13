@@ -1,0 +1,54 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Web;
+using System.Web.UI;
+using System.Web.UI.WebControls;
+using PhanMemQLCTQuangVinh.DAO;
+using PhanMemQLCTQuangVinh.DTO;
+using System.Data;
+
+namespace PhanMemQLCTQuangVinh.QLBoPhan_ThanhPham.QuanLyQuanNo_BH
+{
+    public partial class ThanhToan_BH : System.Web.UI.Page
+    {
+        protected void Page_Load(object sender, EventArgs e)
+        {
+            if (IsPostBack == false)
+            {
+                string maDH = Request.QueryString["MaDH"].ToString();
+                DAO_Entity daoDH = new DAO_Entity();
+                DTODonDatHang dtoDH = daoDH.LayDHTheoMa(maDH);
+                txtMaDH.Text = dtoDH.MaDH.ToString();
+                txtMaKH.Text = dtoDH.MaKH.ToString();
+                txtTenKH.Text = dtoDH.TenKH.ToString();
+                txtTongTien.Text = dtoDH.CongNoDH.ToString();
+                txtNgayTT.Text = DateTime.Now.ToShortDateString();
+            }
+
+
+        }
+
+        protected void btnLuu_Click(object sender, EventArgs e)
+        {
+            DTOCongNoBanHang dto = new DTOCongNoBanHang();
+            dto.MaDH = int.Parse(txtMaDH.Text);
+            dto.MaKH = int.Parse(txtMaKH.Text);
+            dto.MaNV = int.Parse(txtMaNV.Text);
+            dto.NgayTraNo = Convert.ToDateTime(txtNgayTT.Text);
+            dto.TienTT = int.Parse(txtTienTT.Text);
+
+            DAO_Entity dao = new DAO_Entity();
+            dao.ThemCongNoBH(dto);
+
+            DTODonDatHang dtodh = new DTODonDatHang();
+            dtodh.MaDH = txtMaDH.Text;
+            int tong = int.Parse(txtTongTien.Text);
+            int no = int.Parse(txtTienTT.Text);
+            dtodh.CongNoDH = tong - no;
+            dao.CapNhatCongNo(dtodh);
+
+            Response.Redirect("~/QLBoPhan_ThanhPham/QuanLyQuanNo_BH/DanhSachCongNo_BH.aspx");
+        }
+    }
+}

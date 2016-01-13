@@ -1,0 +1,238 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Web;
+using PhanMemQLCTQuangVinh.DTO;
+using System.Data;
+using System.Data.SqlClient;
+
+namespace PhanMemQLCTQuangVinh.DAO
+{
+    public class DAOSanPham
+    {
+        KetNoiCSDL ketnoi;
+        public DAOSanPham()
+        {
+            ketnoi = new KetNoiCSDL();
+        }
+
+        //Lay du lieu tu database hien thi ra bang
+        public DataTable LayDLSP()
+        {
+            string lenh = "select * from SanPham";
+            ketnoi.TaoKetNoi();
+            DataTable bang = new DataTable();
+            try
+            {
+                ketnoi.LenhKetNoi = new SqlCommand(lenh, ketnoi.KetNoi);
+                ketnoi.TichHopCSDL = new SqlDataAdapter(ketnoi.LenhKetNoi); //???
+                ketnoi.TichHopCSDL.Fill(bang);
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+            finally
+            {
+                ketnoi.DongKetNoi();
+            }
+            return bang;
+        }
+
+        //Tao danh sach san pham
+        public List<DTO.DTOSanPham> TaoDSSP()
+        {
+            List<DTO.DTOSanPham> dssp=new List<DTOSanPham>();
+            string lenh = "select * from SanPham, LoaiSP where SanPham.maloai = loaiSP.maloai";
+            ketnoi.TaoKetNoi();
+            DataTable bang = new DataTable();
+            try
+            {
+                ketnoi.LenhKetNoi = new SqlCommand(lenh, ketnoi.KetNoi);
+                ketnoi.TichHopCSDL = new SqlDataAdapter(ketnoi.LenhKetNoi);
+                ketnoi.TichHopCSDL.Fill(bang);
+                foreach(DataRow dongDL in bang.Rows)
+                {
+                    DTO.DTOSanPham dtosp =new DTO.DTOSanPham(dongDL);
+                    dssp.Add(dtosp);
+
+                }
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+            finally
+            {
+                ketnoi.DongKetNoi();
+            }
+            return dssp;
+        }
+
+        //Them sp
+        public bool ThemSanPham(DTOSanPham dtoSP)
+        {
+            bool ketqua = false;
+            ketnoi.TaoKetNoi();
+            try
+            {
+                string lenh = "insert into SanPham(MaSP, TenSP, LoaiSP, GiaSP, Soluong) values(@masp, @tensp, @loaisp, @giasp, @soluong)";
+                ketnoi.LenhKetNoi = new SqlCommand(lenh, ketnoi.KetNoi);
+
+                ketnoi.LenhKetNoi.Parameters.Add("@masp", SqlDbType.Int);
+                ketnoi.LenhKetNoi.Parameters.Add("@tensp", SqlDbType.NVarChar);
+                ketnoi.LenhKetNoi.Parameters.Add("@loaisp", SqlDbType.Int);
+                ketnoi.LenhKetNoi.Parameters.Add("@giasp", SqlDbType.Int);
+                ketnoi.LenhKetNoi.Parameters.Add("@soluong", SqlDbType.Int);
+
+                ketnoi.LenhKetNoi.Parameters["@masp"].Value = dtoSP.MaSP;
+                ketnoi.LenhKetNoi.Parameters["@tensp"].Value = dtoSP.TenSP;
+                ketnoi.LenhKetNoi.Parameters["@loaisp"].Value = dtoSP.dtoLoaiSP.MaLSP;
+                ketnoi.LenhKetNoi.Parameters["@giasp"].Value = dtoSP.Gia;
+                ketnoi.LenhKetNoi.Parameters["@soluong"].Value = dtoSP.soluong;
+
+                if (ketnoi.LenhKetNoi.ExecuteNonQuery() != 0)
+                    ketqua = true;
+            }
+            catch (Exception)
+            {
+
+            }
+            finally 
+            {
+                ketnoi.DongKetNoi();
+            }
+            return ketqua;
+        }
+
+        //Lấy TT loai sp do vao listbox
+        public List<DTOLoaiSP> LayDSLSP()
+        {
+            List<DTOLoaiSP> dsLSP = new List<DTOLoaiSP>();
+            string lenh = "select * from LoaiSP";
+            ketnoi.TaoKetNoi();
+            DataTable bang = new DataTable();
+            try
+            {
+                ketnoi.LenhKetNoi = new SqlCommand(lenh, ketnoi.KetNoi);
+                ketnoi.TichHopCSDL = new SqlDataAdapter(ketnoi.LenhKetNoi);
+                ketnoi.TichHopCSDL.Fill(bang);
+                foreach (DataRow dongDL in bang.Rows)
+                {
+                    DTOLoaiSP dtoLSP = new DTOLoaiSP(dongDL);
+                    dsLSP.Add(dtoLSP);
+                }
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+            finally
+            {
+                ketnoi.DongKetNoi();
+            }
+            return dsLSP;
+        }
+
+        public List<DTOSanPham> TimTPTheoTen(string tenTim)
+        {
+            List<DTOSanPham> dsTim = new List<DTOSanPham>();
+            string lenh = "Select * from SanPham SP, LoaiSP LSP where SP.MaLoai=LSP.MaLoai and SP.TenSP like @tenSP";
+            ketnoi.TaoKetNoi();
+            DataTable bang = new DataTable();
+            try
+            {
+                ketnoi.LenhKetNoi = new SqlCommand(lenh, ketnoi.KetNoi);
+                ketnoi.LenhKetNoi.Parameters.Add("@tenSP", SqlDbType.NVarChar);
+                ketnoi.LenhKetNoi.Parameters["@tenSP"].Value = "%" + tenTim + "%";
+
+                ketnoi.TichHopCSDL = new SqlDataAdapter(ketnoi.LenhKetNoi);
+                ketnoi.TichHopCSDL.Fill(bang);
+                foreach (DataRow dongDL in bang.Rows)
+                {
+                    DTOSanPham dtoSP = new DTOSanPham(dongDL);
+                    dsTim.Add(dtoSP);
+                }
+            }
+            catch (Exception)
+            {
+
+            }
+            finally
+            {
+                ketnoi.DongKetNoi();
+            }
+            return dsTim;
+        }
+
+        // Sua TT san pham
+        public bool SuaSanPham(DTOSanPham dtoSP)
+        {
+            bool ketqua = false;
+            ketnoi.TaoKetNoi();
+            try
+            {
+                string lenh = "update SanPham set TenSP= @tensp, Soluong = @soluong, maloai = @maloai, gia = @gia where masp=@masp";
+                ketnoi.LenhKetNoi = new SqlCommand(lenh, ketnoi.KetNoi);
+
+                ketnoi.LenhKetNoi.Parameters.Add("@masp", SqlDbType.Int);
+                ketnoi.LenhKetNoi.Parameters.Add("@tensp", SqlDbType.NVarChar);
+                ketnoi.LenhKetNoi.Parameters.Add("@soluong", SqlDbType.Int);
+                ketnoi.LenhKetNoi.Parameters.Add("@gia", SqlDbType.Int);
+                ketnoi.LenhKetNoi.Parameters.Add("@maloai", SqlDbType.Int);
+
+                ketnoi.LenhKetNoi.Parameters["@masp"].Value = dtoSP.MaSP;
+                ketnoi.LenhKetNoi.Parameters["@tensp"].Value = dtoSP.TenSP;
+                ketnoi.LenhKetNoi.Parameters["@soluong"].Value = dtoSP.soluong;
+                ketnoi.LenhKetNoi.Parameters["@gia"].Value = dtoSP.Gia;
+                ketnoi.LenhKetNoi.Parameters["@malkh"].Value = dtoSP.dtoLoaiSP.MaLSP;
+
+                if (ketnoi.LenhKetNoi.ExecuteNonQuery() != 0)
+                    ketqua = true;
+            }
+            catch (Exception)
+            {
+
+            }
+            finally
+            {
+                ketnoi.DongKetNoi();
+            }
+            return ketqua;
+        }
+
+        public bool capNhatSoLuong(int soluong, int maSP)
+        {
+            bool ketqua = false;
+            ketnoi.TaoKetNoi();
+            try
+            {
+                string lenh = "update SanPham set Soluong = @soluong where masp=@masp";
+                ketnoi.LenhKetNoi = new SqlCommand(lenh, ketnoi.KetNoi);
+
+                ketnoi.LenhKetNoi.Parameters.Add("@masp", SqlDbType.Int);
+                ketnoi.LenhKetNoi.Parameters.Add("@soluong", SqlDbType.Int);
+
+                ketnoi.LenhKetNoi.Parameters["@masp"].Value = maSP;
+                ketnoi.LenhKetNoi.Parameters["@soluong"].Value = soluong;
+
+                if (ketnoi.LenhKetNoi.ExecuteNonQuery() != 0)
+                    ketqua = true;
+            }
+            catch (Exception)
+            {
+
+            }
+            finally
+            {
+                ketnoi.DongKetNoi();
+            }
+            return ketqua;
+        }
+
+        
+    }
+}

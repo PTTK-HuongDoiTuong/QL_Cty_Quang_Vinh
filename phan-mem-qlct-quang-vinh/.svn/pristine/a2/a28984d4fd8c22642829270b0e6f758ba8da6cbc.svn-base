@@ -1,0 +1,39 @@
+﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="ThanhToan_BH.aspx.cs" Inherits="PhanMemQLCTQuangVinh.QLBoPhan_ThanhPham.QuanLyQuanNo_BH.ThanhToan_BH" %>
+<asp:Content ID="Content1" ContentPlaceHolderID="HeadContent" runat="server">
+</asp:Content>
+<asp:Content ID="Content2" ContentPlaceHolderID="MainContent" runat="server">
+<h2>PHIẾU THANH TOÁN</h2>
+<div>
+    <asp:Label ID="Label1" runat="server" Text="Mã Đơn Hàng: "></asp:Label>
+    <asp:TextBox ID="txtMaDH" runat="server" Width="72px"></asp:TextBox>
+</div>
+<div>
+    <asp:Label ID="Label2" runat="server" Text="Mã Khách Hàng: "></asp:Label>
+    &nbsp;<asp:TextBox ID="txtMaKH" runat="server"></asp:TextBox>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+    <asp:Label ID="Label5" runat="server" Text="Tên Khách Hàng: "></asp:Label>
+    <asp:TextBox ID="txtTenKH" runat="server"></asp:TextBox>
+</div>
+    <div>
+        <asp:Label ID="lbTongTien" runat="server" Text="Tiền Phải Trả: "></asp:Label>
+        <asp:TextBox ID="txtTongTien" runat="server"></asp:TextBox>
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+    <asp:Label ID="Label10" runat="server" Text="Tiền Trả Nợ: "></asp:Label>
+    <asp:TextBox ID="txtTienTT" runat="server"></asp:TextBox>
+    </div>
+<div>
+    &nbsp;
+        <asp:Label ID="Label8" runat="server" Text="Ngày Trả Nợ: "></asp:Label>
+        <asp:TextBox ID="txtNgayTT" runat="server"></asp:TextBox>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<asp:Label ID="Label7" runat="server" Text="Mã Nhân Viên: "></asp:Label>
+    <asp:TextBox ID="txtMaNV" runat="server"></asp:TextBox>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</div>
+<div>
+</div>
+<div class="form-item form-action">
+        <asp:Button ID="btnLuu" runat="server" onclick="btnLuu_Click" Text="Lưu" />
+        <input type="reset" value="Huỷ" />
+    </div>
+</asp:Content>
+

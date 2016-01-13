@@ -1,0 +1,33 @@
+﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="SuaSanPham.aspx.cs" Inherits="PhanMemQLCTQuangVinh.QLSanPham.SuaSanPham" %>
+<asp:Content ID="Content1" ContentPlaceHolderID="HeadContent" runat="server">
+</asp:Content>
+<asp:Content ID="Content2" ContentPlaceHolderID="MainContent" runat="server">
+     <h2>SỬA SẢN PHẨM</h2>
+    <asp:Label ID="lbLoi" CssClass="message-error" runat="server" Text=""></asp:Label>
+
+    <div class="form-content form-edit-custom">
+        <div class="form-item">
+            <asp:Label ID="lbMaSP" runat="server" Text="Mã sản phẩm" AssociatedControlID="lbMa"></asp:Label>
+            <asp:Label ID="lbMa" runat="server" Text=""></asp:Label>
+        </div>
+        <div class="form-item">
+            <asp:Label ID="lbTenSP" runat="server" Text="Tên sản phẩm" AssociatedControlID="txtTenSP"></asp:Label>
+            <asp:TextBox ID="txtTenSP" runat="server"></asp:TextBox>
+        </div>    
+        
+        <div class="form-item">
+            <asp:Label ID="lbLoaiSP" runat="server" Text="Loại sản phẩm" AssociatedControlID="ddLoaiSP"></asp:Label>
+            <asp:DropDownList ID="ddLoaiSP" runat="server" >            
+            </asp:DropDownList>   
+        </div>
+
+        <div class="form-item">
+            <asp:Label ID="lbGia" runat="server" Text="Giá *" AssociatedControlID="txtGia"></asp:Label>
+            <asp:TextBox ID="txtGia" runat="server"></asp:TextBox>
+        </div>
+        <div class="form-item form-action">
+            <asp:Button ID="btnLuu" runat="server" Text="Lưu"/>
+            <asp:HyperLink ID="HyperLink1" runat="server" NavigateUrl="~/QLSanPham/SanPham.aspx">Về danh sách sản phẩm</asp:HyperLink>
+        </div>
+    </div>
+</asp:Content>

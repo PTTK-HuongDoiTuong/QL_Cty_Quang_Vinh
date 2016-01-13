@@ -1,0 +1,46 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Web;
+using System.Web.UI;
+using System.Web.UI.WebControls;
+using PhanMemQLCTQuangVinh.DAO;
+
+namespace PhanMemQLCTQuangVinh.GUI
+{
+    public partial class DoiMatKhau : System.Web.UI.Page
+    {
+        DAOUser DB = new DAOUser();
+        protected void Page_Load(object sender, EventArgs e)
+        {
+
+            if ((bool)Session["DaDangNhap"] == false)
+            {
+                Session["MaTB"] = 1;
+                Response.Redirect("~/GUI/ThongBao.aspx");
+            }
+            lbTBLoi.Visible = false;
+        }
+
+        protected void btTDMK_Click(object sender, EventArgs e)
+        {
+            bool Mk = DB.ThayDoiMK((string)Session["TenDangNhap"], tbMKM.Text);
+            if (Mk == true)
+            {
+                lbTBLoi.Visible = true;
+                lbTBLoi.Text = "Thay Đổi Thành Công";
+            }
+            else
+            {
+                lbTBLoi.Visible = true;
+            }
+        }
+
+        protected void btThoat_Click(object sender, EventArgs e)
+        {
+            Response.Redirect("~/GUI/TrangChu.aspx");
+        }
+
+
+    }
+}

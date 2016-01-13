@@ -1,0 +1,90 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Web;
+using System.Web.UI;
+using System.Web.UI.WebControls;
+using PhanMemQLCTQuangVinh.DAO;
+using PhanMemQLCTQuangVinh.DTO;
+
+namespace PhanMemQLCTQuangVinh.QLVatLieu
+{
+    public partial class VatLieu : System.Web.UI.Page
+    {
+        protected void Page_Load(object sender, EventArgs e)
+        {
+            try
+            {
+                DAO_Entity daovl = new DAO_Entity();
+                List<DTOVatLieu> dsVL = daovl.TaoDSVL();
+                GridDSVL.DataSource = dsVL;
+                GridDSVL.DataBind();
+                    
+            }
+            catch (Exception)
+            {
+
+                Response.Write("<script>alert('Loi tai du lieu!')</script>");
+            }
+            ThemVL.Visible = false;
+
+        }
+
+        protected void Button1_Click(object sender, EventArgs e)
+        {
+            ThemVL.Visible = true;
+        }
+        protected void btLuu_Click(object sender, EventArgs e)
+        {
+            DTOVatLieu dtoVL = new DTOVatLieu();
+
+            
+
+            dtoVL.TenVL = txttenvl.Text;    // Get value from Textbox
+            DTONhacungcap dtoNCC = new DTONhacungcap();
+            dtoNCC.MaNCC = int.Parse(ddNCC.SelectedValue);  // Get value from Dropdownlist
+            dtoNCC.TenNCC = ddNCC.SelectedItem.ToString();  // Get value from ListItem
+            dtoVL.dtoNCC = dtoNCC;
+            dtoVL.Donvi = txtdonvi.Text;    // Get value from Textbox
+            dtoVL.Gia = decimal.Parse(txtgia.Text); // Get value from Textbox
+            dtoVL.Soluong = int.Parse(txtsl.Text);  // Get value from Textbox
+
+            
+
+            if (KiemTraNhap() == "")
+            {
+                //bllVL.ThemVatlieu(dtoVL);
+                Response.Redirect("VatLieu.aspx");
+            }
+            else
+            {
+                lbloi.Text = KiemTraNhap();
+            }
+
+        }
+        private string KiemTraNhap()
+        {
+            string kq = "";
+            //if (txtMaKH.Text.Trim() == "")
+            //{
+            //    kq += "Mã ko đc rỗng!";
+            //}
+            if (txttenvl.Text.Trim() == "")
+            {
+                kq += "Vui lòng nhập tên!";
+            }
+            if (txtdonvi.Text.Trim() == "")
+            {
+                kq += "Vui lòng nhập đơn vị";
+            }
+            /*
+            if (txtgia.Text.Trim () == "")
+            {
+                kq += "Vui lòng nhập giá";
+            }
+             */
+
+            return kq;
+        }
+    }
+}

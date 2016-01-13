@@ -1,0 +1,24 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Web;
+using System.Web.UI;
+using System.Web.UI.WebControls;
+using PhanMemQLCTQuangVinh.DAO;
+using PhanMemQLCTQuangVinh.DTO;
+
+namespace PhanMemQLCTQuangVinh.QLBoPhan_VatLieu.NhapVatLieuNCC
+{
+    public partial class DanhSachPDVL : System.Web.UI.Page
+    {
+        DAOPhieuNhapVatLieu_NCC daoEntities = new DAOPhieuNhapVatLieu_NCC();
+        protected void Page_Load(object sender, EventArgs e)
+        {
+            if (!IsPostBack)
+            {
+                gridDSPhieuDat.DataSource = daoEntities.LayDSPhieuDatVatLieu_NCC();
+                gridDSPhieuDat.DataBind();
+            }
+        }
+    }
+}

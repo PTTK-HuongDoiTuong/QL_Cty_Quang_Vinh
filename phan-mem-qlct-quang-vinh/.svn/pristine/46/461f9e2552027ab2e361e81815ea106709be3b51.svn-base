@@ -1,0 +1,43 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Web;
+using System.Web.UI;
+using System.Web.UI.WebControls;
+using PhanMemQLCTQuangVinh.DAO;
+using PhanMemQLCTQuangVinh.DTO;
+using System.Data;
+using System.Data.SqlClient;
+
+namespace PhanMemQLCTQuangVinh.QLBoPhan_ThanhPham.QLPhieuNhapTP
+{
+    public partial class XLSuCoNhapThanhPham : System.Web.UI.Page
+    {
+        protected void Page_Load(object sender, EventArgs e)
+        {
+            if (IsPostBack == false)
+            {
+                string ma = Request.QueryString["MaPhieuGiao"].ToString();
+                DAO_Entity daoKH = new DAO_Entity();
+                DTOPhieuNhapThanhPham dtoxc = daoKH.LayXuLySucoTheoMa(ma);
+
+                lbMaPG.Text = dtoxc.MaPhieuGiao.ToString();
+                lbMaPhieuNhap.Text = dtoxc.MaPNTP.ToString();
+            }
+
+            try
+            {
+
+                string ma = lbMaPhieuNhap.Text;
+                DAO_Entity daokh = new DAO_Entity();
+                List<XuLySuCoNSP> dssc = daokh.LayDSXuLySuCo(ma);
+                GridView1.DataSource = dssc;
+                GridView1.DataBind();
+            }
+            catch (Exception)
+            {
+                Response.Write("<script>alert('Loi tai du lieu!')</script>");
+            }
+        }
+    }
+}

@@ -1,0 +1,49 @@
+﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="DSPhieuNhapTP.aspx.cs" Inherits="PhanMemQLCTQuangVinh.QLPhieuNhapTP.DSPhieuNhapTP" %>
+<asp:Content ID="Content1" ContentPlaceHolderID="HeadContent" runat="server">
+</asp:Content>
+<asp:Content ID="Content2" ContentPlaceHolderID="MainContent" runat="server">
+    <h2>DANH SÁCH PHIẾU NHẬP THÀNH PHẨM</h2>
+
+    <div class="search">
+        <asp:TextBox ID="txtTim" runat="server" placeholder="Nhập mã cần tìm..."></asp:TextBox>
+        <asp:Button ID="btnTim" runat="server" Text="Tìm" />
+    </div>
+
+    <asp:GridView ID="gridDSNhapTP" runat="server" AllowPaging="True" 
+    AllowSorting="True" AutoGenerateColumns="False">
+        <Columns>
+            <asp:TemplateField HeaderText="Mã phiếu nhập">
+                <EditItemTemplate>
+                    <asp:TextBox ID="TextBox1" runat="server" Text='<%# Bind("MaPNTP") %>'></asp:TextBox>
+                </EditItemTemplate>
+                <ItemTemplate>
+                    <asp:Label ID="Label1" runat="server" Text='<%# Bind("MaPNTP") %>'></asp:Label>
+                </ItemTemplate>
+            </asp:TemplateField>
+            <asp:TemplateField HeaderText="Ngày tạo">
+                <EditItemTemplate>
+                    <asp:TextBox ID="TextBox2" runat="server" Text='<%# Bind("NgayTao") %>'></asp:TextBox>
+                </EditItemTemplate>
+                <ItemTemplate>
+                    <asp:Label ID="Label2" runat="server" Text='<%# Bind("NgayTao") %>'></asp:Label>
+                </ItemTemplate>
+            </asp:TemplateField>
+            <asp:TemplateField HeaderText="Xem chi tiết">
+                <ItemTemplate>
+                    <asp:HyperLink ID="HyperLink1" runat="server" 
+                        NavigateUrl="~/QLPhieuNhapTP/ThemNhapThanhPham_BPSX.aspx" Text="Xem"></asp:HyperLink>
+                </ItemTemplate>
+            </asp:TemplateField>
+            <asp:TemplateField HeaderText="Xử lý sự cố">
+                <ItemTemplate>
+                    <asp:HyperLink ID="HyperLink2" runat="server" 
+                        NavigateUrl="~/QLPhieuNhapTP/PhieuXuLySuCoNhapTP.aspx" Text="Xử lý"></asp:HyperLink>
+                </ItemTemplate>
+            </asp:TemplateField>
+        </Columns>
+    </asp:GridView>
+
+    <div class="form-action">
+        <asp:HyperLink ID="HyperLink1" runat="server" NavigateUrl="~/QLPhieuNhapTP/ThemNhapThanhPham_BPSX.aspx">Tạo phiếu nhập</asp:HyperLink>
+    </div>
+</asp:Content>

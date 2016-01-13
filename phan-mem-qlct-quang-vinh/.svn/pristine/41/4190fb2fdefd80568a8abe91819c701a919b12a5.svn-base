@@ -1,0 +1,33 @@
+﻿<%@ Page Title="Thêm khách hàng" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="ThemKhachHang.aspx.cs" Inherits="PhanMemQLCTQuangVinh.QLKhachHang.ThemKhachHang" %>
+<asp:Content ID="Content1" ContentPlaceHolderID="HeadContent" runat="server">
+</asp:Content>
+<asp:Content ID="Content2" ContentPlaceHolderID="MainContent" runat="server">
+    <h2>Thêm khách hàng</h2>
+
+    <asp:Label ID="lbLoi" CssClass="message-error" runat="server" Text=""></asp:Label>
+
+    <div class="form-add-customer form-content clearfix">
+        <div class="form-item">
+            <asp:Label ID="lbTenKH" runat="server" Text="Tên khách hàng *" AssociatedControlID="txtTenKH"></asp:Label>
+            <asp:TextBox ID="txtTenKH" runat="server"></asp:TextBox>
+        </div>
+        <div class="form-item">
+            <asp:Label ID="lbDiaChi" runat="server" Text="Địa chỉ *" AssociatedControlID="txtDiaChi"></asp:Label>
+            <asp:TextBox ID="txtDiaChi" runat="server"></asp:TextBox>
+        </div>
+        <div class="form-item">
+            <asp:Label ID="lbSdt" runat="server" Text="Số điện thoại *" AssociatedControlID="txtSdt"></asp:Label>
+            <asp:TextBox ID="txtSdt" runat="server"></asp:TextBox>
+        </div>
+        <div class="form-item">
+            <asp:Label ID="lbLoaiKH" runat="server" Text="Loại" AssociatedControlID="ddLoaiKH"></asp:Label>
+            <asp:DropDownList ID="ddLoaiKH" runat="server">
+            </asp:DropDownList>
+        </div>
+        <div class="form-item form-action">
+            <asp:Button ID="btnLuu" runat="server" Text="Lưu" onclick="btnLuu_Click" />
+            <input type="reset" value="Huỷ" />
+        </div>
+    </div>
+
+</asp:Content>

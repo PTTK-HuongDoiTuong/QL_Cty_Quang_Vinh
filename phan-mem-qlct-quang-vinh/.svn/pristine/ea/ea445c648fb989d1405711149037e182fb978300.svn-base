@@ -1,0 +1,79 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Web;
+using System.Web.UI;
+using System.Web.UI.WebControls;
+using PhanMemQLCTQuangVinh.DAO;
+using PhanMemQLCTQuangVinh.DTO;
+using System.Data;
+
+namespace PhanMemQLCTQuangVinh.QLBoPhan_ThanhPham.QuanLyQuanNo_BH
+{
+    public partial class TraHang : System.Web.UI.Page
+    {
+        protected void Page_Load(object sender, EventArgs e)
+        {
+            if (IsPostBack == false)
+            {
+                string maDH = Request.QueryString["MaDH"].ToString();
+                DAO_Entity daoDH = new DAO_Entity();
+                DTODonDatHang dtoDH = daoDH.LayDonHangTraHang(maDH);
+                lbMaDH.Text = dtoDH.MaDH.ToString();
+                lbMaKH.Text = dtoDH.MaKH.ToString();
+                lbTenKH.Text = dtoDH.TenKH.ToString();
+            }
+
+            try
+            {
+                string madh = Request.QueryString["MaDH"].ToString();
+                DAO_Entity daokh = new DAO_Entity();
+                List<DTOChiTietDH> dtoct = daokh.LayDSChiTietDH(madh);
+                GridView2.DataSource = dtoct;
+                GridView2.DataBind();
+
+
+                List<DTOXLSC_HDBH> dto = daokh.LayDSXLSL_HDBH(madh);
+                GridView1.DataSource = dto;
+                GridView1.DataBind();
+
+            }
+            catch
+            {
+                Response.Write("<script>alert('Loi tai du lieu!')</script>");
+            }
+
+        }
+
+        protected void Button1_Click(object sender, EventArgs e)
+        {
+            Response.Redirect("~/QLBoPhan_ThanhPham/QuanLyQuanNo_BH/DanhSachCongNo_BH.aspx");
+        }
+
+        protected void DropDownList1_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            int masp = int.Parse(ddTP.SelectedValue);
+            DAO_Entity daoKH = new DAO_Entity();
+            DTOSanPhamCT dtosp = daoKH.LayGiaSPTheoMaCT(masp);
+            lbgiaSP.Text = dtosp.Gia.ToString();
+        }
+
+        protected void btnThem_Click(object sender, EventArgs e)
+        {
+            DTOXLSC_HDBH dtoct = new DTOXLSC_HDBH();
+            dtoct.MaDH = lbMaDH.Text;
+            DTOSanPham dtoSP = new DTOSanPham();
+            dtoct.MaSP = int.Parse(ddTP.SelectedValue);
+            dtoct.Soluong = int.Parse(txtSoLuong.Text);
+
+            dtoct.ThanhTien = int.Parse(lbgiaSP.Text) * int.Parse(txtSoLuong.Text);
+
+            DAO_Entity daokh = new DAO_Entity();
+            daokh.ThemXuLyTraHang(dtoct);
+
+            Response.Redirect(Request.RawUrl);
+
+        }
+
+    }
+}

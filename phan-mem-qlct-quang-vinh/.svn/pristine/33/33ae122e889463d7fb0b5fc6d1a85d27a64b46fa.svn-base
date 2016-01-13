@@ -1,0 +1,78 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Web;
+using System.Web.UI;
+using System.Web.UI.WebControls;
+using PhanMemQLCTQuangVinh.DTO;
+using PhanMemQLCTQuangVinh.DAO;
+using System.Text.RegularExpressions;
+
+namespace PhanMemQLCTQuangVinh.QLKhachHang
+{
+    public partial class ThemKhachHang : System.Web.UI.Page
+    {
+        //load DL loai KH vo dropdownlist 29/03/2015
+        protected void Page_Load(object sender, EventArgs e)
+        {
+            if (IsPostBack == false)
+            {
+                List<DTOLoaiKH> dsLKH = new List<DTOLoaiKH>();
+                DAOKhachHang daoKH = new DAOKhachHang();
+                dsLKH = daoKH.LayDSLKH();
+                //hien thi ten loai KH ra dropdownlist
+                ddLoaiKH.DataTextField = "TenLKH";//TenLKH la thuoc tinh trong DTOLoaiKH
+                //truyen dl theo ma loai 
+                ddLoaiKH.DataValueField = "MaLKH";//MaLKH la thuoc tinh trong DTOLoaiKH
+                ddLoaiKH.DataSource = dsLKH;
+                ddLoaiKH.DataBind();
+            }
+        }
+
+        protected void btnLuu_Click(object sender, EventArgs e)
+        {
+            DTOKhachHang dtoKH = new DTOKhachHang();
+            
+            dtoKH.TenKH = txtTenKH.Text;
+            dtoKH.DiaChiKH = txtDiaChi.Text;
+            dtoKH.SdtKH = txtSdt.Text;
+
+            DTOLoaiKH dtoLoaiKH = new DTOLoaiKH();
+            dtoLoaiKH.MaLKH = int.Parse(ddLoaiKH.SelectedValue);
+            dtoLoaiKH.TenLKH = ddLoaiKH.SelectedItem.ToString();
+            dtoKH.dtoLoaiKH = dtoLoaiKH;
+
+            DAOKhachHang daoKH = new DAOKhachHang();
+            if (KiemTraNhap() == "")
+            {
+                daoKH.ThemKhachHang(dtoKH);
+                Response.Redirect("KhachHang.aspx");
+            }
+            else
+            {
+                lbLoi.Text = KiemTraNhap();
+            }
+            
+        }
+
+        private string KiemTraNhap()
+        {
+            string kq = "";
+            DAOKhachHang daoKH = new DAOKhachHang();
+            if (txtTenKH.Text.Trim() == "")
+            {
+                kq += "Vui lòng nhập tên!";
+            }
+            if (txtDiaChi.Text.Trim() == "")
+            {
+                kq += "<br>Vui lòng nhập địa chỉ!";
+            }
+            //Match dt = Regex.Match(txtSdt.Text, @"^\d{9,11}$");
+            if (daoKH.KiemTraDienThoai(txtSdt.Text.Trim()) == false)
+            {
+                kq += "<br>Số điện thoại không đúng!";
+            }
+            return kq;
+        }
+    }
+}

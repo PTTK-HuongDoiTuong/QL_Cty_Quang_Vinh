@@ -1,0 +1,107 @@
+﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="ChiTietDH.aspx.cs" Inherits="PhanMemQLCTQuangVinh.QLBoPhan_TiepXucKH.ChiTietDH" %>
+<asp:Content ID="Content1" ContentPlaceHolderID="HeadContent" runat="server">
+</asp:Content>
+<asp:Content ID="Content2" ContentPlaceHolderID="MainContent" runat="server">
+    <h2>
+        Chi TiẾt Đơn Hàng</h2>
+    <asp:SqlDataSource ID="SqlDataSource2" runat="server" 
+        ConnectionString="<%$ ConnectionStrings:CSDLQuangVinh %>" 
+        SelectCommand="SELECT * FROM [SanPham]"></asp:SqlDataSource>
+    &nbsp;&nbsp;&nbsp;
+        <asp:Label ID="lbmact" runat="server" Text="Mã Đơn Hàng:  "></asp:Label>
+&nbsp;
+        <asp:TextBox ID="txtMaDH" runat="server" Height="29px" Width="56px"></asp:TextBox>
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+    <asp:Label ID="lbMaKH" runat="server" Text="Mã KH: "></asp:Label>
+&nbsp;&nbsp;
+    <asp:TextBox ID="txtMaKH" runat="server" Width="49px"></asp:TextBox>
+    <br />
+    <div id="chitiet" runat=server>
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<br />
+    &nbsp;
+        <asp:Label ID="lbThanhPham" runat="server" Text="Thành Phẩm: "  AssociatedControlID="ddTP"></asp:Label>
+    <asp:DropDownList ID="ddTP" runat="server" DataSourceID="SqlDataSource2" 
+        DataTextField="TenSP" DataValueField="MaSP" 
+        onselectedindexchanged="ddTP_SelectedIndexChanged" AppendDataBoundItems="True">
+        <asp:ListItem Value="-1">---Chọn Thành Phẩm -----</asp:ListItem>
+    </asp:DropDownList>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<asp:Label 
+        ID="lbGia" runat="server"></asp:Label>
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+        <asp:Label ID="lbSoLuong" runat="server" Text="Số Lượng: "></asp:Label>
+    <asp:TextBox ID="txtSl" runat="server"></asp:TextBox>
+        <br />
+        <br />
+        <br />
+    <asp:Button ID="btbThemCT" runat="server" Text="Thêm Chi Tiết ĐH" 
+        onclick="btbThemCT_Click" />
+    </div>
+    <br />
+    <asp:GridView ID="GridView1" runat="server" AutoGenerateColumns="False">
+        <Columns>
+            <asp:TemplateField HeaderText="Mã ĐH">
+                <EditItemTemplate>
+                    <asp:TextBox ID="TextBox1" runat="server" Text='<%# Bind("MaDH") %>'></asp:TextBox>
+                </EditItemTemplate>
+                <ItemTemplate>
+                    <asp:Label ID="Label1" runat="server" Text='<%# Bind("MaDH") %>'></asp:Label>
+                </ItemTemplate>
+            </asp:TemplateField>
+            <asp:TemplateField HeaderText="MaSP">
+                <EditItemTemplate>
+                    <asp:TextBox ID="TextBox2" runat="server" Text='<%# Bind("MaSP") %>'></asp:TextBox>
+                </EditItemTemplate>
+                <ItemTemplate>
+                    <asp:Label ID="Label2" runat="server" Text='<%# Bind("MaSP") %>'></asp:Label>
+                </ItemTemplate>
+            </asp:TemplateField>
+            <asp:TemplateField HeaderText="Tên SP">
+                <EditItemTemplate>
+                    <asp:TextBox ID="TextBox3" runat="server" Text='<%# Bind("TenSP") %>'></asp:TextBox>
+                </EditItemTemplate>
+                <ItemTemplate>
+                    <asp:Label ID="Label3" runat="server" Text='<%# Bind("TenSP") %>'></asp:Label>
+                </ItemTemplate>
+            </asp:TemplateField>
+            <asp:TemplateField HeaderText="Giá SP">
+                <EditItemTemplate>
+                    <asp:TextBox ID="TextBox4" runat="server" Text='<%# Bind("Gia") %>'></asp:TextBox>
+                </EditItemTemplate>
+                <ItemTemplate>
+                    <asp:Label ID="Label4" runat="server" Text='<%# Bind("Gia") %>'></asp:Label>
+                </ItemTemplate>
+            </asp:TemplateField>
+            <asp:TemplateField HeaderText="Số Lượng">
+                <EditItemTemplate>
+                    <asp:TextBox ID="TextBox5" runat="server" Text='<%# Bind("SoLuong") %>'></asp:TextBox>
+                </EditItemTemplate>
+                <ItemTemplate>
+                    <asp:Label ID="Label5" runat="server" Text='<%# Bind("SoLuong") %>'></asp:Label>
+                </ItemTemplate>
+            </asp:TemplateField>
+            <asp:TemplateField HeaderText="Thành Tiền">
+                <EditItemTemplate>
+                    <asp:TextBox ID="ThanhTien" runat="server" Text='<%# Bind("ThanhTien") %>'></asp:TextBox>
+                </EditItemTemplate>
+                <ItemTemplate>
+                    <asp:Label ID="Label6" runat="server" Text='<%# Bind("ThanhTien") %>'></asp:Label>
+                </ItemTemplate>
+            </asp:TemplateField>
+        </Columns>
+    </asp:GridView>
+    <br />&nbsp;&nbsp;
+        <asp:Button ID="btLuuCt" runat="server" Text="Lưu" 
+        onclick="btLuuCt_Click" />
+    <asp:Button ID="btQuayVe" runat="server" onclick="btQuayVe_Click" 
+        Text="Quay Về" />
+    &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<asp:Label 
+        ID="lbSumSP" runat="server" Text="Tổng Sản Phẩm:"></asp:Label>
+    &nbsp;<asp:TextBox ID="txtSumSP" runat="server" Height="33px" Width="79px"></asp:TextBox>
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<asp:Label 
+        ID="lbTong" runat="server" Text="Tổng Tiền: "></asp:Label>
+    &nbsp;&nbsp;<asp:TextBox 
+        ID="txtTongtien" runat="server" Height="31px" Width="87px"></asp:TextBox>
+    <br />
+    &nbsp;
+</asp:Content>

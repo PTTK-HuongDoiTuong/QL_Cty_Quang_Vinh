@@ -1,0 +1,41 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Web;
+using System.Web.UI;
+using System.Data;
+using System.Web.UI.WebControls;
+using PhanMemQLCTQuangVinh.DAO;
+
+namespace PhanMemQLCTQuangVinh.GUI
+{
+    public partial class DangNhap : System.Web.UI.Page
+    {
+        DAOUser DB = new DAOUser();
+        protected void Page_Load(object sender, EventArgs e)
+        {
+            lbTBLoi.Visible = false;
+
+        }
+
+        protected void TextBox1_TextChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        protected void btDangNhap_Click(object sender, EventArgs e)
+        {
+            bool ketqua = DB.KTDangNhap(tbTenDN.Text, tbMK.Text);
+            if (ketqua == true)
+            {
+                Session["DaDangNhap"] = true;
+                Session["TenDangNhap"] = tbTenDN.Text;
+                Session["HoTen"]= DB.LayHoTen(tbTenDN.Text);
+                Response.Redirect("~/GUI/TrangChu.aspx");
+            }
+            else
+                lbTBLoi.Visible = true;
+
+        }
+    }
+}

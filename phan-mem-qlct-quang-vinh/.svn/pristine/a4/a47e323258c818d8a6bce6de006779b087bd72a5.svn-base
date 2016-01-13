@@ -1,0 +1,243 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Web;
+using System.Web.UI;
+using System.Web.UI.WebControls;
+using PhanMemQLCTQuangVinh.DAO;
+using PhanMemQLCTQuangVinh.DTO;
+using System.Data;
+using System.Data.SqlClient;
+using PhanMemQLCTQuangVinh.BLL;
+
+namespace PhanMemQLCTQuangVinh.QLBoPhan_TiepXucKH
+{
+    public partial class TaoDonHang : System.Web.UI.Page
+    {
+        DAO_Entity daoEntities = new DAO_Entity();
+        List<DTOChiTietDH> dsThanhPhamChon;
+        protected void Page_Load(object sender, EventArgs e)
+        {
+            try
+            {              
+
+                hienThanhPhamChon();
+
+                if (Session["dsThanhPhamChon"] == null)
+                {
+                    lbDSChon.Visible = false;
+                    lbTextTongTien.Visible = false;
+                    lbTongTien.Visible = false;
+                    lbDSSanpham.Visible = false;
+                    grDSSanPham.Visible = false;
+                    gridDSChon.Visible = false;
+                }
+                else
+                {
+                    lbDSChon.Visible = true;
+                    lbTextTongTien.Visible = true;
+                    lbTongTien.Visible = true;
+                    lbDSSanpham.Visible = true;
+                    grDSSanPham.Visible = true;
+                    gridDSChon.Visible = true;
+                }
+            }
+            catch (Exception)
+            {
+                Response.Write("<script>alert('Loi tai du lieu!')</script>");
+            }
+
+            if (IsPostBack == false)//postback=false: chưa có sự kiện click trên web
+            {
+                // request: yeu cau. QueryString: lay gia tri cua chuoi tren duong dan
+                string makh = Request.QueryString["MaKH"].ToString();
+                DAO_Entity daoEntities = new DAO_Entity();
+                DTOKhachHang dtoKH = daoEntities.LayTTKHTheoMa(makh);
+
+                lbMaKH.Text = dtoKH.MaKH.ToString();
+                txtTen.Text = dtoKH.TenKH;
+                txtNgayTaoDH.Text = DateTime.Now.ToShortDateString();
+
+                
+                List<DTODonDatHang> dsdh = daoEntities.LayDSDHTheoMa(makh);
+                GridViewDH.DataSource = dsdh;
+                GridViewDH.DataBind();
+                grDSSanPham.DataSource = daoEntities.TaoDSSP();
+                grDSSanPham.DataBind();
+            }
+        }
+
+
+        protected void btnThemDh_Click(object sender, EventArgs e)
+        {
+            lbDSSanpham.Visible = true;
+            grDSSanPham.Visible = true;
+        }
+
+        protected void Button1_Click(object sender, EventArgs e)
+        {
+            Response.Redirect("~/QLBoPhan_TiepXucKH/DSKhachHang.aspx");
+        }
+
+        protected void grDSSanPham_RowCommand(object sender, GridViewCommandEventArgs e)
+        {
+            if (e.CommandName == "themThanhPham")
+            {
+                //TextBox txt1 = (TextBox)grDSSanPham.Rows[Convert.ToInt32(e.CommandArgument)].FindControl("txtSLThuc");
+                
+                GridViewRow row = (GridViewRow)(((LinkButton)e.CommandSource).NamingContainer);
+                int rowindex = row.RowIndex;
+                TextBox txtSoluong = (TextBox)row.FindControl("txtSLThuc");
+                Label lbTenTP = (Label)row.FindControl("lbTenSP");
+                Label lbGia = (Label)row.FindControl("lbGia");
+
+                int maThanhPham = int.Parse(e.CommandArgument.ToString());
+                int soluong = 0;
+                int.TryParse(txtSoluong.Text, out soluong);
+                int gia = int.Parse(lbGia.Text);
+                string tenTP = lbTenTP.Text;
+
+                lbDSChon.Visible = true;
+                lbTextTongTien.Visible = true;
+                lbTongTien.Visible = true;
+                lbDSSanpham.Visible = true;
+                grDSSanPham.Visible = true;
+                gridDSChon.Visible = true;
+
+                if (Session["dsThanhPhamChon"] == null)
+                {
+                    dsThanhPhamChon = new List<DTOChiTietDH>();
+                    Session["dsThanhPhamChon"] = dsThanhPhamChon;
+                }
+                else
+                {
+                    dsThanhPhamChon = (List<DTOChiTietDH>)Session["dsThanhPhamChon"];                    
+                }
+
+                bool trangthai = false;
+                foreach (DTOChiTietDH t in dsThanhPhamChon)
+                {
+                    if (t.dtoSP.MaSP == maThanhPham)
+                    {
+                        t.SoLuong += soluong;
+                        trangthai = true;
+                        break;
+                    }
+                }
+                if (trangthai == false)
+                {
+                    DTOChiTietDH tp = new DTOChiTietDH();
+                    DTOSanPham dtoSP = daoEntities.TimTheoMaSP(maThanhPham);
+                    tp.dtoSP = dtoSP;
+                    tp.SoLuong = soluong;
+                    tp.ThanhTien = gia * soluong;
+                    dsThanhPhamChon.Add(tp);
+                }
+
+                hienThanhPhamChon();
+                TongTien();
+            }
+        }
+
+        protected void gridDSChon_RowCommand(object sender, GridViewCommandEventArgs e)
+        {
+            if (e.CommandName == "xoaThanhPhamChon")
+            {
+                dsThanhPhamChon = (List<DTOChiTietDH>)Session["dsThanhPhamChon"];
+                int maTP = int.Parse(e.CommandArgument.ToString());
+                foreach (DTOChiTietDH t in dsThanhPhamChon)
+                {
+                    if (t.dtoSP.MaSP == maTP)
+                    {
+                        dsThanhPhamChon.Remove(t);
+                        break;
+                    }
+                }
+                hienThanhPhamChon();
+                TongTien();
+            }
+        }
+
+        private void TongTien()
+        {
+            int tongtien = 0;
+            dsThanhPhamChon = (List<DTOChiTietDH>)Session["dsThanhPhamChon"];
+            foreach (DTOChiTietDH row in dsThanhPhamChon)
+            {
+                tongtien += row.ThanhTien;
+            }
+            lbTongTien.Text = tongtien.ToString();
+        }
+
+        public void hienThanhPhamChon()
+        {
+
+            if (Session["dsThanhPhamChon"] == null)
+            {
+
+                gridDSChon.Visible = false;
+            }
+            else
+            {
+                dsThanhPhamChon = (List<DTOChiTietDH>)Session["dsThanhPhamChon"];
+                lbDSChon.Visible = true;
+
+                gridDSChon.DataSource = dsThanhPhamChon;
+                gridDSChon.DataBind();
+            }
+        }
+
+        protected void btnLuu_Click(object sender, EventArgs e)
+        {
+            dsThanhPhamChon = (List<DTOChiTietDH>)Session["dsThanhPhamChon"];
+            try
+            {
+                string maDH = DateTime.Now.ToString("yyyyMMddHHmmss");
+                DTODonDatHang dtoDonHang = new DTODonDatHang();
+                int tongtien = 0;
+                foreach (DTOChiTietDH row in dsThanhPhamChon)
+                {
+                    tongtien += row.ThanhTien;
+                }
+                dtoDonHang.MaDH = maDH;
+                dtoDonHang.MaKH = int.Parse(lbMaKH.Text);
+                dtoDonHang.NgayTaoDH = Convert.ToDateTime(txtNgayTaoDH.Text);
+                dtoDonHang.NgayGH = Convert.ToDateTime(txtGiao.Text);
+
+                dtoDonHang.TongTien = 0;
+                dtoDonHang.CongNoDH = 0;
+                dtoDonHang.TongTien = tongtien;
+                dtoDonHang.CongNoDH = tongtien;
+                dtoDonHang.TrangThai = "Chưa Xử Lý";
+
+                if (daoEntities.ThemDonHang(dtoDonHang))
+                {
+                    foreach(DTOChiTietDH dtoCTDH in dsThanhPhamChon)
+                    {
+                        dtoCTDH.MaDH = maDH;
+                        if (daoEntities.ThemChiTietDH(dtoCTDH))
+                        {
+                            Session["dsThanhPhamChon"] = null;
+                        }
+                    }
+                }
+                Response.Redirect(Request.RawUrl);
+            }
+            catch (Exception)
+            {
+                
+                throw;
+            }
+        }
+
+        protected void GridViewDH_PageIndexChanging(object sender, GridViewPageEventArgs e)
+        {
+            
+            string makh = Request.QueryString["MaKH"].ToString();
+            List<DTODonDatHang> dsdh = daoEntities.LayDSDHTheoMa(makh);
+            GridViewDH.PageIndex = e.NewPageIndex;
+            GridViewDH.DataSource = dsdh;
+            GridViewDH.DataBind();
+        }
+    }
+}

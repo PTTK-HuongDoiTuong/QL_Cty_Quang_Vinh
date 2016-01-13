@@ -1,0 +1,6 @@
+﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="ThongBao.aspx.cs" Inherits="PhanMemQLCTQuangVinh.GUI.ThongBao" %>
+<asp:Content ID="Content1" ContentPlaceHolderID="HeadContent" runat="server">
+</asp:Content>
+<asp:Content ID="Content3" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
+    <asp:Label ID="lbTB1" runat="server" Text="Label"></asp:Label>
+</asp:Content>

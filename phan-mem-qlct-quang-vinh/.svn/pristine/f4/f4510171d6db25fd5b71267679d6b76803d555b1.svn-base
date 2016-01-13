@@ -1,0 +1,47 @@
+﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="TraHang.aspx.cs" Inherits="PhanMemQLCTQuangVinh.QLBoPhan_ThanhPham.QuanLyQuanNo_BH.TraHang" %>
+<asp:Content ID="Content1" ContentPlaceHolderID="HeadContent" runat="server">
+</asp:Content>
+<asp:Content ID="Content2" ContentPlaceHolderID="MainContent" runat="server">
+    <h2>
+        PHIẾU Trả Hàng</h2>
+    <div>
+        <asp:Label ID="Label1" runat="server" Text="Mã Đơn Hàng: "></asp:Label>
+        <asp:Label ID="lbMaDH" runat="server"></asp:Label>
+    </div>
+    <div>
+        <asp:Label ID="Label2" runat="server" Text="Mã Khách Hàng: "></asp:Label>
+        <asp:Label ID="lbMaKH" runat="server"></asp:Label>
+        <br />
+        <asp:Label ID="Label5" runat="server" Text="Tên Khách Hàng: "></asp:Label>
+        <asp:Label ID="lbTenKH" runat="server"></asp:Label>
+    </div>
+    <div>
+        <asp:Label ID="Label7" runat="server" Text="Mã Nhân Viên: "></asp:Label>
+        <asp:TextBox ID="txtMaNV" runat="server"></asp:TextBox>
+        <br />
+        <div>
+            <h3>Danh Sách Trả Hàng </h3>
+            <p>
+                <asp:GridView ID="GridView1" runat="server" AutoGenerateColumns="False">
+                    <Columns>
+                        <asp:BoundField HeaderText="Mã Sản Phẩm" />
+                        <asp:BoundField HeaderText="Tên Sản Phẩm" />
+                        <asp:BoundField HeaderText="Giá" />
+                        <asp:BoundField HeaderText="Số Lượng" />
+                        <asp:BoundField HeaderText="Thành Tiền" />
+                    </Columns>
+                </asp:GridView>
+            </p>
+            <p>
+                <asp:Label ID="Label11" runat="server" Text="Tổng Tiền: "></asp:Label>
+                <asp:Label ID="lbTongTien" runat="server"></asp:Label>
+            </p> </div>
+        <div>
+        </div>
+    </div>
+    <div class="form-item form-action">
+        &nbsp;<asp:Button ID="btnLuu" runat="server" Text="Lưu" />
+        <asp:Button ID="Button1" runat="server" onclick="Button1_Click" 
+            Text="Quay Về" />
+    </div>
+</asp:Content>

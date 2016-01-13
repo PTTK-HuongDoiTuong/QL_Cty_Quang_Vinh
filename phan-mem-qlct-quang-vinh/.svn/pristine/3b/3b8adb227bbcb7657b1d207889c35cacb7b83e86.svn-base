@@ -1,0 +1,97 @@
+﻿<%@ Page Title="Trang chủ" Language="C#" MasterPageFile="~/Site.master" AutoEventWireup="true"
+    CodeBehind="Default.aspx.cs" Inherits="PhanMemQLCTQuangVinh._Default" %>
+
+<asp:Content ID="HeaderContent" runat="server" ContentPlaceHolderID="HeadContent">
+</asp:Content>
+<asp:Content ID="BodyContent" runat="server" ContentPlaceHolderID="MainContent">
+    <div class="main-component">
+        <h2>Chức năng chính</h2>
+        <div class="row row-first">
+            <div class="grid col-sm-4">
+                <div class="grid-inner">
+                    <i class="fa fa-recycle"></i>
+                    <h3>Tiếp nhận khách hàng</h3>
+                    <ul class="menu"> 
+                        <li>
+                            <asp:HyperLink ID="menuDH" runat="server" NavigateUrl='~/QLBoPhan_TiepXucKH/DSKhachHang.aspx'>Quản lý đơn hàng</asp:HyperLink>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <div class="grid col-sm-4">
+                <div class="grid-inner">
+                    <i class="fa fa-cog"></i>
+                    <h3>sản xuất</h3>
+                    <ul class="menu">
+                        <li>
+                            <asp:HyperLink ID="menuChamCong" runat="server" NavigateUrl=''>Xử lý nhận Vật Liệu Sản Xuất</asp:HyperLink>
+                        </li>
+                        <li>
+                            <asp:HyperLink ID="menuNVLSX" runat="server" NavigateUrl='~/'>Đặt Nguyên Vật Liệu Sản Xuất</asp:HyperLink>
+                        </li>
+                         <li>
+                            <asp:HyperLink ID="HyperLink1" runat="server" NavigateUrl='~/'>Xuất thành phẩm cho thủ kho thành phẩm</asp:HyperLink>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <div class="grid col-sm-4">
+                <div class="grid-inner">
+                    <i class="fa fa-cube"></i>
+                    <h3>Thủ kho nguyên vật liệu</h3>
+                    <ul class="menu">
+                        <li>
+                            <asp:HyperLink ID="menuNVL" runat="server" NavigateUrl=''>Xuất Nguyên Vật Liệu</asp:HyperLink>
+                        </li>
+                        <li>
+                            <asp:HyperLink ID="menuCongNo" runat="server" NavigateUrl=''>Quản lý công nợ_Nhà cung cấp</asp:HyperLink>
+                        </li>
+                          <li>
+                            <asp:HyperLink ID="HyperLink2" runat="server" NavigateUrl='~/QLBoPhan_VatLieu/NhapVatLieuNCC/DanhSachPDVL.aspx'>Nhập nguyên Vật Liệu_Nhà cung cấp</asp:HyperLink>
+                        </li>
+                        <li>
+                            <asp:HyperLink ID="HyperLink3" runat="server" NavigateUrl=''>Quản lý đặt Vật liệu_Nhà cung cấp</asp:HyperLink>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+         <div class="row row-last">
+            <div class="grid col-sm-4">
+                <div class="grid-inner">
+                    <i class="fa fa-cubes"></i>
+                    <h3>Thủ kho thành phẩm</h3>
+                    <ul class="menu">
+                        <li>
+                            <asp:HyperLink ID="menuSP" runat="server" NavigateUrl='~/QLBoPhan_ThanhPham/QLPhieuNhapTP/DSPhieuNhapTP.aspx'>Xử lý nhập thành phẩm</asp:HyperLink>
+                        </li>
+                        <li>
+                            <asp:HyperLink ID="menuCNBH" runat="server" NavigateUrl='~/QLBoPhan_ThanhPham/QuanLyQuanNo_BH/DanhSachCongNo_BH.aspx'>Quản lý công nợ bán hàng</asp:HyperLink>
+                        </li>
+                         <li>
+                            <asp:HyperLink ID="HyperLink4" runat="server" NavigateUrl='~/QLBoPhan_ThanhPham/QLPhanBoThanhPham/DanhSachDonHang.aspx'>Phân bổ thành phẩm</asp:HyperLink>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <div class="grid col-sm-4">
+                <div class="grid-inner">
+                    <i class="fa fa-cogs"></i>
+                    <h3>Quản trị hệ thống</h3>
+                    <ul class="menu">
+                         <li>
+                            <asp:HyperLink ID="menuTK" runat="server" NavigateUrl=''>Quản lý Người Dùng</asp:HyperLink>
+                        </li>
+                        <li>
+                            <asp:HyperLink ID="menuPhanQuyen" runat="server" NavigateUrl=''>Quản lý Khách hàng</asp:HyperLink>
+                        </li>
+                        <li>
+                            <asp:HyperLink ID="menuCauHinh" runat="server" NavigateUrl='~/QLBophan_Admin/QLCauHinhChung/TrangCauHinh.aspx'>Cấu hình</asp:HyperLink>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+           
+        </div>
+    </div>
+</asp:Content>

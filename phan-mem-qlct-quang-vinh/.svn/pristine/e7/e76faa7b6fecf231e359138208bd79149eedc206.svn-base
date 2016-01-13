@@ -1,0 +1,67 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Web;
+using System.Web.UI;
+using System.Web.UI.WebControls;
+using System.Data;
+using System.Data.SqlClient;
+using PhanMemQLCTQuangVinh.DTO;
+using PhanMemQLCTQuangVinh.DAO;
+using PhanMemQLCTQuangVinh.BLL;
+
+namespace PhanMemQLCTQuangVinh.QLBoPhan_ThanhPham.QLPhanBoThanhPham
+{
+    public partial class PhanBoThanhPham : System.Web.UI.Page
+    {
+        protected void Page_Load(object sender, EventArgs e)
+        {
+            if (IsPostBack == false)
+            {
+                string maDH = Request.QueryString["MaDH"].ToString();
+
+                DAO_Entity daoDH = new DAO_Entity();
+                DTODSDonHang dtoDH = daoDH.PhieuGiaoHang(maDH);
+                lbKH.Text = dtoDH.MaKH.ToString();
+                lbTenKhachHang.Text = dtoDH.TenKH.ToString();
+                lbngayLap.Text = DateTime.Now.ToShortDateString();
+                lbNgaydat.Text = dtoDH.NgayThanhToan.ToString("dd.MM.yyyy");
+                lbTong.Text = dtoDH.TongTien.ToString();
+                lbMaDonHang.Text = dtoDH.MaDH.ToString();
+
+            }
+
+            try
+            {
+                string madh = Request.QueryString["MaDH"].ToString();
+                DAO_Entity daokh = new DAO_Entity();
+                List<DTOXuLyPhieuGiao> dtoct = daokh.LayDSPhieuGiao(madh);
+                GridView1.DataSource = dtoct;
+                GridView1.DataBind();
+            }
+            catch
+            {
+                Response.Write("<script>alert('Loi tai du lieu!')</script>");
+            }
+
+        }
+
+        protected void btnLuu_Click(object sender, EventArgs e)
+        {
+            DTOHoaDonBH dto = new DTOHoaDonBH();
+            dto.MaHDBH = txtMaPG.Text;
+            dto.MaKH = int.Parse(lbKH.Text);
+            dto.NgayHDBH = Convert.ToDateTime(lbngayLap.Text);
+            dto.TongTien = int.Parse(lbTong.Text);
+
+            DAO_Entity dao = new DAO_Entity();
+            dao.ThemPhieuGiaoHang(dto);
+
+            string ma = lbMaDonHang.Text;
+            dao.CapNhatTrangThaiDH(ma);
+
+            Response.Redirect("~/QLBoPhan_ThanhPham/QLPhanBoThanhPham/DanhSachDonHang.aspx");
+
+        }
+    }
+}

@@ -1,0 +1,68 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Web;
+using System.Web.UI;
+using System.Web.UI.WebControls;
+using PhanMemQLCTQuangVinh.DAO;
+using PhanMemQLCTQuangVinh.DTO;
+
+namespace PhanMemQLCTQuangVinh.QLCauHinhNCC
+{
+    public partial class SuaNCC : System.Web.UI.Page
+    {
+        protected void Page_Load(object sender, EventArgs e)
+        {
+            if (IsPostBack == false)//postback=false: chưa có sự kiện click trên web
+            {
+                // request: yeu cau. QueryString: lay gia tri cua chuoi tren duong dan
+                string mancc = Request.QueryString["MaNCC"].ToString();
+                //hien thi chuoi len web
+                //Response.Write(maKH);
+                DAO_Entity daoncc = new DAO_Entity();
+                DTONhacungcap dtoncc = daoncc.LayThongTinNhaCungCap(mancc);
+                lbMa.Text = dtoncc.MaNCC.ToString();
+                txtTenNCC.Text = dtoncc.TenNCC;
+                txtSDT.Text = dtoncc.Sdt;
+                txtdiachi.Text = dtoncc.Diachi;
+            }
+        }
+
+        protected void btnLuu_Click(object sender, EventArgs e)
+        {
+            DTONhacungcap dtoncc = new DTONhacungcap();
+            dtoncc.MaNCC = int.Parse(lbMa.Text);
+            dtoncc.TenNCC = txtTenNCC.Text;
+            dtoncc.Sdt = txtSDT.Text;
+            dtoncc.Diachi = txtdiachi.Text;
+
+            DAO_Entity daoncc = new DAO_Entity();
+            if (KiemTraNhap() == "")
+            {
+                daoncc.capnhatdanhsach(dtoncc);
+                Response.Redirect("~/QLBophan_Admin/QLCauHinhNCC/NCC.aspx");
+            }
+            else
+            {
+                lbLoi.Text = KiemTraNhap();
+            }
+        }
+        private string KiemTraNhap()
+        {
+            string kq = "";
+            if (txtTenNCC.Text.Trim() == "")
+            {
+                kq += "Vui lòng nhập tên!";
+            }
+            if (txtSDT.Text.Trim() == "")
+            {
+                kq += "Vui lòng nhập SĐT!";
+            }
+            if (txtdiachi.Text.Trim() == "")
+            {
+                kq += "Vui lòng nhập Địa chỉ!";
+            }
+            return kq;
+        }
+    }
+}

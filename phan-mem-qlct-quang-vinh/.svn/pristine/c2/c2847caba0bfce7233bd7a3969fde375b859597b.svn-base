@@ -1,0 +1,202 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Web;
+using System.Web.UI;
+using System.Web.UI.WebControls;
+using PhanMemQLCTQuangVinh.DAO;
+using PhanMemQLCTQuangVinh.DTO;
+
+namespace PhanMemQLCTQuangVinh.QLSanPham
+{
+    public partial class NhapThanhPham_BPSX : System.Web.UI.Page
+    {
+
+        List<DTOSanPham> dsThanhPhamChon;
+        protected void Page_Load(object sender, EventArgs e)
+        {
+            if (IsPostBack == false)
+            {
+                try
+                {
+                    string date = DateTime.Now.ToString("dd-MM-yyyy");
+                    Ngay.Text = date;
+                    DAO_Entity daoSP = new DAO_Entity();
+                    List<DTOSanPham> dsTP = daoSP.TaoDSSP();
+                    gridDSTP.DataSource = dsTP;
+                    gridDSTP.DataBind();
+                }
+                catch (Exception)
+                {
+                    Response.Write("<script>alert('Loi tai du lieu!')</script>");
+                }                          
+            }
+            hienThanhPhamChon();
+        }
+
+
+        protected void btnTim_Click(object sender, EventArgs e)
+        {
+            DAOSanPham daoSP = new DAOSanPham();
+            List<DTOSanPham> kqTim = daoSP.TimTPTheoTen(txtTim.Text.Trim());
+            gridDSTP.DataSource = kqTim;
+            gridDSTP.DataBind();
+        }
+
+        protected void btnTaiLai_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                DAO_Entity daoSP = new DAO_Entity();
+                List<DTOSanPham> dsTP = daoSP.TaoDSSP();
+                gridDSTP.DataSource = dsTP;
+                gridDSTP.DataBind();                
+            }
+            catch (Exception)
+            {
+                Response.Write("<script>alert('Loi tai du lieu!')</script>");
+            }
+        }
+
+        protected void gridDSTP_RowCommand(object sender, GridViewCommandEventArgs e)
+        {
+            if (e.CommandName == "themThanhPham")
+            {
+                //TextBox txt1 = (TextBox)gridDSTP.Rows[Convert.ToInt32(e.CommandArgument)].FindControl("txtSLThuc");
+                GridViewRow row = (GridViewRow)(((LinkButton)e.CommandSource).NamingContainer);
+                TextBox txt = (TextBox)row.FindControl("txtSLThuc");
+                Label lb = (Label)row.FindControl("lbTenTP");
+                Label lbSoluongGiao = (Label)row.FindControl("lbSoluongGiao");
+
+                int maThanhPham = int.Parse(e.CommandArgument.ToString());
+                int soluong = int.Parse(txt.Text);
+                string tenTP = lb.Text;
+
+                if (Session["dsThanhPhamChon"] == null)
+                {
+                    dsThanhPhamChon = new List<DTOSanPham>();
+                    Session["dsThanhPhamChon"] = dsThanhPhamChon;
+                }
+
+                bool trangthai = false;
+                foreach (DTOSanPham t in dsThanhPhamChon)
+                {
+                    if (t.MaSP == maThanhPham)
+                    {
+                        t.soluong += soluong;
+                        trangthai = true;
+                        break;
+                    }
+                }
+                if (trangthai == false)
+                {
+                    DTOSanPham tp = new DTOSanPham();
+                    tp.MaSP = maThanhPham;
+                    tp.TenSP = tenTP;
+                    tp.soluong = soluong;
+                    //tp.soluongGiao = int.Parse(lbSoluongGiao.Text);
+                    tp.soluongGiao = 10;
+                    dsThanhPhamChon.Add(tp);
+                }
+
+                hienThanhPhamChon();
+            }
+        }
+
+        public void hienThanhPhamChon()
+        {
+
+            if (Session["dsThanhPhamChon"] == null)
+            {
+                gridDSChon.Visible = false;
+                lbDSChon.Visible = false;
+            }
+            else
+            {
+                dsThanhPhamChon = (List<DTOSanPham>)Session["dsThanhPhamChon"];
+                gridDSChon.Visible = true;
+                lbDSChon.Visible = true;
+
+                gridDSChon.DataSource = dsThanhPhamChon;
+                gridDSChon.DataBind();
+            }
+        }
+
+
+        protected void gridDSChon_RowCommand(object sender, GridViewCommandEventArgs e)
+        {
+            if (e.CommandName == "xoaThanhPhamChon")
+            {
+                
+                int maTP = int.Parse(e.CommandArgument.ToString());
+                foreach (DTOSanPham t in dsThanhPhamChon)
+                {
+                    if (t.MaSP == maTP)
+                    {
+                        dsThanhPhamChon.Remove(t);
+                        break;
+                    }
+                }
+                hienThanhPhamChon();
+            }
+        }
+
+        protected void btnLuu_Click(object sender, EventArgs e)
+        {
+            if (dsThanhPhamChon.Count > 0)
+            {
+                DAOSanPham daoSanPham = new DAOSanPham();
+                DAOPhieuNhapThanhPham daoPhieuNhap = new DAOPhieuNhapThanhPham();
+                if (Request.QueryString["maDH"] != null)
+                {
+                    
+                    
+                }
+                string ngayTao = Ngay.Text;
+                //int maDH = int.Parse(Request.QueryString["maDH"].ToString());
+                int maDH = int.Parse(txtMaDH.Text);
+                string ngayGiao = txtNgayGiao.Text;
+                string nguoiGiao = txtNgGiao.Text;
+                string nguoiNhan = txtNgNhan.Text;
+                string maPN = DateTime.Now.ToString("yyyyMMddHHmmss");
+                DTONhapTP dtoNhapTP = new DTONhapTP();
+                dtoNhapTP.MaNTP = maPN;
+                dtoNhapTP.MaDH = maDH;
+                dtoNhapTP.NgayTao = ngayTao;
+                dtoNhapTP.NgayGiao = ngayGiao;
+                dtoNhapTP.NguoiGiao = nguoiGiao;
+                dtoNhapTP.NguoiNhan = nguoiNhan;
+
+                if (daoPhieuNhap.ThemPhieuNhap(dtoNhapTP))
+                {
+
+                    int dem = 0;
+                    foreach (DTOSanPham row in dsThanhPhamChon)
+                    {
+                        int MaSP = row.MaSP;
+                        int SoLuong = row.soluong;
+                        int soluongGiao = row.soluongGiao;
+                        DTOChiTietNhapTP dtoCTNhap = new DTOChiTietNhapTP();
+                        dtoCTNhap.maNTP = maPN;
+                        dtoCTNhap.maSP = MaSP;
+                        dtoCTNhap.SoLuongGiao = soluongGiao;
+                        dtoCTNhap.SoLuongThuc = SoLuong;
+
+                        daoPhieuNhap.ThemCTPhieuNhap(dtoCTNhap);
+
+                        if (daoSanPham.capNhatSoLuong(SoLuong, MaSP))
+                            dem++;
+                    }
+                    if (dem == gridDSChon.Rows.Count)
+                    {
+                        Session["dsThanhPhamChon"] = null;
+                        dsThanhPhamChon.Clear();
+                    }
+                }
+
+                //else
+                //    Response.Redirect("/Default.aspx");
+            }
+        }
+    }
+}

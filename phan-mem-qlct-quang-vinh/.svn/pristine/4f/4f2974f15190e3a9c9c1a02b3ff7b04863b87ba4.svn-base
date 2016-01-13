@@ -1,0 +1,188 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Web;
+using System.Data;
+using System.Data.SqlClient;
+using System.Configuration;
+
+
+namespace PhanMemQLCTQuangVinh.DAO
+{
+    public class DAOUser
+    {
+        private string ChuoiKetNoi = ConfigurationManager.ConnectionStrings["CSDLQuangVinh"].ConnectionString;
+        SqlConnection ketnoi;
+
+         public bool KTDangNhap(string username, string pass)
+         {   
+             Moketnoi();
+             SqlCommand command = new SqlCommand("Select * from NguoiDung where TenDN=@tendn and MatKhau = @mk", ketnoi);
+             command.Parameters.Add("tendn",username);
+             command.Parameters.Add("mk", pass);
+
+                 SqlDataReader reader = command.ExecuteReader();
+
+                 bool ketqua = false;
+                 if (reader.HasRows == true)
+                     ketqua = true;
+                 Dongketnoi();
+            
+             return ketqua;
+
+         }
+
+         public bool KTTonTai(string username)
+         {
+             Moketnoi();
+             SqlCommand command = new SqlCommand("Select * from NguoiDung where TenDN=@tendn", ketnoi);
+             command.Parameters.Add("tendn", username);
+
+             SqlDataReader reader = command.ExecuteReader();
+
+             bool ketqua = false;
+             if (reader.HasRows == true)
+                 ketqua = true;
+             Dongketnoi();
+
+             return ketqua;
+
+         }
+         public string LayHoTen(string username)
+         {
+             Moketnoi();
+            SqlCommand command = new SqlCommand("Select HoTenuser from NguoiDung where TenDN='"+username+"'",ketnoi);
+            string HoTen;
+            HoTen = command.ExecuteScalar().ToString();
+            Dongketnoi();
+            return HoTen;
+         }
+         public int LayMaNhomQ(string username)
+         {
+             Moketnoi();
+             SqlCommand command = new SqlCommand("Select MaNhomQ from NguoiDung where TenDN='" + username + "'", ketnoi);
+             int MaNQ;
+             MaNQ = (int)command.ExecuteScalar();
+             Dongketnoi();
+             return MaNQ;
+         }
+         public DataTable LayDSUser()
+         {
+             DataTable bang = new DataTable();
+            
+             Moketnoi();
+             SqlCommand command = new SqlCommand("select * from NguoiDung", ketnoi);
+             SqlDataReader reader = command.ExecuteReader();
+             bang.Load(reader);
+             Dongketnoi();
+             return bang;
+         }
+         public DataTable LayMaNhomQ()
+         {
+             DataTable bang = new DataTable();
+
+             Moketnoi();
+             SqlCommand command = new SqlCommand("select MaNhomQ from NhomQuyen", ketnoi);
+             SqlDataReader reader = command.ExecuteReader();
+             bang.Load(reader);
+             Dongketnoi();
+             return bang;
+         }
+         public bool ThemUser(string tendn,string mk, string hoten, int manq)
+         {
+             bool Ketqua;
+             Moketnoi();
+             SqlCommand command = new SqlCommand("insert into NguoiDung values(N'"+tendn+"',N'"+mk+"',N'"+hoten+"',"+manq+")", ketnoi);
+             try
+             {
+                 command.ExecuteNonQuery();
+                 Ketqua = true;
+             }
+             catch
+             {
+                 
+                 Ketqua = false;
+             }
+             Dongketnoi();
+             return Ketqua;
+
+         }
+         public bool SuaUser(string tendn, string mk, string hoten, int manq)
+         {
+             bool Ketqua;
+             Moketnoi();
+             string sql = "update NguoiDung set MatKhau=@mk,  HoTenUser=@hoten, MaNhomQ=@manq where TenDN=@tendangnhap";
+             SqlCommand command = new SqlCommand(sql, ketnoi);
+             command.Parameters.Add("mk", mk);
+             command.Parameters.Add("hoten", hoten);
+             command.Parameters.Add("manq", manq);
+             command.Parameters.Add("tendangnhap", tendn);
+             try
+             {
+                 command.ExecuteNonQuery();
+                 Ketqua = true;
+             }
+             catch
+             {
+
+                 Ketqua = false;
+             }
+             Dongketnoi();
+             return Ketqua;
+
+         }
+         public bool XoaNguoiDung(string tendn)
+         {
+             bool Ketqua;
+             Moketnoi();
+             string lenh = "delete NguoiDung where TenDN=@tendangnhap";
+             SqlCommand command = new SqlCommand(lenh, ketnoi);
+             command.Parameters.Add("tendangnhap", tendn);
+             try
+             {
+                 command.ExecuteNonQuery();
+                 Ketqua = true;
+             }
+             catch
+             {
+
+                 Ketqua = false;
+             }
+             Dongketnoi();
+             return Ketqua;
+
+         }
+         public bool ThayDoiMK(string tendn, string mk)
+         {
+             bool Ketqua;
+             Moketnoi();
+             string sql = "update NguoiDung set MatKhau=@mk where TenDN=@tendangnhap";
+             SqlCommand command = new SqlCommand(sql, ketnoi);
+             command.Parameters.Add("mk", mk);
+             command.Parameters.Add("tendangnhap", tendn);
+             try
+             {
+                 command.ExecuteNonQuery();
+                 Ketqua = true;
+             }
+             catch
+             {
+
+                 Ketqua = false;
+             }
+             Dongketnoi();
+             return Ketqua;
+         }
+        
+
+    void Moketnoi()
+    {
+        ketnoi = new SqlConnection(ChuoiKetNoi);
+        ketnoi.Open();
+    }
+    void Dongketnoi()
+    {
+        ketnoi.Close();
+    }
+    }
+}

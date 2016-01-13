@@ -1,0 +1,267 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Web;
+using PhanMemQLCTQuangVinh.DTO;
+using System.Data;
+using System.Data.SqlClient;
+
+namespace PhanMemQLCTQuangVinh.DAO
+{
+    public class DAOVatLieu
+    {
+        KetNoiCSDL ketnoi;
+        public DAOVatLieu()
+        {
+            ketnoi = new KetNoiCSDL();
+        }
+
+        //Lay du lieu tu Database hien thi ra bang
+        public DataTable LayDLVL()
+        {
+            string lenh = "select * from VatLieu ";
+            ketnoi.TaoKetNoi();
+            DataTable bang = new DataTable();
+            try
+                {
+                    ketnoi.LenhKetNoi = new SqlCommand(lenh, ketnoi.KetNoi);
+                    ketnoi.TichHopCSDL = new SqlDataAdapter(ketnoi.LenhKetNoi);
+                    ketnoi.TichHopCSDL.Fill(bang);
+
+                }
+            catch (Exception)
+                {
+                    throw;
+                }
+            finally 
+                {
+                    ketnoi.DongKetNoi();
+                }
+            return bang;
+        }
+        // Tao danh sach Vat Lieu
+        public List<DTOVatLieu> TaoDSVL()
+        {
+            List<DTOVatLieu> ds = new List<DTOVatLieu>();
+            string lenh = "select * from VatLieu VL ,NhaCungCap NCC where VL.MaNCC = NCC.MaNCC";
+            ketnoi.TaoKetNoi();
+            DataTable bang = new DataTable();
+            try
+            {
+                ketnoi.LenhKetNoi = new SqlCommand(lenh, ketnoi.KetNoi);
+                ketnoi.TichHopCSDL = new SqlDataAdapter(ketnoi.LenhKetNoi);
+                ketnoi.TichHopCSDL.Fill(bang);
+                foreach (DataRow dongDL in bang.Rows)
+                {
+                    DTOVatLieu dtovl = new DTOVatLieu(dongDL);
+                    ds.Add(dtovl);
+                }
+
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+            finally
+            {
+                ketnoi.DongKetNoi();
+            }
+            return ds;
+           
+        }
+
+        //ThemVL
+        public bool ThemVatLieu(DTOVatLieu dtoVL)
+        {
+            bool kq = false;
+            ketnoi.TaoKetNoi();
+            try
+            {
+                string lenh = " insert into VatLieu (TenVL ,MaNCC ,Donvi ,Gia, SoLuong) values (@tenvl ,@mancc ,@donvi ,@gia, @sl)";
+                ketnoi.LenhKetNoi = new SqlCommand(lenh, ketnoi.KetNoi);
+
+                //ketnoi.LenhKetNoi.Parameters.Add("@maVL", SqlDbType.Int);
+                ketnoi.LenhKetNoi.Parameters.Add("@tenvl", SqlDbType.NVarChar);
+                ketnoi.LenhKetNoi.Parameters.Add("@mancc", SqlDbType.Int);
+                ketnoi.LenhKetNoi.Parameters.Add("@donvi", SqlDbType.NVarChar);
+                ketnoi.LenhKetNoi.Parameters.Add("@gia", SqlDbType.Decimal);
+                ketnoi.LenhKetNoi.Parameters.Add("@sl", SqlDbType.Int);
+
+                //ketnoi.LenhKetNoi.Parameters["@maVL"].Value = dtoVL.MaVL;
+                ketnoi.LenhKetNoi.Parameters["@tenvl"].Value = dtoVL.TenVL;
+                ketnoi.LenhKetNoi.Parameters["@mancc"].Value = dtoVL.dtoNCC.MaNCC;
+                ketnoi.LenhKetNoi.Parameters["@donvi"].Value = dtoVL.Donvi;
+                ketnoi.LenhKetNoi.Parameters["@gia"].Value = dtoVL.Gia;
+                ketnoi.LenhKetNoi.Parameters["@sl"].Value = dtoVL.Soluong;
+
+                if (ketnoi.LenhKetNoi.ExecuteNonQuery() != 0)
+                {
+                    kq = true;
+
+                }
+
+            }
+            catch (Exception)
+            {
+
+            }
+            finally
+            {
+                ketnoi.DongKetNoi();
+            }
+            return kq;
+        }
+        public bool capnhatdanhsach(DTOVatLieu dtoVL)
+        {
+            bool kq = false;
+            ketnoi.TaoKetNoi();
+            try
+            {
+                string lenh = "update VatLieu set TenVL = @tenvl , MaNCC = @mancc , Donvi = @donvi ,Gia = @gia where MaVL = @maVL";
+                ketnoi.LenhKetNoi = new SqlCommand(lenh, ketnoi.KetNoi);
+
+                ketnoi.LenhKetNoi.Parameters.Add("@maVL", SqlDbType.Int);
+                ketnoi.LenhKetNoi.Parameters.Add("@tenvl", SqlDbType.NVarChar);
+                ketnoi.LenhKetNoi.Parameters.Add("@mancc", SqlDbType.Int);//mancc
+                ketnoi.LenhKetNoi.Parameters.Add("@donvi", SqlDbType.NVarChar);
+                ketnoi.LenhKetNoi.Parameters.Add("@gia", SqlDbType.Decimal);
+                ketnoi.LenhKetNoi.Parameters.Add("@sl", SqlDbType.Int);
+
+                ketnoi.LenhKetNoi.Parameters["@maVL"].Value = dtoVL.MaVL;
+                ketnoi.LenhKetNoi.Parameters["@tenvl"].Value = dtoVL.TenVL;
+                ketnoi.LenhKetNoi.Parameters["@mancc"].Value = dtoVL.dtoNCC.MaNCC;
+                ketnoi.LenhKetNoi.Parameters["@donvi"].Value = dtoVL.Donvi;
+                ketnoi.LenhKetNoi.Parameters["@gia"].Value = dtoVL.Gia;
+                ketnoi.LenhKetNoi.Parameters["@sl"].Value = dtoVL.Soluong;
+
+                if(ketnoi.LenhKetNoi.ExecuteNonQuery() != 0)
+                {
+                    kq = true;
+                }
+            }
+            catch (Exception)
+            { }
+            finally
+            {
+                ketnoi.DongKetNoi();
+            }
+            return kq;
+
+        }
+        public bool XoaVatLieu(DTOVatLieu dtoVL)
+        {
+            bool kq = false;
+            ketnoi.TaoKetNoi();
+            try
+            {
+                string lenh = "delete from VatLieu where MaVL = @mavl";
+                ketnoi.LenhKetNoi = new SqlCommand(lenh, ketnoi.KetNoi);
+
+                ketnoi.LenhKetNoi.Parameters.Add("@mavl", SqlDbType.Int);
+                ketnoi.LenhKetNoi.Parameters["@mavl"].Value = dtoVL.MaVL;
+
+                if (ketnoi.LenhKetNoi.ExecuteNonQuery() != 0)
+                {
+                    kq = true;
+                }
+            }
+            catch (Exception)
+            {
+
+            }
+            finally
+            {
+                ketnoi.DongKetNoi();
+            }
+            return kq;
+        }
+
+        public DTOVatLieu LayThongTinVatLieu(string maSua)
+        {
+            ketnoi.TaoKetNoi();
+            DTOVatLieu dtoVL = null;
+            try
+            {
+                string lenh = "select * from VatLieu,NhaCungCap  where MaVL = @maSua and VatLieu.MaNCC = NhaCungCap.MaNCC ";
+                ketnoi.LenhKetNoi = new SqlCommand(lenh, ketnoi.KetNoi);
+
+                ketnoi.LenhKetNoi.Parameters.Add("@maSua", SqlDbType.Int);
+                ketnoi.LenhKetNoi.Parameters["@maSua"].Value = maSua;
+
+                DataTable bang = new DataTable();
+                ketnoi.TichHopCSDL = new SqlDataAdapter(ketnoi.LenhKetNoi);
+                ketnoi.TichHopCSDL.Fill(bang);
+                DataRow dong = bang.Rows[0];
+                dtoVL = new DTOVatLieu(dong);
+
+            }
+            catch (Exception)
+            { }
+            finally
+            {
+                ketnoi.DongKetNoi();
+            }
+            return dtoVL;
+        }
+        
+        public List<DTONhacungcap> LayDSNCC()
+        {
+            List<DTONhacungcap> dsNCC = new List<DTONhacungcap>();
+            string lenh = "select * from NhaCungCap";
+            ketnoi.TaoKetNoi();
+            DataTable bang = new DataTable();
+            try
+            {
+                ketnoi.LenhKetNoi = new SqlCommand(lenh, ketnoi.KetNoi);
+                ketnoi.TichHopCSDL = new SqlDataAdapter(ketnoi.LenhKetNoi);
+                ketnoi.TichHopCSDL.Fill(bang);
+                foreach (DataRow dongDL in bang.Rows)
+                {
+                    DTONhacungcap dtoNCC = new DTONhacungcap(dongDL);
+                    dsNCC.Add(dtoNCC);
+                }
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+            finally
+            {
+                ketnoi.DongKetNoi();
+            }
+            return dsNCC;
+        }
+
+        public List<DTOSanPham> TimTPTheoTen(string tenTim)
+        {
+            List<DTOSanPham> dsTim = new List<DTOSanPham>();
+            string lenh = "Select * from SanPham SP, LoaiSP LSP where SP.MaLoai=LSP.MaLoai and SP.TenSP like @tenSP";
+            ketnoi.TaoKetNoi();
+            DataTable bang = new DataTable();
+            try
+            {
+                ketnoi.LenhKetNoi = new SqlCommand(lenh, ketnoi.KetNoi);
+                ketnoi.LenhKetNoi.Parameters.Add("@tenSP", SqlDbType.NVarChar);
+                ketnoi.LenhKetNoi.Parameters["@tenSP"].Value = "%" + tenTim + "%";
+
+                ketnoi.TichHopCSDL = new SqlDataAdapter(ketnoi.LenhKetNoi);
+                ketnoi.TichHopCSDL.Fill(bang);
+                foreach (DataRow dongDL in bang.Rows)
+                {
+                    DTOSanPham dtoSP = new DTOSanPham(dongDL);
+                    dsTim.Add(dtoSP);
+                }
+            }
+            catch (Exception)
+            {
+
+            }
+            finally
+            {
+                ketnoi.DongKetNoi();
+            }
+            return dsTim;
+        }
+    }
+}

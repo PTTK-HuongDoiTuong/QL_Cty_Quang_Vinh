@@ -1,0 +1,26 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Web;
+using System.Data;
+using PhanMemQLCTQuangVinh.DTO;
+
+namespace PhanMemQLCTQuangVinh.DTO
+{
+    public class DTOChiTietNhapTP
+    {
+        public DTOPhieuNhapThanhPham dtoNhapTP { get; set; }
+        public DTOSanPham dtoSP { get; set; }
+        public int SoLuong { get; set; }
+
+        public DTOChiTietNhapTP()
+        { }
+
+        public DTOChiTietNhapTP(DataRow dongDL)
+        {
+            dtoNhapTP = new DTOPhieuNhapThanhPham(dongDL);
+            dtoSP = new DTOSanPham(dongDL);
+            SoLuong = (int)dongDL["SoLuong"];
+        }
+    }
+}

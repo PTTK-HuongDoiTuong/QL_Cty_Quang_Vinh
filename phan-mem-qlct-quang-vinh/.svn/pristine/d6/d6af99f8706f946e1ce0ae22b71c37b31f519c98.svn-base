@@ -1,0 +1,31 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Web;
+using System.Web.UI;
+using System.Web.UI.WebControls;
+using PhanMemQLCTQuangVinh.DAO;
+
+namespace PhanMemQLCTQuangVinh.GUI
+{
+    public partial class BoPhanThuKhoNVL : System.Web.UI.Page
+    {
+        DAOUser DB = new DAOUser();
+        protected void Page_Load(object sender, EventArgs e)
+        {
+            if ((bool)Session["DaDangNhap"] == false)
+            {
+                Session["MaTB"] = 1;
+                Response.Redirect("~/GUI/ThongBao.aspx");
+            }
+            int MaNQ = DB.LayMaNhomQ(Session["TenDangNhap"].ToString());
+            if (MaNQ != 3 && MaNQ != 5)
+            {
+                Session["MaTB"] = 2;
+                Response.Redirect("~/GUI/ThongBao.aspx");
+            }
+
+
+        }
+    }
+}

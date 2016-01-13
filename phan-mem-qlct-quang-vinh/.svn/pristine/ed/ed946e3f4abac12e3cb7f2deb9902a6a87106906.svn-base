@@ -1,0 +1,80 @@
+﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="TaoDonHang.aspx.cs" Inherits="PhanMemQLCTQuangVinh.QLBoPhan_TiepXucKH.TaoDonHang" %>
+<%@ Register assembly="AjaxControlToolkit" namespace="AjaxControlToolkit" tagprefix="cc1" %>
+<asp:Content ID="Content1" ContentPlaceHolderID="HeadContent" runat="server">
+</asp:Content>
+<asp:Content ID="Content2" ContentPlaceHolderID="MainContent" runat="server">
+    <h2>
+        Tạo ĐƠN HÀNG</h2>
+    <div class="form-item">
+        <asp:Label ID="lbMa" runat="server" Text="Mã khách hàng: "></asp:Label>
+        <asp:TextBox ID="txtMa" runat="server" Height="30px" Width="121px"></asp:TextBox>
+    </div>
+    <div class="form-item">
+        <asp:Label ID="lbTen" runat="server" Text="Tên khách hàng: "></asp:Label>
+        <asp:TextBox ID="txtTen" runat="server" Height="30px" Width="129px"></asp:TextBox>
+    </div>
+    <div class="form-item">
+        <asp:Label ID="lbNgayTao" runat="server" Text="Ngày tạo: "></asp:Label>
+        &nbsp;&nbsp;<asp:TextBox ID="txtNgayTaoDH" runat="server"></asp:TextBox>
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+        <asp:Label ID="lbNgayGiao" runat="server" Text="Ngày Giao: "></asp:Label>
+        <asp:TextBox ID="txtGiao" runat="server"></asp:TextBox>
+        <cc1:CalendarExtender ID="txtGiao_CalendarExtender" Format="dd.MM.yyyy"  
+            PopupButtonID="ibtGiao"  runat="server" 
+            BehaviorID="txtGiao_CalendarExtender" TargetControlID="txtGiao" />
+        <asp:ImageButton ID="ibtGiao" runat="server" Height="37px" 
+            ImageUrl="~/Images/calendar.jpg" Width="66px" />
+        </div>
+    <div class="form-item">
+        <asp:ScriptManager ID="ScriptManager1" runat="server">
+        </asp:ScriptManager>
+    </div>
+    <div>
+        <asp:Button ID="btnThemDh" runat="server" onclick="btnThemDh_Click" 
+            Text="Thêm Đơn Hàng Mới" />
+    </div>
+    <br />
+    <br />
+    <asp:GridView ID="GridViewDH" runat="server" AutoGenerateColumns="False" 
+        CellPadding="1">
+        <Columns>
+            <asp:TemplateField HeaderText="Mã ĐH">
+                <EditItemTemplate>
+                    <asp:TextBox ID="txtmadh" runat="server" Text='<%# Bind("MaDH") %>'></asp:TextBox>
+                </EditItemTemplate>
+                <ItemTemplate>
+                    <asp:Label ID="Label1" runat="server" Text='<%# Bind("MaDH") %>'></asp:Label>
+                </ItemTemplate>
+            </asp:TemplateField>
+            <asp:BoundField DataField="MaKH" HeaderText="Mã KH" />
+            <asp:BoundField DataField="TenKH" HeaderText="Tên KH" />
+            <asp:BoundField DataField="NgayTaoDH" HeaderText="Ngày Đặt" 
+                DataFormatString="{0:dd/MM/yyyy}" />
+            <asp:BoundField DataField="NgayGH" HeaderText="Ngày Giao" 
+                DataFormatString="{0:dd/MM/yyyy}" />
+            <asp:BoundField DataField="TongTien" HeaderText="Tổng Tiền ĐH" />
+            <asp:BoundField DataField="CongNoDH" HeaderText="Tiền Phải Trả" />
+            <asp:BoundField DataField="TrangThai" HeaderText="Trạng Thái" />
+            <asp:TemplateField HeaderText="Chi Tiết ĐH">
+                <ItemTemplate>
+                    <asp:HyperLink ID="HyperLink1" runat="server" 
+                        NavigateUrl='<%# "~/QLBoPhan_TiepXucKH/ChiTietDH.aspx?MaDH=" + Eval("MaDH") %>' 
+                        Text="Chi Tiết ĐH"></asp:HyperLink>
+                </ItemTemplate>
+            </asp:TemplateField>
+            <asp:TemplateField HeaderText="Đặt Cọc">
+                <ItemTemplate>
+                    <asp:HyperLink ID="HyperLink2" runat="server" 
+                        NavigateUrl='<%# "~/QLBoPhan_TiepXucKH/DatCoc.aspx?MaDH=" + Eval("MaDH") %>' 
+                        Text="Đặt Cọc"></asp:HyperLink>
+                </ItemTemplate>
+            </asp:TemplateField>
+        </Columns>
+    </asp:GridView>
+    <br />
+    <div id="ThemDH" runat=server>
+        <asp:Button ID="btbQuayLai" runat="server" onclick="Button1_Click" 
+            Text="Quay Về" />
+        <br />
+    </div>
+</asp:Content>

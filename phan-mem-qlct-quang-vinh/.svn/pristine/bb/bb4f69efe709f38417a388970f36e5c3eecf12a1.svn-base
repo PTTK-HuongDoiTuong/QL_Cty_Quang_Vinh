@@ -1,0 +1,93 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Web;
+using System.Web.UI;
+using System.Web.UI.WebControls;
+using PhanMemQLCTQuangVinh.DAO;
+using PhanMemQLCTQuangVinh.DTO;
+
+namespace PhanMemQLCTQuangVinh.QLVatLieu
+{
+    public partial class SuaVatLieu : System.Web.UI.Page
+    {
+       
+        protected void Page_Load(object sender, EventArgs e)
+        {
+
+             //kiểm tra đã có sự kiện click,... trên trang web
+            if (IsPostBack == false)//postback=false: chưa có sự kiện click trên web
+            {
+                // request: yeu cau. QueryString: lay gia tri cua chuoi tren duong dan
+                string maVL = Request.QueryString["MaVL"].ToString();
+                //hien thi chuoi len web
+                //Response.Write(maKH);
+                DAO_Entity daoVL = new DAO_Entity();
+                DTOVatLieu dtoVL = daoVL.LayThongTinVatLieu(maVL);
+                lbMa.Text = dtoVL.MaVL.ToString();
+                txtTenVL.Text = dtoVL.TenVL;
+                  //lay danh sach Loai Kh va truyen vao dropdown list
+                List<DTONhacungcap> dsNCC = new List<DTONhacungcap>();
+                dsNCC = daoVL.LayDSNCC();
+                //hien thi ten loai KH ra dropdownlist
+                ddncc.DataTextField = "TenNCC";//TenLKH la thuoc tinh trong DTOLoaiKH
+                //truyen dl theo ma loai 
+                ddncc.DataValueField = "MaNCC";//MaLKH la thuoc tinh trong DTOLoaiKH
+                ddncc.DataSource = dsNCC;
+                ddncc.DataBind();
+                txtDonvi.Text = dtoVL.Donvi;
+                txtgia.Text = dtoVL.Gia.ToString();
+                
+            }
+            
+        }
+
+        protected void btnLuu_Click(object sender, EventArgs e)
+        {
+     
+
+            DTOVatLieu dtoVL = new DTOVatLieu();
+            dtoVL.MaVL = int.Parse(lbMa.Text); 
+            dtoVL.TenVL = txtTenVL.Text;  
+
+            DTONhacungcap dtoNCC = new DTONhacungcap();
+            dtoNCC.MaNCC = int.Parse(ddncc.SelectedValue);
+            dtoNCC.TenNCC = ddncc.SelectedItem.ToString();
+
+            dtoVL.dtoNCC = dtoNCC;
+
+            dtoVL.Donvi = txtDonvi.Text;  
+            dtoVL.Gia = decimal.Parse(txtgia.Text);
+
+
+
+            DAO_Entity daoVL = new DAO_Entity();
+            if (KiemTraNhap() == "")
+            {
+                daoVL.capnhatdanhsach(dtoVL);
+            }
+            else
+            {
+                lbLoi.Text = KiemTraNhap();
+            }
+        }
+
+        private string KiemTraNhap()
+        {
+            string kq = "";
+            if (txtTenVL.Text.Trim() == "")
+            {
+                kq = "Vui lòng nhập tên Vật Liệu!";
+            }
+            if (txtDonvi.Text.Trim() == "")
+            {
+                kq += "Vui lòng nhập đơn vị!";
+            }
+             if (txtgia.Text.Trim() == "")
+            {
+                kq += "Vui lòng nhập Giá!";
+            }
+            return kq;
+        }
+    }
+}

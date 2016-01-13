@@ -1,0 +1,82 @@
+﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="ThemDonHang.aspx.cs" Inherits="PhanMemQLCTQuangVinh.QLDonHang.ThemDonHang" %>
+<asp:Content ID="Content1" ContentPlaceHolderID="HeadContent" runat="server">
+</asp:Content>
+<asp:Content ID="Content2" ContentPlaceHolderID="MainContent" runat="server">
+    <h2>THÊM ĐƠN HÀNG</h2>
+    
+    <div class="form-item">
+        <asp:Label ID="lbMa" runat="server" Text="Mã khách hàng: "></asp:Label>
+        <asp:Label ID="lbMaKH" runat="server" Text=""></asp:Label>
+    </div>
+    <div class="form-item">
+        <asp:Label ID="lbTen" runat="server" Text="Tên khách hàng: "></asp:Label>
+        <asp:Label ID="blTenKH" runat="server" Text=""></asp:Label>
+    </div>
+    <div class="form-item">
+        <asp:Label ID="lbNgayTao" runat="server" Text="Ngày tạo: "></asp:Label>
+        <asp:Label ID="NgayTao" runat="server" Text=""></asp:Label>
+    </div>
+    <div class="form-item">
+        <asp:Label ID="lbNgayGiao" runat="server" Text="Ngày giao: "></asp:Label>
+        <asp:TextBox ID="txtNgayGiao" runat="server"></asp:TextBox>   
+    </div>
+    <div class="form-item">
+        <asp:Label ID="lbTrangThai" runat="server" Text="Trạng thái: "></asp:Label>
+    </div>
+    <div class="rbtn">
+        <asp:RadioButton ID="rbtnTraTruoc" GroupName="grpTrangThai" Text="Trả trước" runat="server"/>
+        <asp:RadioButton ID="rbtnGhiNo" GroupName="grpTrangThai" Text="Ghi nợ" runat="server"/>
+        <asp:RadioButton ID="rbtnTraSau" GroupName="grpTrangThai" Text="Trả sau" runat="server"/>
+    </div> 
+
+    <div class="search">
+        <asp:TextBox ID="txtTim" runat="server" placeholder="Tên sản phẩm cần tìm"></asp:TextBox>
+        <asp:Button ID="btnTim" runat="server" Text="Tìm" />
+    </div>
+    
+    <asp:Label ID="lbDSSP" runat="server" Text="Danh sách sản phẩm"></asp:Label>
+    <asp:GridView ID="gridDSSP" runat="server" AllowSorting="True" 
+        AutoGenerateColumns="False" AllowPaging="True">
+        <Columns>
+            <asp:TemplateField HeaderText="Mã sản phẩm">
+                <EditItemTemplate>
+                    <asp:TextBox ID="TextBox1" runat="server" Text='<%# Bind("MaSP") %>'></asp:TextBox>
+                </EditItemTemplate>
+                <ItemTemplate>
+                    <asp:Label ID="Label1" runat="server" Text='<%# Bind("MaSP") %>'></asp:Label>
+                </ItemTemplate>
+            </asp:TemplateField>
+            <asp:TemplateField HeaderText="Tên sản phẩm">
+                <EditItemTemplate>
+                    <asp:TextBox ID="TextBox2" runat="server" Text='<%# Bind("TenSP") %>'></asp:TextBox>
+                </EditItemTemplate>
+                <ItemTemplate>
+                    <asp:Label ID="Label2" runat="server" Text='<%# Bind("TenSP") %>'></asp:Label>
+                </ItemTemplate>
+            </asp:TemplateField>
+            <asp:TemplateField HeaderText="Loại sản phẩm">
+                <EditItemTemplate>
+                    <asp:TextBox ID="TextBox3" runat="server" Text='<%# Bind("DTOLoaiSP.MaSP") %>'></asp:TextBox>
+                </EditItemTemplate>
+                <ItemTemplate>
+                    <asp:Label ID="Label3" runat="server" Text='<%# Bind("DTOLoaiSP.MaSP") %>'></asp:Label>
+                </ItemTemplate>
+            </asp:TemplateField>
+            <asp:TemplateField HeaderText="Số lượng">
+                <ItemTemplate>
+                    <asp:TextBox ID="TextBox6" runat="server"></asp:TextBox>
+                </ItemTemplate>
+            </asp:TemplateField>
+            <asp:TemplateField HeaderText="Thêm" ShowHeader="False">
+                <ItemTemplate>
+                    <asp:LinkButton ID="LinkButton2" runat="server" CausesValidation="false" 
+                        CommandName="" Text="Thêm"></asp:LinkButton>
+                </ItemTemplate>
+            </asp:TemplateField>
+        </Columns>
+    </asp:GridView>
+    <div class="form-item form-action">
+        <asp:Button ID="btnLuu" runat="server" Text="Lưu" />
+        <input type="reset" value="Huỷ" />
+    </div>
+</asp:Content>

@@ -1,0 +1,49 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Web;
+using System.Web.UI;
+using System.Web.UI.WebControls;
+
+namespace PhanMemQLCTQuangVinh.QLDonHang
+{
+    public partial class ChonTaoDH : System.Web.UI.Page
+    {
+        protected void Page_Load(object sender, EventArgs e)
+        {
+            linkThemKH.Visible = false;
+        }
+
+        //protected void rbtnChua_CheckedChanged(object sender, EventArgs e)
+        //{
+        //    if (rbtnChua.Checked == true)
+        //    {
+        //        linkThemKH.Visible = true;
+        //        linkTaoDH.Visible = false;
+        //    }
+        //}
+
+        //protected void rbtnDaCo_CheckedChanged(object sender, EventArgs e)
+        //{
+        //    if (rbtnDaCo.Checked == true)
+        //    {
+        //        linkThemKH.Visible = false;
+        //        linkTaoDH.Visible = true;
+        //    }
+        //}
+
+        protected void grpTrangThai_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (grpTrangThai.SelectedItem.Value == "Co")
+            {
+                linkThemKH.Visible = false;
+                linkTaoDH.Visible = true;
+            }
+            else
+            {
+                linkThemKH.Visible = true;
+                linkTaoDH.Visible = false;
+            }
+        }
+    }
+}

@@ -1,0 +1,22 @@
+﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="SuaTrangThai.aspx.cs" Inherits="PhanMemQLCTQuangVinh.QLCauHinhTrangThai.SuaTrangThai" %>
+<asp:Content ID="Content1" ContentPlaceHolderID="HeadContent" runat="server">
+</asp:Content>
+<asp:Content ID="Content2" ContentPlaceHolderID="MainContent" runat="server">
+    <h2>
+        Sửa Loại trạng thái</h2>
+    <asp:Label ID="lbLoi" CssClass="message-error" runat="server" Text=""></asp:Label>
+    <div class="form-content form-edit-custom">
+        <div class="form-item">
+            <asp:Label ID="lbMaTT" runat="server" Text="Mã Trạng Thái"></asp:Label>
+            <asp:Label ID="lbMa" runat="server" Text=""></asp:Label>
+        </div>
+        <div class="form-item">
+            <asp:Label ID="lbTenTT" runat="server" Text="Tên Trạng Thái"></asp:Label>
+            <asp:TextBox ID="txtTenTT" runat="server"></asp:TextBox>
+        </div>
+        <div class="form-item form-action">
+            <asp:Button ID="btnLuu" runat="server" Text="Lưu" onclick="btnLuu_Click" />
+            <asp:Button ID="btnHuy" runat="server" Text="Hủy" />
+        </div>
+    </div>
+</asp:Content>

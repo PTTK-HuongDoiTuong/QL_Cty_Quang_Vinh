@@ -1,0 +1,53 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Web;
+using System.Web.UI;
+using System.Web.UI.WebControls;
+using PhanMemQLCTQuangVinh.DAO;
+using PhanMemQLCTQuangVinh.DTO;
+
+namespace PhanMemQLCTQuangVinh
+{
+    public partial class KhachHang : System.Web.UI.Page
+    {
+        protected void Page_Load(object sender, EventArgs e)
+        {
+            try
+            {
+                DAOKhachHang daokh = new DAOKhachHang();
+                List<DTOKhachHang> dsKH = daokh.TaoDSKH();
+                GridDSKH.DataSource = dsKH;
+                GridDSKH.DataBind();
+            }
+            catch (Exception)
+            {
+
+                Response.Write("<script>alert('Loi tai du lieu!')</script>");
+            }
+        }
+
+        protected void GridDSKH_RowCommand(object sender, GridViewCommandEventArgs e)
+        {
+            if (e.CommandName == "cmdXoa")
+            {
+                LinkButton btnXoa = (LinkButton)e.CommandSource;
+                string MaKH = btnXoa.CommandArgument;
+                DAOKhachHang daoKH = new DAOKhachHang();
+                if (daoKH.XoaKhachHang(int.Parse(MaKH)) == true)
+                {
+                    Response.Redirect("~/QLKhachHang/KhachHang.aspx");
+                }
+            }
+        }
+
+        protected void btnTim_Click(object sender, EventArgs e)
+        {
+            DAOKhachHang daoKH = new DAOKhachHang();
+            List<DTOKhachHang> kqTim = daoKH.TimTheoTen(txtTim.Text.Trim());
+            GridDSKH.DataSource = kqTim;
+            GridDSKH.DataBind();
+        }
+
+    }
+}

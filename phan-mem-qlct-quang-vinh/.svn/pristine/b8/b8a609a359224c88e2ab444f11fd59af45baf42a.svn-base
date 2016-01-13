@@ -1,0 +1,34 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Web;
+using System.Data;
+
+namespace PhanMemQLCTQuangVinh.DTO
+{
+    public class DTOPhieuDatVatLieuCC
+    {
+        public int MaPDVLCC { get; set; }
+        public int MaNCC { get; set; }
+        public DateTime NgayLap { get; set; }
+        public DateTime NgayGiao { get; set; }
+        public int TongTien { get; set; }
+        public string CongNoNCC { get; set; }
+        public string TrangThai { get; set; }
+
+
+        public DTOPhieuDatVatLieuCC()
+        { }
+
+        public DTOPhieuDatVatLieuCC(DataRow dongDL)
+        {
+            MaPDVLCC = (int)dongDL["MaPDVLCC"];
+            MaNCC = (int)dongDL["MaNCC"];
+            NgayLap = (DateTime)dongDL["NgayLap"];
+            NgayGiao = (DateTime)dongDL["NgayGiao"];
+            TongTien = (int)dongDL["TongTien"];
+            CongNoNCC = dongDL["CongNoNCC"].ToString();
+            TrangThai = dongDL["TrangThai"].ToString();
+        }
+    }
+}

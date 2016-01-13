@@ -1,0 +1,70 @@
+﻿<%@ Page Title="Danh sách đơn hàng" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="DonHang.aspx.cs" Inherits="PhanMemQLCTQuangVinh.QLDonHang.DonHang" %>
+<asp:Content ID="Content1" ContentPlaceHolderID="HeadContent" runat="server">
+</asp:Content>
+<asp:Content ID="Content2" ContentPlaceHolderID="MainContent" runat="server">
+    <h2>Danh sách đơn hàng</h2>
+    <div class="search">
+        <asp:TextBox ID="txtTim" runat="server" placeholder="Tìm theo mã..."></asp:TextBox>
+        <asp:Button ID="btnTim" runat="server" Text="Tìm" />
+    </div>
+
+    <asp:GridView ID="gridDSDH" runat="server" AutoGenerateColumns="False" 
+        AllowPaging="True" AllowSorting="True" BorderStyle="Solid" BorderWidth="1px" 
+        CssClass="bang-don-hang">
+        <Columns>
+            <asp:TemplateField HeaderText="Mã đơn hàng">
+                <EditItemTemplate>
+                    <asp:TextBox ID="TextBox1" runat="server" Text='<%# Bind("MaDH") %>'></asp:TextBox>
+                </EditItemTemplate>
+                <ItemTemplate>
+                    <asp:Label ID="Label1" runat="server" Text='<%# Bind("MaDH") %>'></asp:Label>
+                </ItemTemplate>
+            </asp:TemplateField>
+            <asp:TemplateField HeaderText="Tên Khách hàng">
+                <EditItemTemplate>
+                    <asp:TextBox ID="TextBox2" runat="server" Text='<%# Bind("dtoKH.TenKH") %>'></asp:TextBox>
+                </EditItemTemplate>
+                <ItemTemplate>
+                    <asp:Label ID="Label2" runat="server" Text='<%# Bind("dtoKH.TenKH") %>'></asp:Label>
+                </ItemTemplate>
+            </asp:TemplateField>
+            <asp:TemplateField HeaderText="Ngày đặt">
+                <EditItemTemplate>
+                    <asp:TextBox ID="TextBox3" runat="server" Text='<%# Bind("NgayDat") %>'></asp:TextBox>
+                </EditItemTemplate>
+                <ItemTemplate>
+                    <asp:Label ID="Label3" runat="server" Text='<%# Bind("NgayDat") %>'></asp:Label>
+                </ItemTemplate>
+            </asp:TemplateField>
+            <asp:TemplateField HeaderText="Ngày giao">
+                <EditItemTemplate>
+                    <asp:TextBox ID="TextBox4" runat="server" Text='<%# Bind("NgayGiao") %>'></asp:TextBox>
+                </EditItemTemplate>
+                <ItemTemplate>
+                    <asp:Label ID="Label4" runat="server" Text='<%# Bind("NgayGiao") %>'></asp:Label>
+                </ItemTemplate>
+            </asp:TemplateField>
+            <asp:TemplateField HeaderText="Trạng thái">
+                <EditItemTemplate>
+                    <asp:TextBox ID="TextBox5" runat="server" Text='<%# Bind("TrangThai") %>'></asp:TextBox>
+                </EditItemTemplate>
+                <ItemTemplate>
+                    <asp:Label ID="Label5" runat="server" Text='<%# Bind("TrangThai") %>'></asp:Label>
+                </ItemTemplate>
+            </asp:TemplateField>
+            <asp:TemplateField HeaderText="Xem chi tiết">
+                <ItemTemplate>
+                    <asp:HyperLink ID="HyperLink1" runat="server" NavigateUrl='<%# "~/QLBoPhan_TiepNhanKH/QLDonHang/ChiTietDonHang.aspx?MaDH=" + Eval("MaDH") %>' Text="Chi tiết"></asp:HyperLink>
+                </ItemTemplate>
+            </asp:TemplateField>
+            <asp:TemplateField HeaderText="Xuất hóa đơn" ShowHeader="False">
+                <ItemTemplate>
+                    <asp:LinkButton ID="LinkButton1" runat="server" CausesValidation="false" 
+                        CommandName="" Text="Xuất"></asp:LinkButton>
+                </ItemTemplate>
+            </asp:TemplateField>
+        </Columns>
+
+    </asp:GridView>
+</asp:Content>
+

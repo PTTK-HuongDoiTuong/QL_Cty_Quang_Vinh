@@ -1,0 +1,76 @@
+﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="SuaVatLieu.aspx.cs" Inherits="PhanMemQLCTQuangVinh.QLVatLieu.SuaVatLieu" %>
+<asp:Content ID="Content1" ContentPlaceHolderID="HeadContent" runat="server">
+    <style type="text/css">
+        .style6
+        {
+            height: 20px;
+        }
+        .style7
+        {
+            width: 96%;
+        }
+        .style8
+        {
+            width: 3%;
+        }
+        .style9
+        {
+            width: 4px;
+        }
+    </style>
+</asp:Content>
+<asp:Content ID="Content3" ContentPlaceHolderID="MainContent" runat="server">
+    <table style="width:100%;">
+        <tr>
+            <td class="text-center" colspan="3">
+                Trang Sửa Vật Liệu</td>
+        </tr>
+        <tr>
+            <td colspan="3">
+                <asp:Label ID="lbLoi" runat="server" CssClass="Message-error" Text="Label"></asp:Label>
+            </td>
+        </tr>
+        <tr>
+            <td class="style6" colspan="3">
+                <asp:Label ID="lbMaVL" runat="server" Text="Mã Vật Liệu"></asp:Label>
+&nbsp;<asp:Label ID="lbMa" runat="server" Text="[MaVL]"></asp:Label>
+            </td>
+        </tr>
+        <tr>
+            <td class="style6" colspan="3">
+                <asp:Label ID="LbVatLieu" runat="server" Text="Tên Vật Liệu"></asp:Label>
+                <asp:TextBox ID="txtTenVL" runat="server"></asp:TextBox>
+            </td>
+        </tr>
+        <tr>
+            <td class="style7">
+                <asp:Label ID="lbNCC" runat="server" Text="Nhà cung cấp"></asp:Label>
+                <asp:DropDownList ID="ddncc" runat="server">
+                </asp:DropDownList>
+               
+            </td>
+            <td rowspan="4" class="style9">
+                &nbsp;</td>
+            <td rowspan="4" class="style8">
+                &nbsp;</td>
+        </tr>
+        <tr>
+            <td class="style7">
+                <asp:Label ID="lbdonvi" runat="server" Text="Đơn vị"></asp:Label>
+                <asp:TextBox ID="txtDonvi" runat="server"></asp:TextBox>
+            </td>
+        </tr>
+        <tr>
+            <td class="style7">
+                <asp:Label ID="lbgia" runat="server" Text="Giá"></asp:Label>
+                <asp:TextBox ID="txtgia" runat="server"></asp:TextBox>
+            </td>
+        </tr>
+        <tr>
+            <td class="style7">
+                <asp:Button ID="btluu" runat="server" Text="Lưu" OnClick="btnLuu_Click" />
+                <asp:Button ID="bthuy" runat="server" Text="Hủy" />
+            </td>
+        </tr>
+    </table>
+</asp:Content>

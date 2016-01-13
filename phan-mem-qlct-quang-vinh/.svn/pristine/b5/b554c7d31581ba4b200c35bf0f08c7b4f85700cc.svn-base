@@ -1,0 +1,99 @@
+﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="ThemNhapThanhPham_BPSX.aspx.cs" Inherits="PhanMemQLCTQuangVinh.QLSanPham.NhapThanhPham_BPSX" %>
+<asp:Content ID="Content1" ContentPlaceHolderID="HeadContent" runat="server">
+</asp:Content>
+<asp:Content ID="Content2" ContentPlaceHolderID="MainContent" runat="server">
+    <h2>XỬ LÝ NHẬP THÀNH PHẨM</h2>
+
+    <div class="form-content">
+        <div class="form-item">
+            <asp:Label ID="Label8" runat="server" Text="Mã đơn hàng: " AssociatedControlID="lbMaDH"></asp:Label>
+            <asp:Label ID="lbMaDH" runat="server" Text=""></asp:Label>
+        </div>
+        <div class="form-item">
+            <asp:Label ID="Label6" runat="server" Text="Mã phiếu giao: " AssociatedControlID="txtMaGiao"></asp:Label>
+            <asp:TextBox ID="txtMaGiao" runat="server"></asp:TextBox>
+        </div>
+
+        <div class="form-item">
+            <asp:Label ID="lbNgay" runat="server" Text="Ngày tạo: " AssociatedControlID="Ngay"></asp:Label>
+            <asp:Label ID="Ngay" runat="server" Text=""></asp:Label>
+        </div> 
+
+
+       <div class="form-item">
+            <asp:Label ID="Label3" runat="server" Text="Ngày giao: " AssociatedControlID="txtNgayGiao"></asp:Label>
+           <asp:TextBox ID="txtNgayGiao" runat="server"></asp:TextBox>
+        </div> 
+
+        <div class="form-item">
+            <asp:Label ID="Label4" runat="server" Text="Người giao:" AssociatedControlID="txtNgGiao"></asp:Label>
+            <asp:TextBox ID="txtNgGiao" runat="server"></asp:TextBox>   
+        </div>
+
+        <div class="form-item">
+            <asp:Label ID="Label5" runat="server" Text="Người nhận: " AssociatedControlID="txtNgNhan"></asp:Label>
+            <asp:TextBox ID="txtNgNhan" runat="server"></asp:TextBox> 
+        </div>
+    </div>
+    
+    <div class="search">
+        <asp:TextBox ID="txtTim" runat="server" placeholder="Nhập tên sản phẩm cần tìm..."></asp:TextBox>
+        <asp:Button ID="btnTim" runat="server" Text="Tìm" onclick="btnTim_Click" />
+    </div>
+    
+    <div class="form-item">
+        <asp:Label ID="lbDSTP" runat="server" Text="Danh sách thành phẩm: "></asp:Label>
+        <div class="form-action">
+            <asp:Button ID="btnTaiLai" runat="server" Text="Danh sách thành phẩm" 
+                onclick="btnTaiLai_Click" />
+        </div>
+    </div>
+    
+    <asp:GridView ID="gridDSTP" runat="server" AllowPaging="True" 
+        AllowSorting="True" AutoGenerateColumns="False" 
+        onrowcommand="gridDSTP_RowCommand">
+        <Columns>
+            <asp:TemplateField HeaderText="Mã sản phẩm">
+                <EditItemTemplate>
+                    <asp:TextBox ID="TextBox1" runat="server" Text='<%# Bind("dtoSP.MaSP") %>'></asp:TextBox>
+                </EditItemTemplate>
+                <ItemTemplate>
+                    <asp:Label ID="lbMaSP" runat="server" Text='<%# Bind("dtoSP.MaSP") %>'></asp:Label>
+                </ItemTemplate>
+            </asp:TemplateField>
+            <asp:TemplateField HeaderText="Tên sản phẩm">
+                <EditItemTemplate>
+                    <asp:TextBox ID="TextBox2" runat="server" Text='<%# Bind("dtoSP.TenSP") %>'></asp:TextBox>
+                </EditItemTemplate>
+                <ItemTemplate>
+                    <asp:Label ID="lbTenTP" runat="server" Text='<%# Bind("dtoSP.TenSP") %>'></asp:Label>
+                </ItemTemplate>
+            </asp:TemplateField>
+            <asp:BoundField DataField="SoLuong" HeaderText="Số lượng đã đặt" />
+            <asp:TemplateField HeaderText="Số lượng thực">                
+                <ItemTemplate>
+                    <asp:TextBox ID="txtSLThuc" runat="server"></asp:TextBox>
+                </ItemTemplate>
+            </asp:TemplateField>
+            <asp:TemplateField HeaderText="Số lượng giao">
+                <ItemTemplate>
+                    <asp:TextBox ID="txtSLGiao" runat="server"></asp:TextBox>
+                </ItemTemplate>
+            </asp:TemplateField>
+            <asp:TemplateField HeaderText="Số lượng không đạt">
+                <EditItemTemplate>
+                    <asp:TextBox ID="TextBox3" runat="server"></asp:TextBox>
+                </EditItemTemplate>
+                <ItemTemplate>
+                    <asp:Label ID="lbKhongDat" runat="server"></asp:Label>
+                </ItemTemplate>
+            </asp:TemplateField>
+        </Columns>
+    </asp:GridView>
+    
+    
+    <div class="form-action">
+        <asp:Button ID="btnLuu" runat="server" Text="Lưu" onclick="btnLuu_Click" />
+        <asp:Button ID="btnCancel" runat="server" Text="Hủy" />
+    </div> 
+</asp:Content>

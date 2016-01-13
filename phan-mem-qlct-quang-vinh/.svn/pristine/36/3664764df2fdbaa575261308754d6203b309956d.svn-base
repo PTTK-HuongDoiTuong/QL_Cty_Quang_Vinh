@@ -1,0 +1,105 @@
+﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="DanhSachPDVL_NCC.aspx.cs" Inherits="PhanMemQLCTQuangVinh.QLBoPhan_VatLieu.QLDatVLNCC.DanhSachPDVL_NCC" %>
+<asp:Content ID="Content1" ContentPlaceHolderID="HeadContent" runat="server">
+</asp:Content>
+<asp:Content ID="Content2" ContentPlaceHolderID="MainContent" runat="server">
+<h2>DANH SÁCH PHIẾU ĐẶT VẬT LIỆU nhà cung cấp</h2>
+    <div>
+        <asp:GridView ID="GridView1" runat="server" AutoGenerateColumns="False" 
+            Height="383px" Width="782px">
+            <Columns>
+                <asp:TemplateField HeaderText="Mã Phiếu Đặt">
+                    <EditItemTemplate>
+                        <asp:TextBox ID="TextBox1" runat="server"></asp:TextBox>
+                    </EditItemTemplate>
+                    <ItemTemplate>
+                        <asp:Label ID="Label1" runat="server"></asp:Label>
+                    </ItemTemplate>
+                </asp:TemplateField>
+                <asp:TemplateField HeaderText="Ngày Đặt">
+                    <EditItemTemplate>
+                        <asp:TextBox ID="TextBox2" runat="server"></asp:TextBox>
+                    </EditItemTemplate>
+                    <ItemTemplate>
+                        <asp:Label ID="Label2" runat="server"></asp:Label>
+                    </ItemTemplate>
+                </asp:TemplateField>
+                <asp:TemplateField HeaderText="Ngày Giao">
+                    <EditItemTemplate>
+                        <asp:TextBox ID="TextBox3" runat="server"></asp:TextBox>
+                    </EditItemTemplate>
+                    <ItemTemplate>
+                        <asp:Label ID="Label3" runat="server"></asp:Label>
+                    </ItemTemplate>
+                </asp:TemplateField>
+                <asp:TemplateField HeaderText="Mã NCC">
+                    <EditItemTemplate>
+                        <asp:TextBox ID="TextBox4" runat="server"></asp:TextBox>
+                    </EditItemTemplate>
+                    <ItemTemplate>
+                        <asp:Label ID="Label4" runat="server"></asp:Label>
+                    </ItemTemplate>
+                </asp:TemplateField>
+                <asp:TemplateField HeaderText="Tổng tiền">
+                    <EditItemTemplate>
+                        <asp:TextBox ID="TextBox5" runat="server"></asp:TextBox>
+                    </EditItemTemplate>
+                    <ItemTemplate>
+                        <asp:Label ID="Label5" runat="server"></asp:Label>
+                    </ItemTemplate>
+                </asp:TemplateField>
+                <asp:TemplateField HeaderText="Công Nợ">
+                    <EditItemTemplate>
+                        <asp:TextBox ID="TextBox6" runat="server"></asp:TextBox>
+                    </EditItemTemplate>
+                    <ItemTemplate>
+                        <asp:Label ID="Label6" runat="server"></asp:Label>
+                    </ItemTemplate>
+                </asp:TemplateField>
+                <asp:TemplateField HeaderText="Xem Chi Tiết">
+                    <ItemTemplate>
+                        <asp:HyperLink ID="HyperLink1" runat="server" NavigateUrl="" Text="Xem"></asp:HyperLink>
+                    </ItemTemplate>
+                </asp:TemplateField>
+                <asp:TemplateField HeaderText="Đặt cọc">
+                    <ItemTemplate>
+                        <asp:HyperLink ID="HyperLink2" runat="server" NavigateUrl="" Text="Đặt cọc"></asp:HyperLink>
+                    </ItemTemplate>
+                </asp:TemplateField>
+            </Columns>
+        </asp:GridView>
+    </div>
+<div>
+</div>  
+    <h2>CHI TIẾT PHIẾU ĐẶT</h2>
+<div>
+<asp:GridView ID="GridView2" runat="server" AutoGenerateColumns="False">
+    <Columns>
+        <asp:TemplateField HeaderText="Mã Vật Liệu">
+            <EditItemTemplate>
+                <asp:TextBox ID="TextBox1" runat="server"></asp:TextBox>
+            </EditItemTemplate>
+            <ItemTemplate>
+                <asp:Label ID="Label1" runat="server"></asp:Label>
+            </ItemTemplate>
+        </asp:TemplateField>
+        <asp:TemplateField HeaderText="Tên Vật Liệu">
+            <EditItemTemplate>
+                <asp:TextBox ID="TextBox2" runat="server"></asp:TextBox>
+            </EditItemTemplate>
+            <ItemTemplate>
+                <asp:Label ID="Label2" runat="server"></asp:Label>
+            </ItemTemplate>
+        </asp:TemplateField>
+        <asp:TemplateField HeaderText="Số lượng">
+            <EditItemTemplate>
+                <asp:TextBox ID="TextBox3" runat="server"></asp:TextBox>
+            </EditItemTemplate>
+            <ItemTemplate>
+                <asp:Label ID="Label3" runat="server"></asp:Label>
+            </ItemTemplate>
+        </asp:TemplateField>
+    </Columns>
+    </asp:GridView>
+    </div>
+</asp:Content>
+

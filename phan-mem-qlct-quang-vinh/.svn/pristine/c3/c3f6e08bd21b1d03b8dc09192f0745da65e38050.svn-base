@@ -1,0 +1,92 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Web;
+using System.Web.UI;
+using System.Web.UI.WebControls;
+using PhanMemQLCTQuangVinh.DAO;
+using PhanMemQLCTQuangVinh.DTO;
+
+namespace PhanMemQLCTQuangVinh.QLKhachHang
+{
+    public partial class SuaKhachHang : System.Web.UI.Page
+    {
+        protected void Page_Load(object sender, EventArgs e)
+        {
+            //kiểm tra đã có sự kiện click,... trên trang web
+            if (IsPostBack == false)//postback=false: chưa có sự kiện click trên web
+            {
+                // request: yeu cau. QueryString: lay gia tri cua chuoi tren duong dan
+                string maKH = Request.QueryString["MaKH"].ToString();
+                //hien thi chuoi len web
+                //Response.Write(maKH);
+                DAOKhachHang daoKH = new DAOKhachHang();
+                DTOKhachHang dtoKH = daoKH.LayTTKHTheoMa(maKH);
+                lbMa.Text = dtoKH.MaKH.ToString();
+                txtTenKH.Text = dtoKH.TenKH;
+                txtDiaChi.Text = dtoKH.DiaChiKH;
+                txtSdt.Text = dtoKH.SdtKH;
+
+                //lay danh sach Loai Kh va truyen vao dropdown list
+                List<DTOLoaiKH> dsLKH = new List<DTOLoaiKH>();
+                dsLKH = daoKH.LayDSLKH();
+                //hien thi ten loai KH ra dropdownlist
+                ddLoaiKH.DataTextField = "TenLKH";//TenLKH la thuoc tinh trong DTOLoaiKH
+                //truyen dl theo ma loai 
+                ddLoaiKH.DataValueField = "MaLKH";//MaLKH la thuoc tinh trong DTOLoaiKH
+                ddLoaiKH.DataSource = dsLKH;
+                ddLoaiKH.DataBind();
+                
+            }
+            
+        }
+
+        protected void btnLuu_Click(object sender, EventArgs e)
+        {
+            
+            DTOKhachHang dtoKH = new DTOKhachHang(); //khoi tao moi doi tuong DTOKhachHang
+            dtoKH.MaKH = int.Parse(lbMa.Text); //lay gia tri maKh tu lbma tu SuaKhachhang.aspx va gan cho thuoc tinh dtoKH.MaKH
+            dtoKH.TenKH = txtTenKH.Text;  //lay gia tri tu textbox txtTenKH va gan cho thuoc tinh dtoKh.TenKH
+            dtoKH.DiaChiKH = txtDiaChi.Text;  //lay gia tri tu textbox txtDiaChi va gan cho thuoc tinh dtoKh.DiaChiKH
+            dtoKH.SdtKH = txtSdt.Text;  //lay gia tri tu textbox txtSdt va gan cho thuoc tinh dtoKh.SdtKH
+            //dtoKH.dtoLoaiKH.MaLKH = int.Parse(ddLoaiKH.SelectedValue);    //lay gia tri tu dropdown list LoaiKh va gan cho dtoKH.LoaiKh
+            
+            DTOLoaiKH dtoLoaiKH = new DTOLoaiKH();
+            dtoLoaiKH.MaLKH = int.Parse(ddLoaiKH.SelectedValue);
+            dtoLoaiKH.TenLKH = ddLoaiKH.SelectedItem.ToString();
+
+            dtoKH.dtoLoaiKH = dtoLoaiKH;
+
+            DAOKhachHang daoKH = new DAOKhachHang();
+            if (KiemTraNhap() == "")
+            {
+                daoKH.CapNhatKhachHang(dtoKH);
+                Response.Redirect("KhachHang.aspx"); //tu dong chay den trang KhachHang
+            }
+            else
+            {
+                lbLoi.Text = KiemTraNhap();
+            }
+            
+        }
+
+        private string KiemTraNhap()
+        {
+            string kq = "";
+            DAOKhachHang daoKH = new DAOKhachHang();
+            if (txtTenKH.Text.Trim() == "")
+            {
+                kq = "Vui lòng nhập tên!";
+            }
+            if (txtDiaChi.Text.Trim() == "")
+            {
+                kq += "<br>Vui lòng nhập địa chỉ!";
+            }
+            if (daoKH.KiemTraDienThoai(txtSdt.Text.Trim()) == false)
+            {
+                kq += "<br>Số điện thoại không đúng!";
+            }
+            return kq;
+        }
+    }
+}

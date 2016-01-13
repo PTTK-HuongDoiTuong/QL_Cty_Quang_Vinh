@@ -1,0 +1,50 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Web;
+using PhanMemQLCTQuangVinh.DTO;
+using System.Data;
+using System.Data.SqlClient;
+
+namespace PhanMemQLCTQuangVinh.DAO
+{
+    public class DAOPhieuNhapVatLieu_NCC
+    {
+        KetNoiCSDL ketnoi;
+        public DAOPhieuNhapVatLieu_NCC()
+        {
+            ketnoi = new KetNoiCSDL();
+        }
+
+        //Tao danh sach san pham
+        public List<DTOPhieuDatVatLieuCC> LayDSPhieuDatVatLieu_NCC()
+        {
+            List<DTOPhieuDatVatLieuCC> dssp = new List<DTOPhieuDatVatLieuCC>();
+            string lenh = "select * from PDVL_CC pd, Nhacungcap ncc where pd.mancc = ncc.mancc and pd.trangthai = 1";
+            ketnoi.TaoKetNoi();
+            DataTable bang = new DataTable();
+            try
+            {
+                ketnoi.LenhKetNoi = new SqlCommand(lenh, ketnoi.KetNoi);
+                ketnoi.TichHopCSDL = new SqlDataAdapter(ketnoi.LenhKetNoi);
+                ketnoi.TichHopCSDL.Fill(bang);
+                foreach (DataRow dongDL in bang.Rows)
+                {
+                    DTOPhieuDatVatLieuCC dtosp = new DTOPhieuDatVatLieuCC(dongDL);
+                    dssp.Add(dtosp);
+
+                }
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+            finally
+            {
+                ketnoi.DongKetNoi();
+            }
+            return dssp;
+        }
+    }
+}
